@@ -1,0 +1,42 @@
+.verification-main-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; 
+}
+
+.img-logo {
+    width: 101%;
+    transform: translateY(-10%);
+}
+
+.img-logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.verification-txt-container {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.input {
+    width: 55% !important;
+}
+
+.form-container {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2em;
+
+}
+
+.verification-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;    
+}
