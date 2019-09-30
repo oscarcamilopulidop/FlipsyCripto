@@ -1,0 +1,33 @@
+type USER {
+  idUser: ID!
+  nickname: String
+  name: String
+  lastName: String
+  phoneNumber: Int
+  birthDate: String
+  email: String
+  gender: String
+  emailNotifications: Boolean
+  picturePath: String
+  purpose: String
+}
+
+type FC {
+  idFc: ID!
+  front: String
+  back: String
+  lastModifyDate: String
+  creationDate: String
+  comments: String
+}
+
+type FCGroup {
+  idFcg: ID!
+  title: String
+  lastModifyDate: String
+  creationDate: String
+  tags: String
+}
+
+
+
