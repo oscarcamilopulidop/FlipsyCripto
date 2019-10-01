@@ -1,0 +1,21 @@
+.ant-list-split .ant-list-item{
+    border-bottom: 0px;
+}
+
+.ant-list-item-meta-title{
+    font-size: 20px;
+
+}
+
+.ant-list-item-meta-avatar{
+    margin-left: 7%;
+}
+
+.ant-list-item-meta-title{
+    margin-top: 20px;
+}
+
+button{
+    margin-right: 6%;
+    margin-left: 2%;
+}
