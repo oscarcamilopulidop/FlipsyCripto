@@ -1,0 +1,19 @@
+{
+    "env": {
+        "awscloudformation": {
+            "AuthRoleName": "flipsy-env-20190917213104-authRole",
+            "UnauthRoleArn": "arn:aws:iam::672436822072:role/flipsy-env-20190917213104-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::672436822072:role/flipsy-env-20190917213104-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "flipsy-env-20190917213104-deployment",
+            "UnauthRoleName": "flipsy-env-20190917213104-unauthRole",
+            "StackName": "flipsy-env-20190917213104",
+            "StackId": "arn:aws:cloudformation:us-east-2:672436822072:stack/flipsy-env-20190917213104/5ddb1a30-d9bc-11e9-b2d3-0afb0832a490"
+        },
+        "categories": {
+            "auth": {
+                "flipsy17095286": {}
+            }
+        }
+    }
+}

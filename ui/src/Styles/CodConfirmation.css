@@ -1,0 +1,72 @@
+.codconf-container {
+    background: #013C63;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+}
+.code-animation-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: pop 300ms;
+}
+
+.code-title {
+    color: white;
+}
+
+.code-input {
+    width: 50% !important;
+    border: none;
+    padding: 0 1em;
+    border-radius: 15px;
+    outline: none;
+    font-size: 2em;
+    text-align: center;
+    transition: ease-in-out 200ms;
+}
+.code-input:hover {
+    outline: #01D7DF;
+}
+
+.code-btn {
+    margin-top: 2em;
+}
+
+.swal2-popup {
+    width: 90vw !important;
+    background: rgb(255, 91, 91) !important;
+    box-shadow: 0 2px 10px black !important;
+    
+} 
+.swal2-title {
+    color: white !important;
+}
+
+.swal2-content {
+    color: white !important;
+}
+
+.swal2-footer {
+    color: white !important;
+}
+
+.swal2-confirm {
+    background: rgb(187, 0, 56) !important;
+}
+
+.swal2-header {
+    color: red !important;
+}
+
+@keyframes pop {
+    from {transform: scale(.1)}
+    to {transform: scale(1)}
+}
