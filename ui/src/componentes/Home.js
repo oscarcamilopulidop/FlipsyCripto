@@ -26,7 +26,7 @@ const Home = props => {
     return (
         <Layout>
             <Header className = "header">
-                <img className = "logo" src={require("../Assets/Logo-blanco.PNG")} alt="Notificaciones"/>
+                <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones"/>
                 <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
             </Header>
             <Content className="content">
