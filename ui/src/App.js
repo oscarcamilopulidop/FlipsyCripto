@@ -17,6 +17,7 @@ function App() {
         <Route path="/" component={Login} exact />
         <Route path="/signup" component={Registro} />
         <Route path='/signin' component={Login} />
+        <Route path='/login' component={Login} />
         <Route path='/confirm-code' component={CodeConfirmation} />
         <Route path='/home' component={Home} />
         <Route path='/verification' component={Verification} />
