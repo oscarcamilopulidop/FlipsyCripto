@@ -32,3 +32,14 @@ type FCGroup {
   specificTags: [String!]
   remainingNotifications: Int
 }
+
+type CAT{
+  id: ID!
+  name: String!
+}
+
+type SCAT{
+  id: ID!
+  name: String!
+  commonTags: [String!]
+}
