@@ -1,0 +1,67 @@
+.decks-container{
+    margin-top: 4em;
+    text-align: center;
+}
+
+
+.decks-main-container{
+    height: 100%;
+}
+
+.ant-layout{
+    height: 100%;
+}
+
+h1{
+    text-align: center;
+    color: #40a9ff;
+    margin-bottom: 0.8em;
+}
+
+.ant-card{
+    margin: 1%;
+    height: 5%;
+}
+
+.ant-list{
+    margin: 5%;
+}
+
+.ant-card-head {
+    height: 1.7em;
+    margin-bottom: 0.4em !important;
+    min-height: 0;
+    background-color: #00558c;
+}
+
+.ant-card-body {
+    background-color: #00558c;
+    margin: 0;
+    font-size: 0.75em;
+    color: white;
+    padding: 18px 10px;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}
+
+.ant-card {
+    background: transparent;
+}
+
+.ant-card:hover {
+    cursor: pointer;
+}
+
+ .img-card{
+     margin-bottom: 18px;
+     height: 55px;
+ }
+
+ .new-card{
+     color: black;
+     border-color: black;
+     width: 114.31px;
+     height: 159.58px;
+     margin: auto;
+ }
