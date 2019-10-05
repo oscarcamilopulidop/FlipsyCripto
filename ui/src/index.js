@@ -8,13 +8,13 @@ import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css'
-//import Amplify from 'aws-amplify'
-//import config from './aws-exports'
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
 import useGlobalState from './GlobalState/useGlobalState'
 import Context from './GlobalState/context'
 
 
-//Amplify.configure(config)
+Amplify.configure(config)
 
 const Index = () => {
     const store = useGlobalState()
