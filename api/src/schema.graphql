@@ -1,33 +1,34 @@
 type USER {
   idUser: ID!
-  nickname: String
-  name: String
-  lastName: String
+  nickname: String!
+  name: String!
+  lastName: String!
   phoneNumber: Int
-  birthDate: String
-  email: String
-  gender: String
-  emailNotifications: Boolean
+  birthDate: String!
+  email: String!
+  gender: String!
+  emailNotifications: Boolean!
   picturePath: String
   purpose: String
 }
 
 type FC {
   idFc: ID!
-  front: String
-  back: String
-  lastModifyDate: String
-  creationDate: String
+  front: String!
+  back: String!
+  lastModifyDate: String!
+  creationDate: String!
   comments: String
 }
 
 type FCGroup {
   idFcg: ID!
-  title: String
-  lastModifyDate: String
-  creationDate: String
-  tags: String
+  title: String!
+  retentive: Float
+  public: Boolean!
+  isStudying: Boolean!
+  lastModifyDate: String!
+  creationDate: String!
+  specificTags: [String!]
+  remainingNotifications: Int
 }
-
-
-
