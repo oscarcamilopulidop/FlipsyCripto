@@ -1,0 +1,31 @@
+.center{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.desk-creation-tittle{
+    font-size: large;
+    color: #013C63;
+    justify-self: center;
+    width: 100%;
+    font-family: Arial;
+}
+.desk-creation-button{
+
+}
+
+.ant-form-item {
+    margin-bottom: 0% !important;
+}
+
+.content{
+
+}
+
+.desk-creation-form{
+    margin: 0;
+    padding: 0;
+}
