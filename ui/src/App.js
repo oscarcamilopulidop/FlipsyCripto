@@ -9,7 +9,7 @@ import Verification from './componentes/Verification'
 import Confirmation from './componentes/Confirmation'
 import Searcher from "./componentes/Searcher";
 import Menu from './componentes/Menu'
-import DeskCreation from './componentes/DeskCreation';
+import DeckCreation from './componentes/DeckCreation';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path='/confirm' component={Confirmation} />
         <Route path='/search' component={Searcher} />
         <Route path="/menu" component={Menu} exact />
-        <Route path="/desk-creation" component={DeskCreation} />
+        <Route path="/deck-creation" component={DeckCreation} />
       </Switch>
     </BrowserRouter>
   );

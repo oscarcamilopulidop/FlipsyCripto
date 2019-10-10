@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { Layout, Button, Form,Select, Tag, Input, AutoComplete} from 'antd';
+import { Layout, Button, Form,Select, Tag, Input, AutoComplete, Icon} from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
-import '../Styles/DeskCreation.css'
+import '../Styles/DeckCreation.css'
 import CardContent from "@material-ui/core/CardContent";
 
 const { Search } = Input;
@@ -33,19 +33,22 @@ const types = [
     {value: 'privada', label: 'privada'},
     {value: 'publica', label: 'publica'}
 ];
-const DeskCreation = props => {
+
+const DeckCreation = props => {
 
     const [nameDesk, setName] = useState(  {
         nombre: '',
-    })
+    });
 
     const [typeDesk, setTypeDesk] = useState({
         typeDesk: '',
-    })
+    });
 
     const [categoryDesk, setCategoryDesk] = useState({
         categoryDesk: '',
-    })
+    });
+
+    const dataSource = ['Matematicas', 'Quimica', 'Fisica', 'Biologia'];
 
     function select(id) {
 
@@ -53,9 +56,13 @@ const DeskCreation = props => {
 
     const { Option } = Select;
 
-    const [selected, setSelected] = useState({ page: "Home"})
+    const [selected, setSelected] = useState({ page: "Home"});
 
-    const { state, actions } = useContext(Context)
+    const { state, actions } = useContext(Context);
+
+    function onSelect(value) {
+        console.log('onSelect', value);
+    }
 
     return (
         <Layout>
@@ -85,16 +92,30 @@ const DeskCreation = props => {
                             />
                         </Form.Item>
                         <Form.Item label="Tipo">
-                            <Select>
+                            <Select placeholder="Seleccionar tipo">
                                 <Option value="publica">Publica</Option>
                                 <Option value="privada">Privada</Option>
                             </Select>
                         </Form.Item>
                         <Form.Item label="Categoria" >
-                            <Search
+                            <AutoComplete
                                 className="category-input"
-                                onChange={e => setCategoryDesk({ ...categoryDesk, categoria: e.target.value})}
-                            />
+                                placeholder="Buscar categoría"
+                                onSelect={onSelect}
+                                dataSource={dataSource}
+                            >
+                                <Input
+                                    suffix={
+                                        <Button
+                                            className="search-btn"
+                                            style={{ marginRight: -12 }}
+                                            type="primary"
+                                        >
+                                            <Icon type="search" />
+                                        </Button>
+                                    }
+                                />
+                            </AutoComplete>
                             <Tag closable onClose={log}>
                                 Tag 2
                             </Tag>
@@ -115,4 +136,4 @@ const DeskCreation = props => {
     )
 }
 
-export default withRouter(DeskCreation)
+export default withRouter(DeckCreation)
