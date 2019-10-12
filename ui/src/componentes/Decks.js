@@ -1,15 +1,20 @@
 import React, { useState} from 'react'
-import {Button, List, Card, Layout} from 'antd'
+import {Button, List, Card, Layout, Select} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
 
 
 const { Header, Footer} = Layout;
+const { Option } = Select;
 
 const Decks = () => {
 
     const abrirBaraja = () => {
         console.log("abriendo baraja")
+    }
+
+    const handleChange = () => {
+        console.log("mostrando barajas ")
     }
 
     const data = [
@@ -63,6 +68,13 @@ const Decks = () => {
 
                 <div className="decks-container">
                     <h1>Barajas</h1>
+                    <div className="select-container">
+                        <Select defaultValue="Propias" style={{ width: '60%'}} onChange={handleChange}>
+                            <Option value="Propias">Propias</Option>
+                            <Option value="Compartidas">Compartidas conmigo</Option>
+                        </Select>
+                    </div>
+
                     <Button className="new-card" type="dashed" ghost>
                         Nueva
                         <br/>

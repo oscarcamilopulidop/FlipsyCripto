@@ -10,6 +10,9 @@ import Confirmation from './componentes/Confirmation'
 import Searcher from "./componentes/Searcher"
 import Menu from './componentes/Menu'
 import Decks from './componentes/Decks'
+//import FlashcardsCreation from './componentes/FlashcardsCreation'
+//<!--Route path='/cards-creation' component={FlashcardsCreation} /-->
+
 
 function App() {
   return (

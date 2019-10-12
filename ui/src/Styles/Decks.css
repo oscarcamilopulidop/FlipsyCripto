@@ -1,6 +1,8 @@
 .decks-container{
     margin-top: 4em;
     text-align: center;
+    display: flex;
+    flex-flow: column;
 }
 
 
@@ -8,33 +10,34 @@
     height: 100%;
 }
 
-.ant-layout{
+.decks-container .ant-layout{
     height: 100%;
 }
 
-h1{
+.decks-container h1{
     text-align: center;
     color: #40a9ff;
     margin-bottom: 0.8em;
 }
 
-.ant-card{
+.decks-container .ant-card{
     margin: 1%;
     height: 5%;
+    background: transparent;
 }
 
-.ant-list{
+.decks-container .ant-list{
     margin: 5%;
 }
 
-.ant-card-head {
+.decks-container .ant-card-head {
     height: 1.7em;
     margin-bottom: 0.4em !important;
     min-height: 0;
     background-color: #00558c;
 }
 
-.ant-card-body {
+.decks-container .ant-card-body {
     background-color: #00558c;
     margin: 0;
     font-size: 0.75em;
@@ -45,23 +48,31 @@ h1{
     text-align: center;
 }
 
-.ant-card {
-    background: transparent;
-}
-
-.ant-card:hover {
+.decks-container .ant-card:hover {
     cursor: pointer;
 }
 
- .img-card{
+.decks-container .img-card{
      margin-bottom: 18px;
      height: 55px;
  }
 
- .new-card{
-     color: black;
-     border-color: black;
+.decks-container .new-card{
+     color: #00558c;
+     border-color: #00558c;
      width: 114.31px;
      height: 159.58px;
      margin: auto;
  }
+
+.decks-container .select-container{
+    margin-bottom: 0;
+}
+
+.decks-container .ant-select{
+    color: #00558c;
+}
+
+.ant-select-dropdown-menu-item {
+    color: #00558c;
+}
