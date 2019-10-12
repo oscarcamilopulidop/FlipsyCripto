@@ -11,6 +11,7 @@
     height: 75%;
     display: table;
     border: 1px solid #c9c9c9;
+    width: 100%;
 }
 
 .card-content{
@@ -19,6 +20,7 @@
     horizontal-align: middle;
     background: #0A648F;
     color: white;
+    width: 100%;
 }
 
 .fill{
