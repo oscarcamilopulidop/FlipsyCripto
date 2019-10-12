@@ -1,0 +1,73 @@
+.flashcards-container{
+    margin-top: 4em;
+    text-align: center;
+}
+
+
+.flashcards-main-container{
+    height: 100%;
+}
+
+.flashcards-container .ant-layout{
+    height: 100%;
+}
+
+.flashcards-container h1{
+    text-align: center;
+    color: #00558c;
+    margin-bottom: 0.8em;
+}
+
+.flashcards-container .ant-list{
+    margin: 5%;
+}
+
+.flashcards-container .ant-card-body {
+    background-color:white;
+    margin: 0;
+    font-size: 0.75em;
+    color: #00558c;
+    padding: 18px 10px;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    width: 114.31px;
+    height: 159.58px;
+    border: solid;
+    display: inline-grid;
+}
+
+.flashcards-container .ant-card {
+    background: transparent;
+    margin: 1%;
+    height: 5%;
+}
+
+.flashcards-container .ant-card:hover {
+    cursor: pointer;
+}
+
+.img-flashcard{
+    height: 30px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.new-flashcard{
+    color: #00558c;
+    border-color: #00558c;
+    width: 114.31px;
+    height: 159.58px;
+    margin: auto;
+}
+
+.edit-deck{
+    height: 28px;
+    margin-right: 10px;
+}
+
+.play-deck{
+    height: 28px;
+    margin-left: 10px;
+}

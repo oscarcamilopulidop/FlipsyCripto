@@ -9,6 +9,9 @@ import Verification from './componentes/Verification'
 import Confirmation from './componentes/Confirmation'
 import Searcher from "./componentes/Searcher";
 import Menu from './componentes/Menu'
+import FlashcardsCreation from './componentes/FlashcardsCreation'
+
+
 
 function App() {
   return (
@@ -24,6 +27,7 @@ function App() {
         <Route path='/confirm' component={Confirmation} />
         <Route path='/search' component={Searcher} />
         <Route path="/menu" component={Menu} exact />
+        <Route path='/cards-creation' component={FlashcardsCreation} />
       </Switch>
     </BrowserRouter>
   );
