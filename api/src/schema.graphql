@@ -10,6 +10,7 @@ type USER {
   emailNotifications: Boolean!
   picturePath: String
   purpose: String
+  friends: [is_friend!]
 }
 
 type FC {
@@ -42,4 +43,10 @@ type SCAT{
   id: ID!
   name: String!
   commonTags: [String!]
+}
+
+type is_friend @relation(name: "IS_FRIEND") {
+    from: USER!
+    to: USER!
+    notifications: Boolean!
 }
