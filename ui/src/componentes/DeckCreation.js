@@ -119,6 +119,7 @@ const DeckCreation = props => {
                             <Tag closable onClose={log}>
                                 Tag 2
                             </Tag>
+                            
                         </Form.Item>
                     </Form>
                 </div>
