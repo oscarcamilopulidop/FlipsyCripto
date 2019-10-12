@@ -10,6 +10,8 @@ type USER {
   emailNotifications: Boolean!
   picturePath: String
   purpose: String
+  owns: [OWNS_FCG]
+  observing: [IS_OBSERVING_GFC]
 }
 
 type FC {
@@ -19,6 +21,7 @@ type FC {
   lastModifyDate: String!
   creationDate: String!
   comments: String
+  contatins: [CONTAINS_FC]
 }
 
 type FCGroup {
@@ -42,4 +45,19 @@ type SCAT{
   id: ID!
   name: String!
   commonTags: [String!]
+}
+
+##RELATIONSHIPS
+
+type OWNS_FCG @relation(names: "OWNS_FCG"){
+  from: USER
+  to: FCGroup
+}
+type CONTAINS_FC @relation(names: "CONTAINS_FC"){
+  from: FCGroup
+  to: FC
+}
+type  IS_OBSERVING_GFC @relation(names: "IS_OBSERVING_GFC"){
+  from: USER
+  to: FCGroup
 }
