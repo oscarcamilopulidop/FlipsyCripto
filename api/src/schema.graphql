@@ -11,6 +11,8 @@ type USER {
   picturePath: String
   purpose: String
   friends: [is_friend!]
+  owns: FcgToUser
+  observing: FcgShareTo
 }
 
 type FC {
@@ -20,6 +22,7 @@ type FC {
   lastModifyDate: String!
   creationDate: String!
   comments: String
+  contatins: FcToFcg
 }
 
 type FCGroup {
@@ -45,8 +48,23 @@ type SCAT{
   commonTags: [String!]
 }
 
+##RELATIONSHIPS
+
 type is_friend @relation(name: "IS_FRIEND") {
     from: USER!
     to: USER!
     notifications: Boolean!
+}
+
+type FcgToUser @relation(names: "OWNS_FCG"){
+  from: USER
+  to: FCGroup
+}
+type FcToFcg @relation(names: "CONTAINS_FC"){
+  from: FCGroup
+  to: FC
+}
+type  FcgShareTo @relation(names: "IS_OBSERVING_GFC"){
+  from: USER
+  to: FCGroup
 }
