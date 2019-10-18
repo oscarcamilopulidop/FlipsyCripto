@@ -97,8 +97,8 @@ const Decks = () => {
 
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick = ""/>
-                    <img className = "footer-item" src={require("../Assets/friends.svg")} alt="Friends"/>
-                    <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search"/>
+                    <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards"/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search"/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile"/>
                     <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones"/>
                 </Footer>
