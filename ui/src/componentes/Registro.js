@@ -7,10 +7,18 @@ import { Button, Input, Checkbox } from 'antd'
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import Swal from 'sweetalert2'
-
+// import { gql } from 'apollo-boost';
 
 
 const Registro = props => {
+    // const [CreateUserInNeo4j, { data }] = useMutation(gql`
+    //     mutation Create($id: ID!, $nickname: String!, $email: String!){
+    //         CreateUSER(idUser: $id, nickname: $nickname, email: $email){
+    //             idUser nickname email
+    //         }
+    //     }
+    // `)
+
     const { state, actions } = useContext(Context)
     const [signUpCredentials, setSignUpCredentials] = useState({
         correo: '',
@@ -32,7 +40,8 @@ const Registro = props => {
                 username: correo,
                 password: contra,
                 attributes: {
-                    email: correo
+                    email: correo,
+                    nickname: usuario
                 }
             })
                 .then(() => {
@@ -40,11 +49,12 @@ const Registro = props => {
                         type: "setState",
                         payload: {
                             user_credentials: {
-                                email: correo
+                                email: correo,
+                                nickname: usuario,
                             }
                         }
                     })
-                    props.history.push('confirm-code')
+                    props.history.push('wizard-name')
                 })
 
         } catch (error) {
@@ -76,13 +86,14 @@ const Registro = props => {
                         className="signup-input"
                         onChange={e => setSignUpCredentials({ ...signUpCredentials, correo: e.target.value })}
                         placeholder="Correo Electrónico"
+                        onClick={() => console.log(state)}
 
                     />
 
                     <Input
                         className="signup-input"
                         onChange={e => setSignUpCredentials({ ...signUpCredentials, usuario: e.target.value })}
-                        placeholder="Nombre de Usuario"
+                        placeholder="Nickname"
                     />
 
                     <Input

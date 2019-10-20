@@ -32,7 +32,7 @@ const CodConfirmation = props => {
 
     const ConfirmCode = () => {
         Auth.confirmSignUp(state.user_credentials.email, code.replace(/ /g, ""))
-            .then(data => props.history.push('home'))
+            .then(data => props.history.push('wizard'))
             .catch(error => {
                 Toast.fire({
                     type: 'error',

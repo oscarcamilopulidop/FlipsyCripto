@@ -1,0 +1,76 @@
+.signup-input2 {
+    width: 85% !important;
+    padding: 1em !important;
+    margin-bottom: 1em !important;
+}
+
+.signup-datepicker2{
+    width: 85% !important;
+}
+
+.Registro2 {
+    background: #013C63;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    color: white;
+}
+
+.formRegis2{
+    margin-top: 3%;
+}
+
+.inputs-container2 {
+    margin-top: 5em;
+    width: 100%;
+    /*height: 18vh;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.signup-gender2{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.signup-notification2{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.terms-and-conditions2 {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-container2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+}
+
+
+.final-options2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*margin-top: 4em;*/
+}
+
+.wizard-description{
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    text-align-last: center;
+}
