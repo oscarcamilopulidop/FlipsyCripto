@@ -8,12 +8,14 @@ import CodeConfirmation from './componentes/CodConf'
 import Home from './componentes/Home'
 import Verification from './componentes/Verification'
 import Confirmation from './componentes/Confirmation'
-import Searcher from "./componentes/Searcher";
+import Searcher from "./componentes/Searcher"
 import Menu from './componentes/Menu'
 import DeckCreation from './componentes/DeckCreation';
 import WizardNickname from "./componentes/WizardNickname";
 import WizardPersonalInfo from "./componentes/WizardPersonalInfo";
 import Wizard from "./componentes/Wizard";
+import FlashcardsCreation from './componentes/FlashcardsCreation'
+import Decks from './componentes/Decks'
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="/signup" component={Registro} />
         <Route path="/signup2" component={SignUp} />
         <Route path='/signin' component={Login} />
+        <Route path='/login' component={Login} />
         <Route path='/confirm-code' component={CodeConfirmation} />
         <Route path='/home' component={Home} />
         <Route path='/verification' component={Verification} />
@@ -33,7 +36,8 @@ function App() {
         <Route path="/wizard-name" component={WizardNickname} />
         <Route path="/wizard-personal-info" component={WizardPersonalInfo} />
         <Route path="/wizard" component={Wizard}/>
-
+        <Route path='/cards-creation' component={FlashcardsCreation} />
+        <Route path='/decks' component={Decks} />
       </Switch>
     </BrowserRouter>
   );

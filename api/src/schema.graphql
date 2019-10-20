@@ -1,33 +1,70 @@
 type USER {
   idUser: ID!
-  nickname: String
-  name: String
-  lastName: String
+  nickname: String!
+  name: String!
+  lastName: String!
   phoneNumber: Int
-  birthDate: String
-  email: String
-  gender: String
-  emailNotifications: Boolean
+  birthDate: String!
+  email: String!
+  gender: String!
+  emailNotifications: Boolean!
   picturePath: String
   purpose: String
+  friends: [is_friend!]
+  owns: FcgToUser
+  observing: FcgShareTo
 }
 
 type FC {
   idFc: ID!
-  front: String
-  back: String
-  lastModifyDate: String
-  creationDate: String
+  front: String!
+  back: String!
+  lastModifyDate: String!
+  creationDate: String!
   comments: String
+  contatins: FcToFcg
 }
 
 type FCGroup {
   idFcg: ID!
-  title: String
-  lastModifyDate: String
-  creationDate: String
-  tags: String
+  title: String!
+  retentive: Float
+  public: Boolean!
+  isStudying: Boolean!
+  lastModifyDate: String!
+  creationDate: String!
+  specificTags: [String!]
+  remainingNotifications: Int
 }
 
+type CAT{
+  id: ID!
+  name: String!
+}
 
+type SCAT{
+  id: ID!
+  name: String!
+  commonTags: [String!]
+}
 
+##RELATIONSHIPS
+
+type is_friend @relation(name: "IS_FRIEND") {
+    from: USER!
+    to: USER!
+    notifications: Boolean!
+}
+
+type FcgToUser @relation(names: "OWNS_FCG"){
+  from: USER
+  to: FCGroup
+}
+type FcToFcg @relation(names: "CONTAINS_FC"){
+  from: FCGroup
+  to: FC
+}
+type  FcgShareTo @relation(names: "IS_OBSERVING_GFC"){
+  from: USER
+  to: FCGroup
+}
