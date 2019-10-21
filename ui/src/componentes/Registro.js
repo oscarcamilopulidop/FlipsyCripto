@@ -36,7 +36,7 @@ const Registro = props => {
     const handleSubmit = async () => {
         const { correo, usuario, contra } = signUpCredentials
         try {
-            let newUser = await Auth.signUp({
+            await Auth.signUp({
                 username: correo,
                 password: contra,
                 attributes: {
@@ -44,13 +44,14 @@ const Registro = props => {
                     nickname: usuario
                 }
             })
-                .then(() => {
+                .then(async (authUser) => {
                     actions({
                         type: "setState",
                         payload: {
                             user_credentials: {
                                 email: correo,
                                 nickname: usuario,
+                                id: authUser.userSub
                             }
                         }
                     })
