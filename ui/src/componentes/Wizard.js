@@ -10,14 +10,6 @@ import { withRouter } from 'react-router-dom'
 const Wizard = props => {
     const { state, actions } = useContext(Context)
     const [nickname, setNickname] = useState("")
-    // const [CreateUserInNeo4j, { data }] = useMutation(gql`
-    //     mutation Create($id: ID!, $nickname: String!, $email: String!){
-    //         CreateUSER(idUser: $id, nickname: $nickname, email: $email){
-    //             idUser nickname email
-    //         }
-    //     }
-    // `)
-
     useEffect(() => {
         setNickname(state.user_credentials.nickname || "")
     }, [])
@@ -29,18 +21,6 @@ const Wizard = props => {
             payload: { ...state, user_credentials: { ...state.user_credentials, nickname: nickname } }
         })
         console.log(state.user_credentials);
-        // try {
-        //     CreateUserInNeo4j({
-        //         variables: {
-        //             id: (Math.random() * 1000000).toString(),
-        //             nickname: nickname,
-        //             email: email
-        //         }
-        //     }).then(res => {
-        //         console.log(res.data)
-        //         props.history.push('')
-        //     })
-        // } catch (error) { console.log("error => ", error) }
     }
 
     return (

@@ -2,13 +2,20 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Input, Button } from 'antd'
 import '../Styles/MainLogin.css'
 import { withRouter } from 'react-router-dom'
+import { Auth } from 'aws-amplify'
+
 
 const MainLogin = props => {
 
     const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
 
     const Login = () => {
-        alert("Loging in")
+      Auth.signIn(loginCredentials.email, loginCredentials.password);
+
+      Auth.currentAuthenticatedUser().then(user => console.log(user.attributes.sub));
+      // let user = await Auth.currentAuthenticatedUser().then(console.log(user));
+      // console.log(user);
+      alert("Loging in")
     }
 
     return (

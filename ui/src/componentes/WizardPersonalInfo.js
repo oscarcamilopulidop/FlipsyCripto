@@ -22,7 +22,7 @@ const WizardPersonalInfo = props => {
     });
 
     const [CreateUserInNeo4j, { data }] = useMutation(gql`
-        mutation Create($id: ID!, $nickname: String!, 
+        mutation Create($id: ID!, $nickname: String!,
             $email: String!, $lastname: String!, $firstname: String!,
             $birthDate: String!, $gender: String!, $emailNotifications: Boolean!
         ){
@@ -50,7 +50,7 @@ const WizardPersonalInfo = props => {
         try {
             CreateUserInNeo4j({
                 variables: {
-                    id: (Math.random() * 1000000).toString(),
+                    id: state.user_credentials.id,
                     nickname: state.user_credentials.nickname,
                     email: state.user_credentials.email,
                     lastname: state.user_credentials.last_name,
