@@ -1,12 +1,8 @@
 import React, { useState, useContext } from 'react';
-import regis from '../Assets/icon.png';
-import ConfirmCode from '../componentes/CodConf'
-import '../Styles/Signup2.css'
-import { Auth } from 'aws-amplify'
+import '../Styles/Wizard2.css'
 import { Button, Input, Checkbox, DatePicker } from 'antd'
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
-import Swal from 'sweetalert2'
 
 
 
@@ -25,10 +21,11 @@ const WizardNickname = props => {
         })
         console.log(state.user_credentials);
         console.log(wizardName.first_name);
+        props.history.push('wizard-personal-info')
     }
 
     return (
-        <div className="Registro2">
+        <div className="wizard2">
 
             <form className="formRegis2">
 
@@ -39,27 +36,24 @@ const WizardNickname = props => {
                     </section>
 
                     <Input
-                        className="signup-input2"
+                        className="wizard-input2"
                         onChange={e => setWizardName({ ...wizardName, first_name: e.target.value })}
                         placeholder="Nombre de Usuario"
                         onClick={() => console.log(state.user_credentials)}
                     />
 
                     <Input
-                        className="signup-input2"
+                        className="wizard-input2"
                         onChange={e => setWizardName({ ...wizardName, last_name: e.target.value })}
                         placeholder="Apellido de Usuario"
-                        onClick={UpdateName}
+                        // onClick={UpdateName}
                     />
-
 
                 </section>
 
                 <section className="btn-container2">
-                    <Button onClick={() => props.history.push('wizard-personal-info')} type="primary"> Siguiente </Button>
+                    <Button onClick={UpdateName } type="primary"> Siguiente </Button>
                 </section>
-
-
 
             </form>
         </div>
