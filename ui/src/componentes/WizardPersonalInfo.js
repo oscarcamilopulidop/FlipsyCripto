@@ -31,7 +31,7 @@ const WizardPersonalInfo = props => {
                 idUser nickname email lastName name birthDate gender emailNotifications
             }
         }
-    `)
+    `);
 
     const UpdateInfo = () => {
         const { date, gender, notifications } = state.user_credentials

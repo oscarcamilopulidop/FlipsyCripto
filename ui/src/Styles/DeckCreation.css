@@ -13,8 +13,12 @@
     width: 100%;
     font-family: Arial;
 }
-.desk-creation-button{
-
+.desk-creation-button-final{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    width: 100%;
+    text-align: center;
 }
 
 .ant-form-item {

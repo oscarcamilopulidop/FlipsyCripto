@@ -36,6 +36,8 @@ const types = [
 
 const DeckCreation = props => {
 
+    // const { state, actions } = useContext(Context);
+
     const [nameDesk, setName] = useState(  {
         nombre: '',
     });
@@ -122,6 +124,11 @@ const DeckCreation = props => {
 
                         </Form.Item>
                     </Form>
+                    <div className="desk-creation-button-final">
+                        <Button size="large" type="primary" onClick={() => props.history.push('decks')}>
+                            Crear
+                        </Button>
+                    </div>
                 </div>
 
             </Content>
