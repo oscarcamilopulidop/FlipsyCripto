@@ -87,8 +87,6 @@
     background: #e7e9ec;
     padding: 20px;
     margin-top: 2.7em;
-    height: 100%;
-    width: 100%;
     font-family: Arial;
 }
 
@@ -107,6 +105,14 @@
     width: 100vw;
     position: relative;
     display: flex;
+    align-items: center;
+}
+
+.outside-container{
+    border-bottom: #8e8e8e solid thin;
+    overflow: auto;
+    padding: 0;
+    justify-content: center;
     align-items: center;
 }
 
@@ -129,6 +135,7 @@
     justify-content: center;
     align-items: center;
     animation: pop 300ms;
+
 }
 
 .circular{
@@ -136,37 +143,59 @@
     border-radius: 50%;
     width: 2.5em;
     height: 2.5em;
-    margin-right: 0.7em;
+    margin-right: 0;
+    margin-top: 0.8em;
 }
 
-.name{
-    margin-left: 1.2em;
+.card{
+    float: right;
+    border-radius: 10%;
+    width: 5em;
+    height: 7em;
+    margin-left: 0.7em;
+    margin-top: 0.7em;
+    background: #013C63;
+    margin-bottom: 1.4em;
+}
+
+.link{
     font-weight: bold;
     color: #013C63;
     font-family: Arial;
-    font-size: 1em;
-    padding: 0;
-    line-height:1.2em;
-    margin-bottom: 0.2em;
+    height: 1.2em;
 }
 
-.date{
-    margin-left: 1em;
-    font-weight: bold;
-    color: #4e4e4e;
+.text-container{
+    margin-top: 0.7em;
+    margin-bottom: 1.4em;
+    background: white;
+    overflow: auto;
+    margin-left: 3em;
+    padding-left: 0.5em;
+    border-color: #dfe1e4;
+    border-width: 1px;
+    border-radius: 0.3em;
+    border-style: solid;
+    vertical-align: middle;
+}
+
+.text{
+    color: #000000;
     font-family: Arial;
-    font-size: 0.8em;
-    padding: 0;
-    line-height:1em;
+    font-size: 1em;
+    margin-top: 0.7em;
+    vertical-align: center;
+    height: 1.2em;
+    line-height :1.3em;
 }
 
 .notice-header{
     width: 100%;
-    display: flow;
+    float: top;
 }
 
 div{
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 0.7em 0px;
 }
 
 @keyframes pop {

@@ -47,31 +47,29 @@ const Home = props => {
                    </div>
                 </div>
 
-                <div className="user-content-wrapper">
+                <div className="outside-container">
+                    <div className="card">
+                    </div>
                     <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-13.jpg" height="100" width="100"/>
-                    <div className="notice-header">
-                        <h1 className="name"> Juanita Suarez </h1>
-                        <h1 className="date"> Ayer </h1>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Juanita suarez </span> ha creado una nueva baraja <span className="link"> Matemáticas </span> </span>
                     </div>
-                    Cambié mi baraja de Cálculo, Quieres verla?
                 </div>
 
-                <div className="user-content-wrapper">
-                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-1.jpg" height="100" width="100"/>
-                    <div className="notice-header">
-                        <h1 className="name"> Pepito Díaz </h1>
-                        <h1 className="date"> Hace dos días </h1>
+                <div className="outside-container">
+                    <img className="circular" src ="https://static.ellahoy.es/ellahoy/fotogallery/845X0/459517/cortes-de-cabello-apra-cara-cuadrada-2017.jpg" height="100" width="100"/>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Andrés Felipe Ortíz </span> ha aceptado tu invitación de amistad</span>
                     </div>
-                    Agregué algunas tarjetas a mi baraja de Música Instumental
                 </div>
 
-                <div className="user-content-wrapper">
-                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-10.jpg" height="100" width="100"/>
-                    <div className="notice-header">
-                        <h1 className="name"> Andrés Jiménez </h1>
-                        <h1 className="date"> Hace un año </h1>
+                <div className="outside-container">
+                    <div className="card">
                     </div>
-                    Estoy creando una nueva baraja sobre perritos, alguien me ayuda?
+                    <img className="circular" src ="http://cdn3.upsocl.com/wp-content/uploads/2016/05/18-24.jpg" height="100" width="100"/>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Juan Carlos Castellanos </span> ha compartido contigo su baraja <span className="link"> Música Instrumental </span> </span>
+                    </div>
                 </div>
 
             </Content>

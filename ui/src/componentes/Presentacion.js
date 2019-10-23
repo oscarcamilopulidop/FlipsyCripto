@@ -75,7 +75,7 @@ class Presentacion extends React.Component {
                             </div>
                         </Container>
                     </div>
-                    <Container maxWidth="md">
+                    <div maxWidth="md">
 
                         <Grid container justify="space-evenly" >
 
@@ -96,7 +96,7 @@ class Presentacion extends React.Component {
                                 </ReactCardFlip>
                             </Grid>
                         </Grid>
-                    </Container>
+                    </div>
                 </main>
 
 
