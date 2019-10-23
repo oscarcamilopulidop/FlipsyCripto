@@ -8,10 +8,9 @@ import '../App.css';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-class CreateCard extends React.Component {
+const CreateCard  = props => {
 
-    constructor() {
-        super();
+    const constructor = () => {
         this.state = {
             isFlipped: false
         };
@@ -19,22 +18,20 @@ class CreateCard extends React.Component {
     }
 
 
-    handleClick(e) {
+    const handleClick = (e) => {
         e.preventDefault();
         this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
     }
 
-    handleChange = value => {
+    const handleChange = value => {
         this.setState({ mdeValue: value });
     };
-
-    render() {
 
         return (
             <Layout className="layout">
                 <Header className = "header">
-                    <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones"/>
-                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
+                    <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} onClick={() => props.history.push('home')}/>
+                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"onClick={() => props.history.push('menu')} />
                 </Header>
                 <form className="content" action="" method="post">
                     <div className="add-deck">
@@ -57,25 +54,25 @@ class CreateCard extends React.Component {
                     <div className="">
                         Parte Frontal:
                         <textarea  class="textarea text-area flip-card"
-                            onChange={this.handleChange}
+                            onChange={handleChange}
                         />
                         <br/>
                         Parte posterior:
                         <textarea  class="textarea text-area flip-card"
-                                   onChange={this.handleChange}
+                                   onChange={handleChange}
                         />
                     </div>
                 </form>
 
                 <Footer className="footer">
-                    <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick = ""/>
+                    <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick = "" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item" src={require("../Assets/friends.svg")} alt="Friends"/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search"/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile"/>
                     <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones"/>
                 </Footer>
             </Layout>
         );
-    }
+
 }
 export default CreateCard
