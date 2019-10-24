@@ -12,24 +12,27 @@ import useGlobalState from './GlobalState/useGlobalState'
 import Context from './GlobalState/context'
 import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from '@apollo/react-hooks'
+import ApolloClient from 'apollo-boost'
+
 
 Amplify.configure(config)
 
-
 const client = new ApolloClient({
-    uri: 'http://18.190.119.49:4000/'
+    uri:"http://18.190.119.49:4000"
 })
+
 
 const Index = () => {
     const store = useGlobalState()
     return (
         <Context.Provider value={store}>
             <ApolloProvider client={client}>
-            <App />
-        </ApolloProvider>
+                <App />
+            </ApolloProvider>
         </Context.Provider>
     )
 }
+
 
 ReactDOM.render(<Index />, document.getElementById('root'));
 

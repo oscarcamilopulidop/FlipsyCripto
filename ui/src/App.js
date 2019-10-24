@@ -16,6 +16,7 @@ import WizardPersonalInfo from "./componentes/WizardPersonalInfo";
 import Wizard from "./componentes/Wizard";
 import FlashcardsCreation from './componentes/FlashcardsCreation'
 import Decks from './componentes/Decks'
+import StudyCards from './componentes/StudyCards'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/wizard" component={Wizard}/>
         <Route path='/cards-creation' component={FlashcardsCreation} />
         <Route path='/decks' component={Decks} />
+        <Route path="/study" component={StudyCards} />
       </Switch>
     </BrowserRouter>
   );
