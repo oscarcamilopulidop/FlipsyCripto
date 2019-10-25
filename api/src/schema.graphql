@@ -23,10 +23,14 @@ type FC {
   creationDate: String!
   comments: String
   contatins: FcToFcg
+  idFCG: String!
 }
 
 type FCGroup {
   idFcg: ID!
+  idUser: String!
+  idCat: String!
+  idScat: String!
   title: String!
   retentive: Float
   public: Boolean!
