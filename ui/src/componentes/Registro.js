@@ -55,7 +55,7 @@ const Registro = props => {
                             }
                         }
                     })
-                    props.history.push('wizard-name')
+                    props.history.push('confirm-code')
                 })
 
         } catch (error) {
