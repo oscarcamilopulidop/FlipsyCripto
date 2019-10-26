@@ -30,7 +30,7 @@ const MainLogin = props => {
             </section>
 
             <section className="login-btn-container">
-                <Button type="primary" onClick={Login}> Iniciar Sesiónss </Button>
+                <Button type="primary" onClick={Login}> Iniciar Sesión </Button>
             </section>
 
             <section className="final-options">

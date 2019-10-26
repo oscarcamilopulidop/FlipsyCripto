@@ -16,7 +16,6 @@ import Wizard from "./componentes/Wizard";
 import FlashcardsCreation from './componentes/FlashcardsCreation'
 import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
-import ListCards from './componentes/ListCards'
 import CreateCard from './componentes/CreateCard'
 
 function App() {

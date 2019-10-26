@@ -7,18 +7,36 @@ import { withRouter } from 'react-router-dom'
 import '../Styles/Home.css'
 import { Input } from 'antd';
 import CardContent from "@material-ui/core/CardContent";
+import Menu from "./Menu";
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
 
 const Home = props => {
 
+    var flag = false;
+    const ShowSideMenu = () => {
+
+        var element = document.getElementById('menu');
+        if(flag){
+            element.style.transform = 'translate(60vw)';
+        }else{
+            element.style.transform = 'translate(-60vw)';
+        }
+        element.style.zIndex = '25';
+        element.style.transition = 'transform 500ms';
+        flag = !flag;
+    }
+
     return (
         <Layout>
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
-                <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
+                <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
             </Header>
+            <div className="home-menu-collapse" id="menu">
+                <Menu/>
+            </div>
             <Content className="content">
                 <div className = "search">
                     <Search

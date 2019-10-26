@@ -9,6 +9,7 @@ import { gql } from 'apollo-boost'
 import { useMutation } from "@apollo/react-hooks";
 
 import '../App.css';
+import Menu from "./Menu";
 const { Header, Footer, Sider, Content } = Layout;
 
 const StudyCards = props => {
@@ -19,12 +20,29 @@ const StudyCards = props => {
         setIsFlipped(!isFlipped)
     }
 
+    var flag = false;
+    const ShowSideMenu = () => {
+
+        var element = document.getElementById('menu');
+        if(flag){
+            element.style.transform = 'translate(60vw)';
+        }else{
+            element.style.transform = 'translate(-60vw)';
+        }
+        element.style.zIndex = '25';
+        element.style.transition = 'transform 500ms';
+        flag = !flag;
+    }
+
     return (
         <Layout className="layout">
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
-                <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={() => props.history.push('menu')}/>
+                <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
             </Header>
+            <div className="home-menu-collapse" id="menu">
+                <Menu/>
+            </div>
             <body className="content" >
             <div className="cards-list-study">
                 <img className="arrow-study" src={require("../Assets/prev-card.svg")} />

@@ -3,6 +3,7 @@ import {Input, Layout} from 'antd'
 import '../Styles/Searcher.css'
 import '../Styles/Home.css'
 import ProfileList from "./ProfileList";
+import Menu from "./Menu";
 
 const { Header, Footer} = Layout;
 
@@ -14,15 +15,31 @@ const Searcher = props => {
 
     const { Search } = Input;
 
+    var flag = false;
+    const ShowSideMenu = () => {
+
+        var element = document.getElementById('menu');
+        if(flag){
+            element.style.transform = 'translate(60vw)';
+        }else{
+            element.style.transform = 'translate(-60vw)';
+        }
+        element.style.zIndex = '25';
+        element.style.transition = 'transform 500ms';
+        flag = !flag;
+    }
+
     return (
         <div className='searcher-main-container'>
             <Layout>
 
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
-                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
+                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
                 </Header>
-
+                <div className="home-menu-collapse" id="menu">
+                    <Menu/>
+                </div>
                 <div className="search-container">
                     <Search
                         placeholder="Busca a tus amigos"

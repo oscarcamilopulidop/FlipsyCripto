@@ -1,3 +1,20 @@
+.deck-creation{
+    background: #013C63;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .center{
     display: flex;
     flex-direction: column;
@@ -6,14 +23,14 @@
     text-align: center;
 }
 
-.desk-creation-tittle{
+.deck-creation-tittle{
     font-size: large;
     color: #013C63;
     justify-self: center;
     width: 100%;
     font-family: Arial;
 }
-.desk-creation-button-final{
+.deck-creation-button-final{
     display: flex;
     flex-direction: column;
     justify-items: center;
@@ -29,7 +46,7 @@
 
 }
 
-.desk-creation-form{
+.deck-creation-form{
     margin: 0;
     padding: 0;
 }

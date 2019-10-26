@@ -5,6 +5,7 @@ import ReactCardFlip from 'react-card-flip'
 import '../Styles/Home.css'
 import '../Styles/CreateCard.css'
 import '../App.css';
+import Menu from "./Menu";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -27,12 +28,28 @@ const CreateCard  = props => {
         this.setState({ mdeValue: value });
     };
 
+    var flag = false;
+    const ShowSideMenu = () => {
+
+        var element = document.getElementById('menu');
+        if(flag){
+            element.style.transform = 'translate(60vw)';
+        }else{
+            element.style.transform = 'translate(-60vw)';
+        }
+        element.style.zIndex = '25';
+        element.style.transition = 'transform 500ms';
+        flag = !flag;
+    }
         return (
             <Layout className="layout">
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
-                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
+                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
                 </Header>
+                <div className="home-menu-collapse" id="menu">
+                    <Menu/>
+                </div>
                 <form className="content" action="" method="post">
                     <div className="add-deck">
                         Matemáticas I

@@ -2,6 +2,7 @@ import React from 'react'
 import {Button, List, Card, Layout, Select} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
+import Menu from "./Menu";
 
 
 const { Header, Footer} = Layout;
@@ -57,15 +58,31 @@ const Decks = props => {
 
     ];
 
+    var flag = false;
+    const ShowSideMenu = () => {
+
+        var element = document.getElementById('menu');
+        if(flag){
+            element.style.transform = 'translate(60vw)';
+        }else{
+            element.style.transform = 'translate(-60vw)';
+        }
+        element.style.zIndex = '25';
+        element.style.transition = 'transform 500ms';
+        flag = !flag;
+    }
+
     return (
         <div className='decks-main-container'>
             <Layout>
 
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
-                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
+                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
                 </Header>
-
+                <div className="home-menu-collapse" id="menu">
+                    <Menu/>
+                </div>
                 <div className="decks-container">
                     <h1>Barajas</h1>
                     <div className="select-container">

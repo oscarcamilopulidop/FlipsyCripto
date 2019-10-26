@@ -1,0 +1,13 @@
+.home-container{
+    position: relative;
+    z-index: 1;
+}
+
+.home-menu-main-container{
+    position: absolute;
+    left: 40%;
+    top: 5%;
+    bottom: 3%;
+    z-index: 2; /* put .green-box above .dashed-box */
+    background-color: #143256;
+}

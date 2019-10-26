@@ -12,11 +12,11 @@ const Menu = props => {
             </div>
 
             <div className="menu-main-menu">                
-                <p> Barajas </p>
+                <p onClick={() => props.history.push('decks')}> Barajas </p>
                 <p> Comunidad </p>
                 <p> Perfil </p>
                 <p> Retos </p>
-                <p> Cerrar Sesión </p>
+                <p onClick={() => props.history.push('')}> Cerrar Sesión </p>
                 <div className="center-hr">
                     <hr className="menu-separator"/>
                 </div>
