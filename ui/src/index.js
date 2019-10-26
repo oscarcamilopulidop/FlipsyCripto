@@ -6,16 +6,14 @@ import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css'
-//import Amplify from 'aws-amplify'
-//import config from './aws-exports'
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
 import useGlobalState from './GlobalState/useGlobalState'
 import Context from './GlobalState/context'
 import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from '@apollo/react-hooks'
-import ApolloClient from 'apollo-boost'
 
-
-//Amplify.configure(config)
+Amplify.configure(config)
 
 const client = new ApolloClient({
     uri:"http://18.190.119.49:4000"
