@@ -13,16 +13,6 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const Home = props => {
 
-
-
-    function select(id) {
-
-    }
-
-    const [selected, setSelected] = useState({ page: "Home"})
-
-    const { state, actions } = useContext(Context)
-
     return (
         <Layout>
             <Header className = "header">
