@@ -16,7 +16,7 @@ const Home = props => {
     return (
         <Layout>
             <Header className = "header">
-                <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones"/>
+                <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                 <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
             </Header>
             <Content className="content">
@@ -27,11 +27,11 @@ const Home = props => {
                     />
                 </div>
 
-                <div className="add-deck">
+                <div className="add-deck"  onClick={() => props.history.push('deck-creation')}>
                     + Nueva baraja
                 </div>
 
-                <div className="deck">
+                <div className="deck" onClick={() => props.history.push('decks')}>
                    <div className="bottom">
                        Barajas
                    </div>
@@ -63,13 +63,12 @@ const Home = props => {
                 </div>
 
             </Content>
-
             <Footer className="footer">
-                <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick = ""/>
-                <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards"/>
-                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search"/>
-                <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile"/>
-                <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones"/>
+                <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick={() => props.history.push('home')}/>
+                <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
+                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
+                <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
             </Footer>
         </Layout>
     )

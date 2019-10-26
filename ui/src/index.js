@@ -10,7 +10,6 @@ import 'antd/dist/antd.css'
 //import config from './aws-exports'
 import useGlobalState from './GlobalState/useGlobalState'
 import Context from './GlobalState/context'
-import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 
