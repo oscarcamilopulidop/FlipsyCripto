@@ -20,15 +20,13 @@ const WizardPersonalInfo = props => {
     });
 
     const [CreateUserInNeo4j, { data }] = useMutation(gql`
-        mutation Create($id: ID!, $nickname: String!,
-            $email: String!, $lastname: String!, $firstname: String!,
-            $birthDate: String!, $gender: String!, $emailNotifications: Boolean!
+        mutation Create($idUser: ID!, $nickname: String!, $name: String!, $lastName: String!,
+            $birthDate: String!, $email: String!, $gender: String!, $emailNotifications: Boolean!
         ){
-            CreateUSER(idUser: $id, nickname: $nickname, email: $email,
-            lastName: $lastname, name: $firstname, birthDate: $birthDate,
-                gender: $gender, emailNotifications: $emailNotifications
+            CreateUSER(idUser: $idUser, nickname: $nickname, name: $name, lastName: $lastName,
+                birthDate: $birthDate, email: $email, gender: $gender, emailNotifications: $emailNotifications
             ){
-                idUser nickname email lastName name birthDate gender emailNotifications
+                idUser nickname email name lastName birthDate gender emailNotifications
             }
         }
     `);
@@ -48,11 +46,11 @@ const WizardPersonalInfo = props => {
         try {
             CreateUserInNeo4j({
                 variables: {
-                    id: state.user_credentials.id,
+                    idUser: state.user_credentials.id,
                     nickname: state.user_credentials.nickname,
                     email: state.user_credentials.email,
-                    lastname: state.user_credentials.last_name,
-                    firstname: state.user_credentials.first_name,
+                    lastName: state.user_credentials.last_name,
+                    name: state.user_credentials.first_name,
                     birthDate: state.user_credentials.date,
                     gender: state.user_credentials.gender,
                     emailNotifications: state.user_credentials.notifications
@@ -79,7 +77,7 @@ const WizardPersonalInfo = props => {
                     <DatePicker
                         className="wizard-datepicker2"
                         onChange={e => setWizardPersonalInfo({...wizardPersonalInfo, date: e.unix().toString()})}
-                        // onChange={e => console.log(typeof (e.unix().toString()))}
+                        // onChange={e => console.log( (e.unix().toString()))}
                         placeholder="Fecha de Nacimiento"
                     />
 

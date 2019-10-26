@@ -7,7 +7,7 @@ import CodeConfirmation from './componentes/CodConf'
 import Home from './componentes/Home'
 import Verification from './componentes/Verification'
 import Confirmation from './componentes/Confirmation'
-import Searcher from "./componentes/Searcher"
+import Searcher from "./componentes/Searcher";
 import Menu from './componentes/Menu'
 import DeckCreation from './componentes/DeckCreation';
 import WizardNickname from "./componentes/WizardNickname";
@@ -16,7 +16,7 @@ import Wizard from "./componentes/Wizard";
 import FlashcardsCreation from './componentes/FlashcardsCreation'
 import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
-import HomeMenu from "./componentes/HomeMenu";
+import CreateCard from './componentes/CreateCard'
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
         <Route path='/cards-creation' component={FlashcardsCreation} />
         <Route path='/decks' component={Decks} />
         <Route path="/study" component={StudyCards} />
-        <Route path="/home-menu" component={HomeMenu}/>
+        <Route path="/createCard" component={CreateCard}/>
       </Switch>
     </BrowserRouter>
   );

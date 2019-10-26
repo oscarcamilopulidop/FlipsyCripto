@@ -13,7 +13,7 @@
     "graphql": "^14.5.4",
     "graphql-tag": "^2.10.1",
     "material-ui": "^0.20.2",
-    "nodemon": "^1.19.4",
+    "mdbreact": "^4.21.0",
     "react": "^16.9.0",
     "react-apollo": "^3.1.0",
     "react-card-flip": "^0.8.1",
@@ -23,8 +23,9 @@
     "react-material-ui-form-validator": "^2.0.9",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
-    "sweetalert2": "^8.17.4",
-    "wait-port": "^0.2.6"
+    "react-simplemde-editor": "^4.1.0",
+    "semantic-ui-react": "^0.88.1",
+    "sweetalert2": "^8.17.4"
   },
   "scripts": {
     "start": "react-scripts start",

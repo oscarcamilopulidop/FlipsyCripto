@@ -10,15 +10,11 @@ const MainLogin = props => {
     const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
 
     const Login = () => {
-        Auth.signIn(loginCredentials.email, loginCredentials.password);
-
-        Auth.currentAuthenticatedUser().then(user => console.log(user.attributes.sub));
-        // let user = await Auth.currentAuthenticatedUser().then(console.log(user));
-        // console.log(user);
-        // props.history.push('home');
-        alert("Loging in")
-        props.history.push('home');
+      Auth.signIn(loginCredentials.email, loginCredentials.password);
+      Auth.currentAuthenticatedUser().then(user => console.log(user.attributes.sub));
+      props.history.push('home');
     }
+
 
     return (
         <div className='login-main-container'>
@@ -34,7 +30,7 @@ const MainLogin = props => {
             </section>
 
             <section className="login-btn-container">
-                <Button type="primary" onClick={Login}> Iniciar Sesiónss </Button>
+                <Button type="primary" onClick={Login}> Iniciar Sesión </Button>
             </section>
 
             <section className="final-options">
