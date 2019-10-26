@@ -11,12 +11,10 @@ const MainLogin = props => {
 
     const Login = () => {
       Auth.signIn(loginCredentials.email, loginCredentials.password);
-
       Auth.currentAuthenticatedUser().then(user => console.log(user.attributes.sub));
-      // let user = await Auth.currentAuthenticatedUser().then(console.log(user));
-      // console.log(user);
-      alert("Loging in")
+      props.history.push('home');
     }
+
 
     return (
         <div className='login-main-container'>
