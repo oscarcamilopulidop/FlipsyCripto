@@ -10,12 +10,14 @@ const MainLogin = props => {
     const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
 
     const Login = () => {
-      Auth.signIn(loginCredentials.email, loginCredentials.password);
+        Auth.signIn(loginCredentials.email, loginCredentials.password);
 
-      Auth.currentAuthenticatedUser().then(user => console.log(user.attributes.sub));
-      // let user = await Auth.currentAuthenticatedUser().then(console.log(user));
-      // console.log(user);
-      alert("Loging in")
+        Auth.currentAuthenticatedUser().then(user => console.log(user.attributes.sub));
+        // let user = await Auth.currentAuthenticatedUser().then(console.log(user));
+        // console.log(user);
+        // props.history.push('home');
+        alert("Loging in")
+        props.history.push('home');
     }
 
     return (

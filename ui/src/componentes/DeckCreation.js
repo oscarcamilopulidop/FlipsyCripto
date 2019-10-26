@@ -9,9 +9,6 @@ import CardContent from "@material-ui/core/CardContent";
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
-const data = [
-
-];
 
 function log(e) {
     console.log(e);
@@ -36,111 +33,123 @@ const types = [
 
 const DeckCreation = props => {
 
-    // const { state, actions } = useContext(Context);
+    const { state, actions } = useContext(Context);
 
-    const [nameDesk, setName] = useState(  {
-        nombre: '',
+    const [deck, setDeck] = useState(  {
+        name: '',
+        typeDeck: '',
+        categoryDeck: '',
     });
-
-    const [typeDesk, setTypeDesk] = useState({
-        typeDesk: '',
-    });
-
-    const [categoryDesk, setCategoryDesk] = useState({
-        categoryDesk: '',
-    });
-
     const dataSource = ['Matematicas', 'Quimica', 'Fisica', 'Biologia'];
-
-    function select(id) {
-
-    }
 
     const { Option } = Select;
 
     const [selected, setSelected] = useState({ page: "Home"});
 
-    const { state, actions } = useContext(Context);
+
 
     function onSelect(value) {
         console.log('onSelect', value);
     }
-
+    const show = () => {
+        const {name, typeDeck, categoryDeck } = deck;
+        actions({
+            type: "setState",
+            payload: {
+                ...state, deck:
+                    { ...state.deck,
+                        name: deck.name,
+                        typeDeck: deck.typeDeck,
+                        categoryDeck: deck.categoryDeck
+                    }
+            }
+        })
+        // console.log(deck);
+        console.log(state.deck)
+    };
     return (
-        <Layout>
-            <Header className = "header">
-                <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones"/>
-                <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
-            </Header>
-            <Content className="content">
-                <div className="center">
-                    <div className="desk-creation-title">
-                        <h1>Crear Baraja</h1>
+        <div className="deck-creation">
+            <Layout>
+                <Header className = "header">
+                    <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones"/>
+                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
+                </Header>
+                <Content className="content">
+                    <div className="center">
+                        <div className="desk-creation-title">
+                            <h1>Crear Baraja</h1>
+                        </div>
+                        <div className="desk-creation-button">
+                            <Button size="large" type="primary" shape="round" icon="plus-circle-o">
+                                Foto opcional
+                            </Button>
+                        </div>
                     </div>
-                    <div className="desk-creation-button">
-                        <Button size="large" type="primary" shape="round" icon="plus-circle-o">
-                            Foto opcional
-                        </Button>
-                    </div>
-                </div>
 
-                <div className="desk-creation-form">
-                    <Form {...formItemLayout} >
-                        <Form.Item label="Nombre">
-                            <Input
-                                className="name-input"
-                                onChange={e => setName({ ...nameDesk, nombre: e.target.value})}
-                                placeholder="Nombre"
-                            />
-                        </Form.Item>
-                        <Form.Item label="Tipo">
-                            <Select placeholder="Seleccionar tipo">
-                                <Option value="publica">Publica</Option>
-                                <Option value="privada">Privada</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item label="Categoria" >
-                            <AutoComplete
-                                className="category-input"
-                                placeholder="Buscar categoría"
-                                onSelect={onSelect}
-                                dataSource={dataSource}
-                            >
+                    <div className="desk-creation-form">
+                        <Form {...formItemLayout} >
+                            <Form.Item label="Nombre">
                                 <Input
-                                    suffix={
-                                        <Button
-                                            className="search-btn"
-                                            style={{ marginRight: -12 }}
-                                            type="primary"
-                                        >
-                                            <Icon type="search" />
-                                        </Button>
-                                    }
+                                    className="name-input"
+                                    onChange={e => setDeck({ ...deck, name: e.target.value})}
+                                    placeholder="Nombre"
+                                    onClick={show}
                                 />
-                            </AutoComplete>
-                            <Tag closable onClose={log}>
-                                Tag 2
-                            </Tag>
+                            </Form.Item>
+                            <Form.Item label="Tipo">
+                                <Select placeholder="Seleccionar tipo"
+                                        onChange={e => setDeck({ ...deck, typeDeck: e})}
+                                >
+                                    <Option value="publica">Publica</Option>
+                                    <Option value="privada">Privada</Option>
+                                </Select>
+                            </Form.Item>
+                            <Form.Item label="Categoria" >
+                                <AutoComplete
+                                    className="category-input"
+                                    placeholder="Buscar categoría"
+                                    onChange={e => setDeck({ ...deck, categoryDeck: e})}
+                                    onSelect={onSelect}
+                                    dataSource={dataSource}
+                                >
+                                    <Input
+                                        suffix={
+                                            <Button
+                                                className="search-btn"
+                                                style={{ marginRight: -12 }}
+                                                type="primary"
+                                            >
+                                                <Icon type="search" />
+                                            </Button>
+                                        }
+                                    />
+                                </AutoComplete>
+                                <Tag closable onClose={log}>
+                                    Tag 2
+                                </Tag>
 
-                        </Form.Item>
-                    </Form>
-                    <div className="desk-creation-button-final">
-                        <Button size="large" type="primary" onClick={() => props.history.push('decks')}>
-                            Crear
-                        </Button>
+                            </Form.Item>
+                        </Form>
+                        <div className="deck-creation-button-final">
+                            <Button size="large" type="primary" onClick={() => props.history.push('decks')}>
+                                Crear
+                            </Button>
+                        </div>
                     </div>
-                </div>
 
-            </Content>
+                </Content>
 
-            <Footer className="footer">
-                <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick = ""/>
-                <img className = "footer-item" src={require("../Assets/friends.svg")} alt="Friends"/>
-                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search"/>
-                <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile"/>
-                <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones"/>
-            </Footer>
-        </Layout>
+                <Footer className="footer">
+                    <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
+                    <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
+                    <img className = "footer-item" src={require("../Assets/friends.svg")} alt="Friends"/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                    <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
+                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                </Footer>
+            </Layout>
+        </div>
+
     )
 }
 

@@ -12,15 +12,12 @@ import useGlobalState from './GlobalState/useGlobalState'
 import Context from './GlobalState/context'
 import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from '@apollo/react-hooks'
-import ApolloClient from 'apollo-boost'
 
-
-Amplify.configure(config)
+Amplify.configure(config);
 
 const client = new ApolloClient({
     uri:"http://18.190.119.49:4000"
 })
-
 
 const Index = () => {
     const store = useGlobalState()
@@ -31,9 +28,7 @@ const Index = () => {
             </ApolloProvider>
         </Context.Provider>
     )
-}
-
-
+};
 ReactDOM.render(<Index />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
