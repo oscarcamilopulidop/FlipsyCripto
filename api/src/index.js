@@ -39,6 +39,7 @@ const driver = neo4j.driver(
  * generated resolvers to connect to the database.
  */
 const server = new ApolloServer({
+  cors = true,
   context: { driver },
   schema: schema
 });
