@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import {Button, List, Card, Layout} from 'antd'
 import '../Styles/FlashcardsCreation.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
+import Context from "../GlobalState/context";
 
 
 const { Header, Footer} = Layout;

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useContext, useState} from 'react';
 import CardContent from '@material-ui/core/CardContent';
 import { Layout, Button } from 'antd';
 import ReactCardFlip from 'react-card-flip'
@@ -6,10 +6,20 @@ import '../Styles/Home.css'
 import '../Styles/CreateCard.css'
 import '../App.css';
 import Menu from "./Menu";
+import Context from "../GlobalState/context";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost';
 
 const { Header, Footer, Sider, Content } = Layout;
 
 const CreateCard  = props => {
+
+    const { state, actions } = useContext(Context);
+
+    const [flashCard, setFlashCard] = useState(  {
+        front: '',
+        back: '',
+    });
 
     const constructor = () => {
         this.state = {
@@ -27,6 +37,47 @@ const CreateCard  = props => {
     const handleChange = value => {
         this.setState({ mdeValue: value });
     };
+    const [CreateCardInNeo4j, { data }] = useMutation(gql`
+        mutation Create(
+            $idFc: ID
+            $front: String!
+            $back: String!
+            $lastModifyDate: String!
+            $creationDate: String!
+            $idFCG: String!        
+        ){
+            CreateFCGroup(
+                idFc: $idFc,
+                front: $front,
+                back: $back,
+                lastModifyDate: $lastModifyDate,
+                creationDate: $creationDate,
+                idFCG: $idFCG,
+            ){
+                idFcg, front, back, lastModifyDate, creationDate, idFCG
+            }
+        }
+    `);
+
+    const show = () => {
+        const { front, back } = flashCard;
+        const { id } = state.user_credentials;
+        const { idFcg } = state.deck;
+        console.log(state.user_credentials);
+        actions({
+            type: "setState",
+            payload: {
+                ...state, flashCard:
+                    { ...state.flashCard,
+                        front: flashCard.front,
+                        back: flashCard.back,
+                    }
+            }
+        });
+
+        console.log(state.flashCard);
+    };
+
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -51,19 +102,19 @@ const CreateCard  = props => {
                     <Menu/>
                 </div>
                 <form className="content" action="" method="post">
-                    <div className="add-deck">
+                    <div className="add-deck" onClick={show}>
                         Matemáticas I
                     </div>
                     <div className="">
                         Parte Frontal:
                         <br/>
-                        <textarea  class="text-area flip-card"
-                                   onChange={handleChange}
+                        <textarea  className="text-area flip-card"
+                                   onChange={e => setFlashCard({ ...flashCard, front: e.target.value})}
                         />
                         Parte posterior:
                         <br/>
-                        <textarea  class="text-area flip-card"
-                                   onChange={handleChange}
+                        <textarea  className="text-area flip-card"
+                                   onChange={e => setFlashCard({ ...flashCard, back: e.target.value})}
                         />
                     </div>
                     <Button onClick={() => props.history.push('home')}>
