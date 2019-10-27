@@ -29,7 +29,7 @@ const Home = props => {
     }
 
     return (
-        <Layout>
+        <Layout className="home-container">
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                 <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

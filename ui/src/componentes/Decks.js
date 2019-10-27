@@ -26,22 +26,16 @@ const Decks = (props, {idUser}) => {
         {variables:{
                 id: '9596a3b9-e8f7-4efc-8843-94025f1de0ee'
     }});
-    console.log(typeof (data));
+    if (!loading) { console.log(data.FCGroup) }
 
-
-    const abrirBaraja = () => {
-        props.history.push('cards-creation')
-    }
-
-    const handleChange = () => {
-        console.log("mostrando barajas ")
-    }
+    const dataJ = [];
 
     const show = () => {
         const { id } = state.user_credentials;
         console.log(state.user_credentials);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         console.log(data.FCGroup);
+        dataJ.push(data.FCGroup);
         // dataDecks({variables: {id: state.user_credentials.id}})
         // eslint-disable-next-line react-hooks/rules-of-hooks,no-undef
         // const { loading, error, data } = useQuery(Query, {
@@ -51,7 +45,13 @@ const Decks = (props, {idUser}) => {
         // console.log(data);
     };
 
-    const dataJ = data;
+    const abrirBaraja = () => {
+        props.history.push('cards-creation')
+    }
+
+    const handleChange = () => {
+        console.log("mostrando barajas ")
+    }
 
     const dataJson = [
         {
@@ -108,6 +108,9 @@ const Decks = (props, {idUser}) => {
     }
 
     return (
+        loading ?
+            <div />
+            :
         <div className='decks-main-container'>
             <Layout>
 
@@ -137,13 +140,14 @@ const Decks = (props, {idUser}) => {
                     </Button>
                     <List
                         grid={{ gutter: 10, column: 3 }}
-                        dataSource={dataJson}
+                        dataSource={data.FCGroup}
                         renderItem={item => (
                             <List.Item>
                                 <Card onClick={abrirBaraja} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>
                             </List.Item>
                         )}
-                    />,
+                    />
+                    ,
                 </div>
 
 
