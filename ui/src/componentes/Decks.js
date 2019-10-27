@@ -45,7 +45,17 @@ const Decks = (props, {idUser}) => {
         // console.log(data);
     };
 
-    const abrirBaraja = () => {
+    const openDeck = idFcg => {
+        console.log(idFcg)
+        actions({
+            type: "setState",
+            payload: {
+                ...state, current_deck:
+                    { ...state.current_deck,
+                        id: idFcg} }
+        })
+
+        // console.log(state.current_deck)
         props.history.push('cards-creation')
     }
 
@@ -143,7 +153,7 @@ const Decks = (props, {idUser}) => {
                         dataSource={data.FCGroup}
                         renderItem={item => (
                             <List.Item>
-                                <Card onClick={abrirBaraja} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>
+                                <Card onClick={() => openDeck(item.idFcg)} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>
                             </List.Item>
                         )}
                     />
