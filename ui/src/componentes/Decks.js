@@ -1,14 +1,33 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Button, List, Card, Layout, Select} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
-
+import Context from "../GlobalState/context";
+import { useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost';
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
 
-const Decks = props => {
+const GET_DECKS = gql`
+    query FCGroup($id: String!) {
+        FCGroup(idUser: $id) {
+            idFcg
+            title
+        }
+}`;
+
+const Decks = (props, {idUser}) => {
+
+    const { state, actions } = useContext(Context);
+    const { loading, error, data } = useQuery(GET_DECKS,
+        {variables:{
+                id: '9596a3b9-e8f7-4efc-8843-94025f1de0ee'
+    }});
+    console.log(typeof (data));
+
 
     const abrirBaraja = () => {
         props.history.push('cards-creation')
@@ -18,7 +37,23 @@ const Decks = props => {
         console.log("mostrando barajas ")
     }
 
-    const data = [
+    const show = () => {
+        const { id } = state.user_credentials;
+        console.log(state.user_credentials);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        console.log(data.FCGroup);
+        // dataDecks({variables: {id: state.user_credentials.id}})
+        // eslint-disable-next-line react-hooks/rules-of-hooks,no-undef
+        // const { loading, error, data } = useQuery(Query, {
+        //     variables: { id: state.user_credentials.id },
+        //     pollInterval: 100
+        // })
+        // console.log(data);
+    };
+
+    const dataJ = data;
+
+    const dataJson = [
         {
             title: 'Matematicas I',
         },
@@ -84,7 +119,8 @@ const Decks = props => {
                     <Menu/>
                 </div>
                 <div className="decks-container">
-                    <h1>Barajas</h1>
+                    <h1 onClick={show}>Barajas</h1>
+
                     <div className="select-container">
                         <Select defaultValue="Propias" style={{ width: '60%'}} onChange={handleChange}>
                             <Option value="Propias">Propias</Option>
@@ -101,7 +137,7 @@ const Decks = props => {
                     </Button>
                     <List
                         grid={{ gutter: 10, column: 3 }}
-                        dataSource={data}
+                        dataSource={dataJson}
                         renderItem={item => (
                             <List.Item>
                                 <Card onClick={abrirBaraja} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>

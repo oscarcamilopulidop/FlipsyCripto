@@ -3,15 +3,32 @@ import { Input, Button } from 'antd'
 import '../Styles/MainLogin.css'
 import { withRouter } from 'react-router-dom'
 import { Auth } from 'aws-amplify'
+import Context from "../GlobalState/context";
 
 
 const MainLogin = props => {
 
+    const { state, actions } = useContext(Context);
+
     const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
 
     const Login = () => {
+        // console.log(user.attributes.sub)
       Auth.signIn(loginCredentials.email, loginCredentials.password);
-      Auth.currentAuthenticatedUser().then(user => console.log(user.attributes.sub));
+      Auth.currentAuthenticatedUser().then((user) => {
+          const { id } = state.user_credentials;
+          console.log(state.user_credentials);
+          actions({
+              type: "setState",
+              payload: {
+                  ...state, user_credentials:
+                      { ...state.user_credentials,
+                          id: user.attributes.sub,
+                      }
+              }
+          });
+      });
+      console.log(state.user_credentials);
       props.history.push('home');
     }
 
