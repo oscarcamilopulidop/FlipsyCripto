@@ -2,14 +2,36 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Input, Button } from 'antd'
 import '../Styles/MainLogin.css'
 import { withRouter } from 'react-router-dom'
+import { Auth } from 'aws-amplify'
+import Context from "../GlobalState/context";
+
 
 const MainLogin = props => {
+
+    const { state, actions } = useContext(Context);
 
     const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
 
     const Login = () => {
-        alert("Loging in")
+        // console.log(user.attributes.sub)
+      Auth.signIn(loginCredentials.email, loginCredentials.password);
+      Auth.currentAuthenticatedUser().then((user) => {
+          const { id } = state.user_credentials;
+          console.log(state.user_credentials);
+          actions({
+              type: "setState",
+              payload: {
+                  ...state, user_credentials:
+                      { ...state.user_credentials,
+                          id: user.attributes.sub,
+                      }
+              }
+          });
+      });
+      console.log(state.user_credentials);
+      props.history.push('home');
     }
+
 
     return (
         <div className='login-main-container'>
@@ -25,7 +47,7 @@ const MainLogin = props => {
             </section>
 
             <section className="login-btn-container">
-                <Button type="primary" onClick={Login}> Iniciar Sesiónss </Button>
+                <Button type="primary" onClick={Login}> Iniciar Sesión </Button>
             </section>
 
             <section className="final-options">

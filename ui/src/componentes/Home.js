@@ -7,28 +7,36 @@ import { withRouter } from 'react-router-dom'
 import '../Styles/Home.css'
 import { Input } from 'antd';
 import CardContent from "@material-ui/core/CardContent";
+import Menu from "./Menu";
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
 
 const Home = props => {
 
+    var flag = false;
+    const ShowSideMenu = () => {
 
-
-    function select(id) {
-
+        var element = document.getElementById('menu');
+        if(flag){
+            element.style.transform = 'translate(60vw)';
+        }else{
+            element.style.transform = 'translate(-60vw)';
+        }
+        element.style.zIndex = '25';
+        element.style.transition = 'transform 500ms';
+        flag = !flag;
     }
 
-    const [selected, setSelected] = useState({ page: "Home"})
-
-    const { state, actions } = useContext(Context)
-
     return (
-        <Layout>
+        <Layout className="home-container">
             <Header className = "header">
-                <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones"/>
-                <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>
+                <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
+                <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
             </Header>
+            <div className="home-menu-collapse" id="menu">
+                <Menu/>
+            </div>
             <Content className="content">
                 <div className = "search">
                     <Search
@@ -37,51 +45,48 @@ const Home = props => {
                     />
                 </div>
 
-                <div className="add-deck">
+                <div className="add-deck"  onClick={() => props.history.push('deck-creation')}>
                     + Nueva baraja
                 </div>
 
-                <div className="deck">
+                <div className="deck" onClick={() => props.history.push('decks')}>
                    <div className="bottom">
                        Barajas
                    </div>
                 </div>
 
-                <div className="user-content-wrapper">
+                <div className="outside-container">
+                    <div className="card">
+                    </div>
                     <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-13.jpg" height="100" width="100"/>
-                    <div className="notice-header">
-                        <h1 className="name"> Juanita Suarez </h1>
-                        <h1 className="date"> Ayer </h1>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Juanita suarez </span> ha creado una nueva baraja <span className="link"> Matemáticas </span> </span>
                     </div>
-                    Cambié mi baraja de Cálculo, Quieres verla?
                 </div>
 
-                <div className="user-content-wrapper">
-                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-1.jpg" height="100" width="100"/>
-                    <div className="notice-header">
-                        <h1 className="name"> Pepito Díaz </h1>
-                        <h1 className="date"> Hace dos días </h1>
+                <div className="outside-container">
+                    <img className="circular" src ="https://static.ellahoy.es/ellahoy/fotogallery/845X0/459517/cortes-de-cabello-apra-cara-cuadrada-2017.jpg" height="100" width="100"/>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Andrés Felipe Ortíz </span> ha aceptado tu invitación de amistad</span>
                     </div>
-                    Agregué algunas tarjetas a mi baraja de Música Instumental
                 </div>
 
-                <div className="user-content-wrapper">
-                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-10.jpg" height="100" width="100"/>
-                    <div className="notice-header">
-                        <h1 className="name"> Andrés Jiménez </h1>
-                        <h1 className="date"> Hace un año </h1>
+                <div className="outside-container">
+                    <div className="card">
                     </div>
-                    Estoy creando una nueva baraja sobre perritos, alguien me ayuda?
+                    <img className="circular" src ="http://cdn3.upsocl.com/wp-content/uploads/2016/05/18-24.jpg" height="100" width="100"/>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Juan Carlos Castellanos </span> ha compartido contigo su baraja <span className="link"> Música Instrumental </span> </span>
+                    </div>
                 </div>
 
             </Content>
-
             <Footer className="footer">
-                <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick = ""/>
-                <img className = "footer-item" src={require("../Assets/friends.svg")} alt="Friends"/>
-                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search"/>
-                <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile"/>
-                <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones"/>
+                <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick={() => props.history.push('home')}/>
+                <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
+                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
+                <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
             </Footer>
         </Layout>
     )

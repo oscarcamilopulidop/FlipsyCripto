@@ -1,0 +1,58 @@
+.layout{
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    color: white;
+}
+
+.flip-card-study{
+    background-color: #094c6d;
+    border-radius: 9px;
+    padding: 10px;
+    height: 75%;
+    display: table;
+    border: 1px solid #c9c9c9;
+}
+
+.card-content-study{
+    display: table-cell;
+    vertical-align: middle;
+    horizontal-align: middle;
+    background: white;
+    color: #094C6D;
+}
+
+.fill{
+    width:100%;
+    height:100%;
+}
+
+.cards-list-study{
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+}
+
+.mini-card-content-study{
+    vertical-align: middle;
+    horizontal-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 65px;
+    width: 50px;
+    background: white;
+    border: 4px #0A648F solid;
+    border-radius:  4px;
+    font-size: 2.5px;
+    color: #0A648F;
+    text-align: center;
+    padding: 4px;
+}
+
+.arrow-study{
+    height: 4.2em;
+    width: 3em;
+}

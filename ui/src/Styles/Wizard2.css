@@ -1,0 +1,64 @@
+.wizard2 {
+    background: #013C63;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wizard-input2 {
+    width: 80% !important;
+    padding: 1em !important;
+    margin-bottom: 1em !important;
+}
+
+.wizard-description{
+    text-align: justify;
+}
+
+.wizard-description > p {
+    color: white;
+    font-size: 1.2em;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.inputs-container2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wizard-gender2{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.wizard-datepicker2{
+    /*width: 80%;*/
+}
+
+.wizard-notification2{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.btn-container2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+}
+

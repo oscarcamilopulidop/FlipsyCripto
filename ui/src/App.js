@@ -9,6 +9,14 @@ import Verification from './componentes/Verification'
 import Confirmation from './componentes/Confirmation'
 import Searcher from "./componentes/Searcher";
 import Menu from './componentes/Menu'
+import DeckCreation from './componentes/DeckCreation';
+import WizardNickname from "./componentes/WizardNickname";
+import WizardPersonalInfo from "./componentes/WizardPersonalInfo";
+import Wizard from "./componentes/Wizard";
+import FlashcardsCreation from './componentes/FlashcardsCreation'
+import Decks from './componentes/Decks'
+import StudyCards from './componentes/StudyCards'
+import CreateCard from './componentes/CreateCard'
 
 function App() {
   return (
@@ -24,6 +32,14 @@ function App() {
         <Route path='/confirm' component={Confirmation} />
         <Route path='/search' component={Searcher} />
         <Route path="/menu" component={Menu} exact />
+        <Route path="/deck-creation" component={DeckCreation} />
+        <Route path="/wizard-name" component={WizardNickname} />
+        <Route path="/wizard-personal-info" component={WizardPersonalInfo} />
+        <Route path="/wizard" component={Wizard}/>
+        <Route path='/cards-creation' component={FlashcardsCreation} />
+        <Route path='/decks' component={Decks} />
+        <Route path="/study" component={StudyCards} />
+        <Route path="/createCard" component={CreateCard}/>
       </Switch>
     </BrowserRouter>
   );
