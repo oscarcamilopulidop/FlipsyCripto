@@ -59,7 +59,31 @@ const Registro = props => {
                 })
 
         } catch (error) {
-            Swal.fire({
+            //alert(error.name)
+            switch (error.name) {
+                case 'UsernameExistsException': {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error',
+                        text: `
+                            El correo ingresado ya existe
+                        `,
+                        footer: '<i> Inténtalo de nuevo :D </i>'
+                    })
+                }break;
+                default: {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error',
+                        text: `
+                            La Contraseña debe contener 8 caracteres, mayúscula y minúscula y al menos un número
+                        `,
+                        footer: '<i> Inténtalo de nuevo :D </i>'
+                    })
+                }
+            }
+            /*
+            * Swal.fire({
                 type: 'error',
                 title: 'Error',
                 text: `
@@ -67,6 +91,7 @@ const Registro = props => {
                 `,
                 footer: '<i> Inténtalo de nuevo :D </i>'
             })
+            * */
         }
     }
 

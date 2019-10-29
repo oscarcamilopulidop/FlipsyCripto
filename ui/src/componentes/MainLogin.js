@@ -10,14 +10,21 @@ const MainLogin = props => {
 
     const { state, actions } = useContext(Context);
 
+    useEffect(() => {
+      Auth.currentAuthenticatedUser().then(() => props.history.push('home'))
+    }, [])
+
     const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
 
-    const Login = () => {
+    const Login = async () => {
         // console.log(user.attributes.sub)
-      Auth.signIn(loginCredentials.email, loginCredentials.password);
-      Auth.currentAuthenticatedUser().then((user) => {
+        !Object.values(loginCredentials).includes("") ?
+      await Auth.signIn(loginCredentials.email, loginCredentials.password)
+        .then((user) => {
+
           const { id } = state.user_credentials;
           console.log(state.user_credentials);
+          props.history.push('home');
           actions({
               type: "setState",
               payload: {
@@ -26,10 +33,24 @@ const MainLogin = props => {
                           id: user.attributes.sub,
                       }
               }
+
           });
-      });
+      })
+          .catch(err => {
+              switch (err.name) {
+                  case 'UserNotFoundException': alert("El usuario no existe"); break;
+                  case 'NotAuthorizedException': alert("La contraseña es incorrecta"); break;
+                  case 'UserNotConfirmedException': alert("El usuario no se ha verificado"); break;
+                  default: alert(err.name)
+              }
+          })
+            :
+            alert("Los Campos no pueden estar vacíos")
+      // Auth.currentAuthenticatedUser()
+
+
       console.log(state.user_credentials);
-      props.history.push('home');
+      
     }
 
 

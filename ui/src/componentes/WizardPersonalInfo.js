@@ -10,16 +10,7 @@ import { gql } from 'apollo-boost';
 
 const WizardPersonalInfo = props => {
     const { state, actions } = useContext(Context);
-
-    const { Option } = Select;
-
-    const [wizardPersonalInfo, setWizardPersonalInfo] = useState({
-        date: '',
-        gender: '',
-        notifications: 0,
-    });
-
-    const [CreateUserInNeo4j, { data }] = useMutation(gql`
+    const [CreateUserInNeo4j] = useMutation(gql`
         mutation Create($idUser: ID!, $nickname: String!, $name: String!, $lastName: String!,
             $birthDate: String!, $email: String!, $gender: String!, $emailNotifications: Boolean!
         ){
@@ -30,6 +21,16 @@ const WizardPersonalInfo = props => {
             }
         }
     `);
+
+    const { Option } = Select;
+
+    const [wizardPersonalInfo, setWizardPersonalInfo] = useState({
+        date: '',
+        gender: '',
+        notifications: 0,
+    });
+
+
 
     const UpdateInfo = () => {
         const { date, gender, notifications } = state.user_credentials
@@ -57,7 +58,7 @@ const WizardPersonalInfo = props => {
                 }
             }).then(res => {
                 console.log(res.data)
-                props.history.push('')
+                props.history.push('home')
             })
         } catch (error) { console.log("error => ", error) }
     }

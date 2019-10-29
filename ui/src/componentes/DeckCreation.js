@@ -249,10 +249,6 @@ const DeckCreation = props => {
                                         }
                                     />
                                 </AutoComplete>
-                                <Tag closable onClose={log}>
-                                    Tag 2
-                                </Tag>
-
                             </Form.Item>
                         </Form>
                         <div className="deck-creation-button-final">

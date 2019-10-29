@@ -8,11 +8,26 @@ import '../Styles/Home.css'
 import { Input } from 'antd';
 import CardContent from "@material-ui/core/CardContent";
 import Menu from "./Menu";
+import Deck from './Decks'
+import { Auth } from 'aws-amplify'
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
 
 const Home = props => {
+    const [userId, setUserId] = useState("")
+    const [show, setShow] = useState(false)
+    const { state, actions } = useContext(Context)
+
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        })
+    }, [])
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -28,7 +43,7 @@ const Home = props => {
         flag = !flag;
     }
 
-    return (
+    return ( 
         <Layout className="home-container">
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
@@ -67,7 +82,7 @@ const Home = props => {
                 <div className="outside-container">
                     <img className="circular" src ="https://static.ellahoy.es/ellahoy/fotogallery/845X0/459517/cortes-de-cabello-apra-cara-cuadrada-2017.jpg" height="100" width="100"/>
                     <div className="text-container">
-                        <span className="text"> <span className="link"> Andrés Felipe Ortíz </span> ha aceptado tu invitación de amistad</span>
+                        <span className="text"> <span className="link" onClick={() => console.log(state.in_session_data.uid)} > Andrés Felipe Ortíz </span> ha aceptado tu invitación de amistad</span>
                     </div>
                 </div>
 

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {Button, List, Card, Layout, Select} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
@@ -7,26 +7,33 @@ import Context from "../GlobalState/context";
 import { useQuery } from '@apollo/react-hooks'
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
+import { Auth } from 'aws-amplify'
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
 
 const GET_DECKS = gql`
-    query FCGroup($id: String!) {
-        FCGroup(idUser: $id) {
-            idFcg
-            title
+    query FCGroup($id: ID!) {
+        USER(idUser: $id)  {
+            fcg {
+                idFcg
+                title
+            }
         }
 }`;
 
-const Decks = (props, {idUser}) => {
+const Decks = (props) => {
+
 
     const { state, actions } = useContext(Context);
+    const uid = state.in_session_data.uid
     const { loading, error, data } = useQuery(GET_DECKS,
         {variables:{
-                id: '9596a3b9-e8f7-4efc-8843-94025f1de0ee'
+                id: uid //'9596a3b9-e8f7-4efc-8843-94025f1de0ee'
     }});
-    if (!loading) { console.log(data.FCGroup) }
+    if (!loading) { console.log(data.USER[0].fcg) }
+
+    
 
     const dataJ = [];
 
