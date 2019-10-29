@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Input, Button } from 'antd'
+import React from 'react'
 import '../Styles/Menu.css'
 import { withRouter } from 'react-router-dom'
+import {Auth} from "aws-amplify";
 
 const Menu = props => {
+
+    const logout = () => {
+        Auth.signOut()
+        props.history.push("/")
+    }
 
     return (
         <div className='menu-main-container'>
@@ -16,7 +21,7 @@ const Menu = props => {
                 <p> Comunidad </p>
                 <p> Perfil </p>
                 <p> Retos </p>
-                <p onClick={() => props.history.push('')}> Cerrar Sesión </p>
+                <p onClick={logout}> Cerrar Sesión </p>
                 <div className="center-hr">
                     <hr className="menu-separator"/>
                 </div>
