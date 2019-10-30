@@ -30,7 +30,14 @@ const Registro = props => {
     const ValidateCredentials = () => {
         signUpCredentials.terminos
             ? handleSubmit()
-            : alert("Debes aceptar los términos y condiciones")
+            : Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text: `
+                            Debes aceptar los términos y condiciones
+                        `,
+                footer: '<i> Inténtalo de nuevo :D </i>'
+            })
     }
 
     const handleSubmit = async () => {
