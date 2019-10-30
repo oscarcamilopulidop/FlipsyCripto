@@ -13,27 +13,24 @@ const { Header, Footer} = Layout;
 const { Option } = Select;
 
 const GET_DECKS = gql`
-    query FCGroup($id: ID!) {
-        USER(idUser: $id)  {
-            fcg {
-                idFcg
-                title
-            }
-        }
-}`;
+  query Search($id: String!) {
+      FCGroup(idUser: $id)  {
+            idFcg, title
+      }
+  }`;
 
 const Decks = (props) => {
 
 
     const { state, actions } = useContext(Context);
     const uid = state.in_session_data.uid
+    console.log(uid)
     const { loading, error, data } = useQuery(GET_DECKS,
         {variables:{
-                id: uid //'9596a3b9-e8f7-4efc-8843-94025f1de0ee'
+                id: uid //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
     }});
-    if (!loading) { console.log(data.USER[0].fcg) }
 
-    
+    if (!loading) { console.log(data) }
 
     const dataJ = [];
 
@@ -41,8 +38,7 @@ const Decks = (props) => {
         const { id } = state.user_credentials;
         console.log(state.user_credentials);
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        console.log(data.FCGroup);
-        dataJ.push(data.FCGroup);
+        console.log(data.USER[0]);
         // dataDecks({variables: {id: state.user_credentials.id}})
         // eslint-disable-next-line react-hooks/rules-of-hooks,no-undef
         // const { loading, error, data } = useQuery(Query, {
@@ -52,53 +48,23 @@ const Decks = (props) => {
         // console.log(data);
     };
 
-    const abrirBaraja = () => {
+    const openDeck = idFcg => {
+        console.log(idFcg)
+        actions({
+            type: "setState",
+            payload: {
+                ...state, current_deck:
+                    { ...state.current_deck,
+                        id: idFcg} }
+        })
+
+        // console.log(state.current_deck)
         props.history.push('cards-creation')
     }
 
     const handleChange = () => {
         console.log("mostrando barajas ")
     }
-
-    const dataJson = [
-        {
-            title: 'Matematicas I',
-        },
-        {
-            title: 'Comida',
-        },
-        {
-            title: 'Química',
-        },
-        {
-            title: 'Física',
-        },
-        {
-            title: 'Matematicas I',
-        },
-        {
-            title: 'Comida',
-        },
-        {
-            title: 'Química',
-        },
-        {
-            title: 'Física',
-        },
-        {
-            title: 'Matematicas I',
-        },
-        {
-            title: 'Comida',
-        },
-        {
-            title: 'Química',
-        },
-        {
-            title: 'Física',
-        },
-
-    ];
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -150,7 +116,7 @@ const Decks = (props) => {
                         dataSource={data.FCGroup}
                         renderItem={item => (
                             <List.Item>
-                                <Card onClick={abrirBaraja} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>
+                                <Card onClick={() => openDeck(item.idFcg)} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>
                             </List.Item>
                         )}
                     />
