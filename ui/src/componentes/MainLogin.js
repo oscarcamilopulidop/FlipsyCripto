@@ -4,6 +4,7 @@ import '../Styles/MainLogin.css'
 import { withRouter } from 'react-router-dom'
 import { Auth } from 'aws-amplify'
 import Context from "../GlobalState/context";
+import Swal from 'sweetalert2'
 
 
 const MainLogin = props => {
@@ -40,14 +41,53 @@ const MainLogin = props => {
       })
           .catch(err => {
               switch (err.name) {
-                  case 'UserNotFoundException': alert("El usuario no existe"); break;
-                  case 'NotAuthorizedException': alert("La contraseña es incorrecta"); break;
-                  case 'UserNotConfirmedException': alert("El usuario no se ha verificado"); break;
-                  default: alert(err.name)
+
+                  case 'UserNotFoundException':
+                      Swal.fire({
+                      type: 'error',
+                      title: 'Error',
+                      text: `
+                            El usuario no existe
+                        `,
+                      footer: '<i> Inténtalo de nuevo :D </i>'
+                      }); break;
+                  case 'NotAuthorizedException':
+                      Swal.fire({
+                          type: 'error',
+                          title: 'Error',
+                          text: `
+                            La contraseña es incorrecta
+                        `,
+                          footer: '<i> Inténtalo de nuevo :D </i>'
+                      }); break;
+                  case 'UserNotConfirmedException':
+                      Swal.fire({
+                          type: 'error',
+                          title: 'Error',
+                          text: `
+                            El usuario no se ha verificado
+                        `,
+                          footer: '<i> Inténtalo de nuevo :D </i>'
+                      }); break;
+                  default: Swal.fire({
+                      type: 'error',
+                      title: 'Error',
+                      text:
+                            err.name
+                        ,
+                      footer: '<i> Inténtalo de nuevo :D </i>'
+                  });
               }
           })
             :
-            alert("Los Campos no pueden estar vacíos")
+            Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text:
+                    "Los Campos no pueden estar vacíos"
+                ,
+                footer: '<i> Inténtalo de nuevo :D </i>'
+            });
       // Auth.currentAuthenticatedUser()
 
 
