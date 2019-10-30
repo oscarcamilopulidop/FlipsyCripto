@@ -9,6 +9,7 @@ import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
+import moment from "moment";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -37,6 +38,20 @@ const CreateCard  = props => {
     const handleChange = value => {
         this.setState({ mdeValue: value });
     };
+
+        // from: _FCGroupInput!
+        // to: _FCInput!
+
+    const [temp, { data_ }] = useMutation(gql`
+        mutation Create($idFcg: ID!, $idFc: ID!){
+            AddFCContatins(from:{
+                idFcg:$idFcg
+            },to:{
+                idFc:$idFc
+            }){from{idUser}}
+        }
+    `)
+
     const [CreateCardInNeo4j, { data }] = useMutation(gql`
         mutation Create(
             $idFc: ID
@@ -44,39 +59,76 @@ const CreateCard  = props => {
             $back: String!
             $lastModifyDate: String!
             $creationDate: String!
-            $idFCG: String!        
+            $idFCG: String!
         ){
-            CreateFCGroup(
+            CreateFC(
                 idFc: $idFc,
                 front: $front,
                 back: $back,
                 lastModifyDate: $lastModifyDate,
                 creationDate: $creationDate,
-                idFCG: $idFCG,
+                idFcg: $idFCG,
             ){
-                idFcg, front, back, lastModifyDate, creationDate, idFCG
+                idFcg, front, back, lastModifyDate, creationDate, idFcg
             }
         }
     `);
 
-    const show = () => {
-        const { front, back } = flashCard;
+    const UpdateInfo = () => {
+        const { idFc, front, back } = flashCard;
         const { id } = state.user_credentials;
-        const { idFcg } = state.deck;
         console.log(state.user_credentials);
         actions({
             type: "setState",
             payload: {
                 ...state, flashCard:
                     { ...state.flashCard,
+                        idFc: (Math.random() * 1000000).toString(),
                         front: flashCard.front,
                         back: flashCard.back,
                     }
             }
         });
 
-        console.log(state.flashCard);
+        console.log(state.current_deck.id);
     };
+
+    const SendQuery = () => {
+      UpdateInfo()
+      console.log(state.flashCard)
+      console.log(state.current_deck)
+      props.history.push('cards-creation')
+      
+      try {
+          CreateCardInNeo4j({
+              variables: {
+                  idFc: state.flashCard.idFc,
+                  front: state.flashCard.front,
+                  back: state.flashCard.back,
+                  lastModifyDate: moment().unix().toString(),
+                  creationDate: moment().unix().toString(),
+                  idFCG: state.current_deck.id.toString(),
+              }
+          }).then(res => {
+              console.log(res.data)
+
+              // props.history.push('decks')
+          })
+      }catch (e) {
+
+      }try {
+          temp({
+              variables: {
+                  idFcg: state.current_deck.id.toString(),
+                  idFc: state.flashCard.idFc,
+              }
+          }).then((res => {
+              // props.history.push('decks');
+          }))
+      }catch (e) {
+          console.log(e);
+      }
+    }
 
 
     var flag = false;
@@ -102,7 +154,7 @@ const CreateCard  = props => {
                     <Menu/>
                 </div>
                 <form className="content" action="" method="post">
-                    <div className="add-deck" onClick={show}>
+                    <div className="add-deck" onClick={UpdateInfo}>
                         Matemáticas I
                     </div>
                     <div className="">
@@ -117,7 +169,7 @@ const CreateCard  = props => {
                                    onChange={e => setFlashCard({ ...flashCard, back: e.target.value})}
                         />
                     </div>
-                    <Button onClick={() => props.history.push('home')}>
+                    <Button onClick={SendQuery}>
                         Aceptar
                     </Button>
                 </form>

@@ -10,14 +10,16 @@ const MainLogin = props => {
 
     const { state, actions } = useContext(Context);
 
-    useEffect(() => {
-      Auth.currentAuthenticatedUser().then(() => props.history.push('home'))
-    }, [])
+    // useEffect(() => {
+    //   Auth.currentAuthenticatedUser().then(() => props.history.push('home'))
+    // }, [])
 
     const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
 
     const Login = async () => {
-        // console.log(user.attributes.sub)
+
+      console.log(loginCredentials)
+
         !Object.values(loginCredentials).includes("") ?
       await Auth.signIn(loginCredentials.email, loginCredentials.password)
         .then((user) => {
@@ -49,8 +51,8 @@ const MainLogin = props => {
       // Auth.currentAuthenticatedUser()
 
 
-      console.log(state.user_credentials);
-      
+      // console.log(state.user_credentials);
+
     }
 
 

@@ -35,7 +35,7 @@ const types = [
 
 const DeckCreation = props => {
 
-    const { state, actions } = useContext(Context);
+  const { state, actions } = useContext(Context);
 
     // eslint-disable-next-line no-undef
     var currtenDate = moment().unix();
@@ -96,8 +96,11 @@ const DeckCreation = props => {
     function onSelect(value) {
         console.log('onSelect', value);
     }
+
     const show = () => {
         const {idUser, id, name, typeDeck, categoryDeck, dateDeck } = deck;
+        const uid = state.in_session_data.uid
+        console.log(uid)
         actions({
             type: "setState",
             payload: {
@@ -110,7 +113,7 @@ const DeckCreation = props => {
             payload: {
                 ...state, deck:
                     { ...state.deck,
-                        idUser: state.user_credentials.id,
+                        idUser: uid,
                         idFcg: deck.id,
                         title: deck.name,
                         public_: deck.typeDeck,
@@ -123,29 +126,15 @@ const DeckCreation = props => {
         // console.log(deck);
         console.log(state.deck)
     };
+
     const UpdateInfo = () => {
-        const {idUser, id, name, typeDeck, categoryDeck, dateDeck } = deck;
-        actions({
-            type: "setState",
-            payload: {
-                ...state, deck:
-                    { ...state.deck,
-                        idUser: state.user_credentials.id,
-                        idFcg: deck.id,
-                        title: deck.name,
-                        public_: deck.typeDeck,
-                        idCat: deck.categoryDeck,
-                        creationDate: deck.dateDeck.toString(),
-                        lastModifiedDate: deck.dateDeck.toString()
-                    }
-            }
-        })
-        console.log(state.user_credentials);
+        const uid = state.in_session_data.uid
+        console.log(uid)
         try {
             CreateDeckInNeo4j({
                 variables: {
                     idFcg: state.deck.idFcg,
-                    idUser: state.deck.idUser,
+                    idUser: uid,
                     idCat: state.deck.idCat,
                     idScat: state.deck.idCat,
                     title: state.deck.title,
@@ -162,7 +151,7 @@ const DeckCreation = props => {
         try {
             temp({
                 variables: {
-                    idUser: state.deck.idUser,
+                    idUser: uid,
                     idFcg: state.deck.idFcg
                 }
             }).then((res => {
@@ -170,7 +159,6 @@ const DeckCreation = props => {
             }))
         }catch (e) {
             console.log(e);
-
         }
     }
 
