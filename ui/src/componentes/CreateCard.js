@@ -90,7 +90,7 @@ const CreateCard  = props => {
             }
         });
 
-        console.log(state.current_deck.id);
+        //console.log(state.current_deck.id);
     };
 
     const SendQuery = () => {
