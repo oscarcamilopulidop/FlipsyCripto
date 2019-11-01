@@ -1,4 +1,4 @@
-import React, {Component, useContext, useState} from 'react';
+import React, {Component, useContext, useEffect, useState} from 'react';
 import CardContent from '@material-ui/core/CardContent';
 import { Layout, Button } from 'antd';
 import ReactCardFlip from 'react-card-flip'
@@ -10,10 +10,23 @@ import Context from "../GlobalState/context";
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import moment from "moment";
+import { Auth } from 'aws-amplify'
+
 
 const { Header, Footer, Sider, Content } = Layout;
 
 const CreateCard  = props => {
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+          props.history.push('');
+        })
+    }, [])
 
     const { state, actions } = useContext(Context);
 
@@ -23,7 +36,7 @@ const CreateCard  = props => {
         back: '',
         lastModifyDate: moment().unix().toString(),
         creationDate: moment().unix().toString(),
-        idFCG: (Math.random() * 1000000).toString(),
+        idFCG: state.current_deck.id,
     });
 
     const constructor = () => {
@@ -73,7 +86,7 @@ const CreateCard  = props => {
       UpdateInfo();
       console.log(flashCard_data)
       props.history.push('cards-creation')
-      
+
       try {
           CreateCardInNeo4j({
               variables: {

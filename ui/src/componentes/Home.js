@@ -26,6 +26,8 @@ const Home = props => {
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
             })
             console.log(res.attributes.sub)
+        }).catch(err => {
+          props.history.push('');
         })
     }, [])
 
@@ -43,7 +45,7 @@ const Home = props => {
         flag = !flag;
     }
 
-    return ( 
+    return (
         <Layout className="home-container">
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
