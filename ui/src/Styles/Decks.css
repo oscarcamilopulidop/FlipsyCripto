@@ -83,8 +83,52 @@
 
 .delete-button{
     z-index: 10;
-    position: relative;
-    height: 1.5em;
-    top: 1.85em;
-    right: -3em;
+    position: absolute;
+    height: 1.3em;
+    top: 0.4em;
+    right: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.edit-button{
+    z-index: 10;
+    position: absolute;
+    height: 1.3em;
+    top: 0.4em;
+    left: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.swal2-popup {
+    width: 90vw !important;
+    background: rgb(255, 255, 255) !important;
+    box-shadow: 0 2px 10px black !important;
+}
+
+.swal2-confirm{
+    background: #a5dc86 !important;
+}
+
+.swal2-cancel{
+    background: #f27474 !important;
+}
+
+.swal2-title {
+    color: #4e4e4e !important;
+}
+
+.swal2-content {
+    color: #4e4e4e !important;
+}
+
+.swal2-footer {
+    color: #4e4e4e !important;
+}
+
+
+@keyframes pop {
+    from {transform: scale(.1)}
+    to {transform: scale(1)}
 }

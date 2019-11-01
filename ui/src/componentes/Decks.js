@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
+import Swal from 'sweetalert2'
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
@@ -67,16 +68,25 @@ const Decks = (props) => {
         props.history.push('cards-creation')
     }
 
+
     const deleteDeck = idFcg => {
-        console.log("Aqui borraria mi carta... si tuviera una!!")
-        actions({
-            type: "setState",
-            payload: {
-                ...state, current_deck:
-                    { ...state.current_deck,
-                        id: idFcg} }
+        Swal.fire({
+            title: 'Seguro que desea eliminar la baraja?',
+            type: 'warning',
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                console.log("AQUÍ DEBERÍA BORRAR LA BAEAJA "+idFcg);
+                Swal.fire(
+                    '',
+                    'Su baraja ha sido eliminada.',
+                    'success'
+                )
+            }
         })
-        props.history.push('decks')
     }
 
     const handleChange = () => {
@@ -133,9 +143,10 @@ const Decks = (props) => {
                         dataSource={data.FCGroup}
                         renderItem={item => (
                             <List.Item>
+                                <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
                                 <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
-                                <Card onClick={() => openDeck(item.idFcg)} title=" ">
-                                    <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
+                                <Card title=" " onClick={() => openDeck(item.idFcg)}>
+                                    <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                                     {item.title}
                                 </Card>
                             </List.Item>

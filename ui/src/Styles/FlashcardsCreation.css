@@ -75,3 +75,23 @@
     height: 28px;
     margin-left: 10px;
 }
+
+.delete-card-button{
+    z-index: 10;
+    position: absolute;
+    height: 1.5em;
+    top: 0.6em;
+    right: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.edit-card-button{
+    z-index: 10;
+    position: absolute;
+    height: 1.4em;
+    top: 0.6em;
+    left: 0.9em;
+    margin: 0;
+    padding: 0;
+}
