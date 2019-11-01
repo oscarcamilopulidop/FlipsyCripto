@@ -20,17 +20,17 @@ const GET_DECKS = gql`
   }`;
 
 const Decks = (props) => {
-    // useEffect(() => {
-    //     Auth.currentAuthenticatedUser().then(res => {
-    //         actions({
-    //             type: 'setState',
-    //             payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-    //         })
-    //         console.log(res.attributes.sub)
-    //     }).catch(err => {
-    //       props.history.push('');
-    //     })
-    // }, [])
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+          props.history.push('');
+        })
+    }, [])
 
     const { state, actions } = useContext(Context);
     const uid = state.in_session_data.uid

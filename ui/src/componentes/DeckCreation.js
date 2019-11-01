@@ -40,7 +40,7 @@ const DeckCreation = props => {
     var currtenDate = moment().unix();
     const [deck_data, set_deck_data] = useState({
       idFcg: (Math.random() * 1000000).toString(),
-      idUser: "state.in_session_data.uid",
+      idUser: state.in_session_data.uid,
       idCat: "",
       idScat: "",
       title: "",

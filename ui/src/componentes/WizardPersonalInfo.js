@@ -27,22 +27,12 @@ const WizardPersonalInfo = props => {
     const [wizardPersonalInfo, setWizardPersonalInfo] = useState({
         date: '',
         gender: '',
-        notifications: 0,
+        notifications: false,
     });
 
 
 
     const UpdateInfo = () => {
-        const { date, gender, notifications } = state.user_credentials
-        actions({
-            type: "setState",
-            payload: {
-                ...state, user_credentials:
-                    { ...state.user_credentials,
-                        date: wizardPersonalInfo.date,
-                        gender: wizardPersonalInfo.gender,
-                        notifications: wizardPersonalInfo.notifications} }
-        })
         console.log(state.user_credentials);
         try {
             CreateUserInNeo4j({
@@ -52,9 +42,9 @@ const WizardPersonalInfo = props => {
                     email: state.user_credentials.email,
                     lastName: state.user_credentials.last_name,
                     name: state.user_credentials.first_name,
-                    birthDate: state.user_credentials.date,
-                    gender: state.user_credentials.gender,
-                    emailNotifications: state.user_credentials.notifications
+                    birthDate: wizardPersonalInfo.date,
+                    gender: wizardPersonalInfo.gender,
+                    emailNotifications: wizardPersonalInfo.notifications
                 }
             }).then(res => {
                 console.log(res.data)

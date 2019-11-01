@@ -14,7 +14,6 @@ const WizardNickname = props => {
     });
 
     const UpdateName = () => {
-        const { first_name, last_name } = state.user_credentials
         actions({
             type: "setState",
             payload: { ...state, user_credentials: { ...state.user_credentials, first_name: wizardName.first_name, last_name: wizardName.last_name } }
@@ -46,7 +45,6 @@ const WizardNickname = props => {
                         className="wizard-input2"
                         onChange={e => setWizardName({ ...wizardName, last_name: e.target.value })}
                         placeholder="Apellido de Usuario"
-                        // onClick={UpdateName}
                     />
 
                 </section>

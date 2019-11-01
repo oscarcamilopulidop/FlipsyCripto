@@ -36,7 +36,7 @@ const CreateCard  = props => {
         back: '',
         lastModifyDate: moment().unix().toString(),
         creationDate: moment().unix().toString(),
-        idFCG: (Math.random() * 1000000).toString(),
+        idFCG: state.current_deck.id,
     });
 
     const constructor = () => {

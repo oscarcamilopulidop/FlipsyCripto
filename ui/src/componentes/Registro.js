@@ -13,14 +13,6 @@ import { useMutation } from '@apollo/react-hooks';
 
 
 const Registro = props => {
-    const [CreateUserInNeo4j, { data }] = useMutation(gql`
-        mutation Create($id: ID!, $nickname: String!, $email: String!){
-            CreateUSER(idUser: $id, nickname: $nickname, email: $email){
-                idUser nickname email
-            }
-        }
-    `)
-
     const { state, actions } = useContext(Context)
     const [signUpCredentials, setSignUpCredentials] = useState({
         correo: '',

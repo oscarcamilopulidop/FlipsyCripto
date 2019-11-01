@@ -25,7 +25,7 @@ const FlascardsCreation = props => {
     }, [])
 
     const { state, actions } = useContext(Context);
-  
+
     const openCard = () => {
         props.history.push('study')
     }
