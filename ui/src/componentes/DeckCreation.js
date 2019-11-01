@@ -37,31 +37,23 @@ const DeckCreation = props => {
 
   const { state, actions } = useContext(Context);
 
-    // eslint-disable-next-line no-undef
     var currtenDate = moment().unix();
-    const [deck, setDeck] = useState(  {
-        id: (Math.random() * 1000000).toString(),
-        name: '',
-        typeDeck: true,
-        categoryDeck: '',
-        dateDeck: currtenDate,
+    const [deck_data, set_deck_data] = useState({
+      idFcg: (Math.random() * 1000000).toString(),
+      idUser: state.in_session_data.uid,
+      idCat: "",
+      idScat: "",
+      title: "",
+      public_: true,
+      isStudying: true,
+      lastModifyDate: moment().unix().toString(),
+      creationDate: moment().unix().toString(),
     });
     const dataSource = ['Matematicas', 'Quimica', 'Fisica', 'Biologia'];
 
     const { Option } = Select;
 
     const [selected, setSelected] = useState({ page: "Home"});
-
-
-    const [temp, { data_ }] = useMutation(gql`
-        mutation Create($idUser: ID!, $idFcg: ID!){
-            AddUSEROwns(from:{
-                idUser:$idUser
-            },to:{
-                idFcg:$idFcg
-            }){from{idUser}}
-        }
-    `)
 
     const [CreateDeckInNeo4j, { data }] = useMutation(gql`
         mutation Create(
@@ -91,40 +83,15 @@ const DeckCreation = props => {
         }
     `);
 
-
-
     function onSelect(value) {
         console.log('onSelect', value);
     }
 
     const show = () => {
-        const {idUser, id, name, typeDeck, categoryDeck, dateDeck } = deck;
         const uid = state.in_session_data.uid
         console.log(uid)
-        actions({
-            type: "setState",
-            payload: {
-                ...state, user_credentials:
-                    { ...state.user_credentials} }
-        })
         console.log(state.user_credentials);
-        actions({
-            type: "setState",
-            payload: {
-                ...state, deck:
-                    { ...state.deck,
-                        idUser: uid,
-                        idFcg: deck.id,
-                        title: deck.name,
-                        public_: deck.typeDeck,
-                        idCat: deck.categoryDeck,
-                        creationDate: deck.dateDeck.toString(),
-                        lastModifiedDate: deck.dateDeck.toString()
-                    }
-            }
-        })
-        // console.log(deck);
-        console.log(state.deck)
+        console.log(deck_data)
     };
 
     const UpdateInfo = () => {
@@ -133,35 +100,23 @@ const DeckCreation = props => {
         try {
             CreateDeckInNeo4j({
                 variables: {
-                    idFcg: state.deck.idFcg,
-                    idUser: uid,
-                    idCat: state.deck.idCat,
-                    idScat: state.deck.idCat,
-                    title: state.deck.title,
-                    public_: state.deck.public_,
-                    isStudying: true,
-                    lastModifyDate: state.deck.lastModifiedDate.toString(),
-                    creationDate: state.deck.creationDate.toString(),
+                    idFcg: deck_data.idFcg,
+                    idUser: deck_data.idUser,
+                    idCat: deck_data.idCat,
+                    idScat: deck_data.idCat,
+                    title: deck_data.title,
+                    public_: deck_data.public_,
+                    isStudying: deck_data.public_,
+                    lastModifyDate: deck_data.lastModifyDate,
+                    creationDate: deck_data.creationDate,
                 }
             }).then(res => {
                 console.log(res.data)
-                // props.history.push('decks')
+                props.history.push('decks')
             })
         } catch (error) { console.log("error => ", error) }
-        try {
-            temp({
-                variables: {
-                    idUser: uid,
-                    idFcg: state.deck.idFcg
-                }
-            }).then((res => {
-                props.history.push('decks');
-            }))
-        }catch (e) {
-            console.log(e);
-        }
-    }
 
+    }
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -204,14 +159,14 @@ const DeckCreation = props => {
                             <Form.Item label="Nombre">
                                 <Input
                                     className="name-input"
-                                    onChange={e => setDeck({ ...deck, name: e.target.value})}
+                                    onChange={e => set_deck_data({ ...deck_data, title: e.target.value})}
                                     placeholder="Nombre"
                                     onClick={show}
                                 />
                             </Form.Item>
                             <Form.Item label="Tipo">
                                 <Select placeholder="Seleccionar tipo"
-                                        onChange={e => setDeck({ ...deck, typeDeck: (e === "publica")})}
+                                        onChange={e => set_deck_data({ ...deck_data, public_: (e === "publica")})}
                                 >
                                     <Option value="publica">Publica</Option>
                                     <Option value="privada">Privada</Option>
@@ -221,7 +176,7 @@ const DeckCreation = props => {
                                 <AutoComplete
                                     className="category-input"
                                     placeholder="Buscar categoría"
-                                    onChange={e => setDeck({ ...deck, categoryDeck: e})}
+                                    onChange={e => set_deck_data({ ...deck_data, idCat: e, idScat: e})}
                                     onSelect={onSelect}
                                     dataSource={dataSource}
                                 >
