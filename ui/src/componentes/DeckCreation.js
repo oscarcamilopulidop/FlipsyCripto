@@ -42,7 +42,7 @@ const DeckCreation = props => {
     const [deck, setDeck] = useState(  {
         id: (Math.random() * 1000000).toString(),
         name: '',
-        typeDeck: 0,
+        typeDeck: true,
         categoryDeck: '',
         dateDeck: currtenDate,
     });
