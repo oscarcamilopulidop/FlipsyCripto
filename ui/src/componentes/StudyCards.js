@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import CardContent from '@material-ui/core/CardContent';
 import {Card, Layout} from 'antd';
 import Typography from '@material-ui/core/Typography';
@@ -10,9 +10,27 @@ import { useMutation } from "@apollo/react-hooks";
 
 import '../App.css';
 import Menu from "./Menu";
+import {Auth} from "aws-amplify";
+import Context from "../GlobalState/context";
 const { Header, Footer, Sider, Content } = Layout;
 
 const StudyCards = props => {
+
+    const { state, actions } = useContext(Context);
+
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+            props.history.push('');
+        })
+    }, [])
+
+
     const [isFlipped, setIsFlipped] = useState(false)
 
     const handleClick = (e) => {

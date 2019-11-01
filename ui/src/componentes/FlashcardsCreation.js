@@ -1,14 +1,30 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Button, List, Card, Layout} from 'antd'
 import '../Styles/FlashcardsCreation.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
+import { Auth } from 'aws-amplify'
+
 
 
 const { Header, Footer} = Layout;
 
 const FlascardsCreation = props => {
+
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+          props.history.push('');
+        })
+    }, [])
+
+    const { state, actions } = useContext(Context);
 
     const openCard = () => {
         props.history.push('study')

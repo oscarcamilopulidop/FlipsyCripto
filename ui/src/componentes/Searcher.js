@@ -1,13 +1,29 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Input, Layout} from 'antd'
 import '../Styles/Searcher.css'
 import '../Styles/Home.css'
 import ProfileList from "./ProfileList";
 import Menu from "./Menu";
+import Context from "../GlobalState/context";
+import {Auth} from "aws-amplify";
 
 const { Header, Footer} = Layout;
 
 const Searcher = props => {
+
+    const { state, actions } = useContext(Context);
+
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+            props.history.push('');
+        })
+    }, [])
 
     const toSearch = () => {
 
