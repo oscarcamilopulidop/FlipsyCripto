@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import regis from '../Assets/icon.png';
 import ConfirmCode from './CodConf'
 import '../Styles/Signup.css'
@@ -7,17 +7,19 @@ import { Button, Input, Checkbox } from 'antd'
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import Swal from 'sweetalert2'
-// import { gql } from 'apollo-boost';
+import { gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
+
 
 
 const Registro = props => {
-    // const [CreateUserInNeo4j, { data }] = useMutation(gql`
-    //     mutation Create($id: ID!, $nickname: String!, $email: String!){
-    //         CreateUSER(idUser: $id, nickname: $nickname, email: $email){
-    //             idUser nickname email
-    //         }
-    //     }
-    // `)
+    const [CreateUserInNeo4j, { data }] = useMutation(gql`
+        mutation Create($id: ID!, $nickname: String!, $email: String!){
+            CreateUSER(idUser: $id, nickname: $nickname, email: $email){
+                idUser nickname email
+            }
+        }
+    `)
 
     const { state, actions } = useContext(Context)
     const [signUpCredentials, setSignUpCredentials] = useState({
@@ -89,16 +91,6 @@ const Registro = props => {
                     })
                 }
             }
-            /*
-            * Swal.fire({
-                type: 'error',
-                title: 'Error',
-                text: `
-                    La Contraseña debe contener 8 caracteres, mayúscula y minúscula y al menos un número
-                `,
-                footer: '<i> Inténtalo de nuevo :D </i>'
-            })
-            * */
         }
     }
 

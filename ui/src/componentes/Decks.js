@@ -20,7 +20,17 @@ const GET_DECKS = gql`
   }`;
 
 const Decks = (props) => {
-
+    // useEffect(() => {
+    //     Auth.currentAuthenticatedUser().then(res => {
+    //         actions({
+    //             type: 'setState',
+    //             payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+    //         })
+    //         console.log(res.attributes.sub)
+    //     }).catch(err => {
+    //       props.history.push('');
+    //     })
+    // }, [])
 
     const { state, actions } = useContext(Context);
     const uid = state.in_session_data.uid
@@ -39,15 +49,7 @@ const Decks = (props) => {
     const show = () => {
         const { id } = state.user_credentials;
         console.log(state.user_credentials);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         console.log(data.USER[0]);
-        // dataDecks({variables: {id: state.user_credentials.id}})
-        // eslint-disable-next-line react-hooks/rules-of-hooks,no-undef
-        // const { loading, error, data } = useQuery(Query, {
-        //     variables: { id: state.user_credentials.id },
-        //     pollInterval: 100
-        // })
-        // console.log(data);
     };
 
     const openDeck = idFcg => {
@@ -60,7 +62,6 @@ const Decks = (props) => {
                         id: idFcg} }
         })
 
-        // console.log(state.current_deck)
         props.history.push('cards-creation')
     }
 
