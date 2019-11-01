@@ -17,9 +17,13 @@ const CreateCard  = props => {
 
     const { state, actions } = useContext(Context);
 
-    const [flashCard, setFlashCard] = useState(  {
+    const [flashCard_data, setFlashCard_data] = useState(  {
+        idFc: (Math.random() * 1000000).toString(),
         front: '',
         back: '',
+        lastModifyDate: moment().unix().toString(),
+        creationDate: moment().unix().toString(),
+        idFCG: (Math.random() * 1000000).toString(),
     });
 
     const constructor = () => {
@@ -39,19 +43,6 @@ const CreateCard  = props => {
         this.setState({ mdeValue: value });
     };
 
-        // from: _FCGroupInput!
-        // to: _FCInput!
-
-    const [temp, { data_ }] = useMutation(gql`
-        mutation Create($idFcg: ID!, $idFc: ID!){
-            AddFCContatins(from:{
-                idFcg:$idFcg
-            },to:{
-                idFc:$idFc
-            }){from{idUser}}
-        }
-    `)
-
     const [CreateCardInNeo4j, { data }] = useMutation(gql`
         mutation Create(
             $idFc: ID
@@ -67,66 +58,39 @@ const CreateCard  = props => {
                 back: $back,
                 lastModifyDate: $lastModifyDate,
                 creationDate: $creationDate,
-                idFcg: $idFCG,
+                idFCG: $idFCG,
             ){
-                idFcg, front, back, lastModifyDate, creationDate, idFcg
+                idFc, front, back, lastModifyDate, creationDate, idFCG
             }
         }
     `);
 
     const UpdateInfo = () => {
-        const { idFc, front, back } = flashCard;
-        const { id } = state.user_credentials;
-        console.log(state.user_credentials);
-        actions({
-            type: "setState",
-            payload: {
-                ...state, flashCard:
-                    { ...state.flashCard,
-                        idFc: (Math.random() * 1000000).toString(),
-                        front: flashCard.front,
-                        back: flashCard.back,
-                    }
-            }
-        });
-
-        //console.log(state.current_deck.id);
+        console.log(flashCard_data);
     };
 
     const SendQuery = () => {
-      UpdateInfo()
-      console.log(state.flashCard)
-      console.log(state.current_deck)
+      UpdateInfo();
+      console.log(flashCard_data)
       props.history.push('cards-creation')
       
       try {
           CreateCardInNeo4j({
               variables: {
-                  idFc: state.flashCard.idFc,
-                  front: state.flashCard.front,
-                  back: state.flashCard.back,
-                  lastModifyDate: moment().unix().toString(),
-                  creationDate: moment().unix().toString(),
-                  idFCG: state.current_deck.id.toString(),
+                  idFc: flashCard_data.idFc,
+                  front: flashCard_data.front,
+                  back: flashCard_data.back,
+                  lastModifyDate: flashCard_data.lastModifyDate,
+                  creationDate: flashCard_data.creationDate,
+                  idFCG: flashCard_data.idFCG,
               }
           }).then(res => {
               console.log(res.data)
 
               // props.history.push('decks')
           })
-      }catch (e) {
-
-      }try {
-          temp({
-              variables: {
-                  idFcg: state.current_deck.id.toString(),
-                  idFc: state.flashCard.idFc,
-              }
-          }).then((res => {
-              // props.history.push('decks');
-          }))
-      }catch (e) {
-          console.log(e);
+      }catch (err) {
+          console.log(err);
       }
     }
 
@@ -161,12 +125,12 @@ const CreateCard  = props => {
                         Parte Frontal:
                         <br/>
                         <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard({ ...flashCard, front: e.target.value})}
+                                   onChange={e => setFlashCard_data({ ...flashCard_data, front: e.target.value})}
                         />
                         Parte posterior:
                         <br/>
                         <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard({ ...flashCard, back: e.target.value})}
+                                   onChange={e => setFlashCard_data({ ...flashCard_data, back: e.target.value})}
                         />
                     </div>
                     <Button onClick={SendQuery}>
