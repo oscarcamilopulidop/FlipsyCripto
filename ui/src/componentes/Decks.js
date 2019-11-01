@@ -19,6 +19,8 @@ const GET_DECKS = gql`
       }
   }`;
 
+
+
 const Decks = (props) => {
 
 
@@ -62,6 +64,18 @@ const Decks = (props) => {
 
         // console.log(state.current_deck)
         props.history.push('cards-creation')
+    }
+
+    const deleteDeck = idFcg => {
+        console.log("Aqui borraria mi carta... si tuviera una!!")
+        actions({
+            type: "setState",
+            payload: {
+                ...state, current_deck:
+                    { ...state.current_deck,
+                        id: idFcg} }
+        })
+        props.history.push('decks')
     }
 
     const handleChange = () => {
@@ -118,7 +132,11 @@ const Decks = (props) => {
                         dataSource={data.FCGroup}
                         renderItem={item => (
                             <List.Item>
-                                <Card onClick={() => openDeck(item.idFcg)} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>
+                                <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
+                                <Card onClick={() => openDeck(item.idFcg)} title=" ">
+                                    <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
+                                    {item.title}
+                                </Card>
                             </List.Item>
                         )}
                     />

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import CardContent from '@material-ui/core/CardContent';
-import { Layout } from 'antd';
+import {Card, Layout} from 'antd';
 import Typography from '@material-ui/core/Typography';
 import ReactCardFlip from 'react-card-flip';
 import '../Styles/Home.css'
@@ -67,6 +67,7 @@ const StudyCards = props => {
                                 Contenido de la tarjeta en la parte de atrás, aquí irán los datos y demás.
                             </Typography>
                         </CardContent>
+                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                     </ReactCardFlip>
                 </div>
             </div>

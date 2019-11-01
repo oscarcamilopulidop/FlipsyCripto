@@ -80,3 +80,11 @@
 .ant-select-dropdown-menu-item {
     color: #00558c;
 }
+
+.delete-button{
+    z-index: 1000;
+    position: relative;
+    height: 1.5em;
+    top: 1.85em;
+    right: -3em;
+}
