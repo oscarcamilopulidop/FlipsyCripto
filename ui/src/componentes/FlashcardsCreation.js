@@ -5,6 +5,7 @@ import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { Auth } from 'aws-amplify'
+import Swal from 'sweetalert2'
 
 
 
@@ -32,6 +33,26 @@ const FlascardsCreation = props => {
 
     const editDeck = () => {
         props.history.push('createCard')
+    }
+
+    const deleteCard = idFc => {
+        Swal.fire({
+            title: 'Seguro que desea eliminar la carta?',
+            type: 'warning',
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                console.log("AQUÍ DEBERÍA BORRAR LA CARTA "+idFc);
+                Swal.fire(
+                    '',
+                    'Su carta ha sido eliminada.',
+                    'success'
+                )
+            }
+        })
     }
 
     const play = () => {
@@ -96,6 +117,8 @@ const FlascardsCreation = props => {
                         dataSource={data}
                         renderItem={item => (
                             <List.Item>
+                                <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
+                                <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFcg)} alt="delete-button"/>
                                 <Card onClick={openCard}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>
                             </List.Item>
                         )}

@@ -84,17 +84,21 @@
 .delete-button{
     z-index: 10;
     position: absolute;
-    height: 1.9em;
-    top: 0.3em;
-    right: 0.3em;
+    height: 1.3em;
+    top: 0.4em;
+    right: 0.8em;
+    margin: 0;
+    padding: 0;
 }
 
 .edit-button{
     z-index: 10;
     position: absolute;
-    height: 1.9em;
-    top: 0.3em;
-    left: 0.3em;
+    height: 1.3em;
+    top: 0.4em;
+    left: 0.8em;
+    margin: 0;
+    padding: 0;
 }
 
 .swal2-popup {

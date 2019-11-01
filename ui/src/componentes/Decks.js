@@ -143,10 +143,10 @@ const Decks = (props) => {
                         dataSource={data.FCGroup}
                         renderItem={item => (
                             <List.Item>
-                                <Card title=" ">
-                                    <img className = "edit-button" src={require("../Assets/edit-white.svg")}   onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
-                                    <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
-                                    <img className = "img-card" onClick={() => openDeck(item.idFcg)} src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
+                                <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
+                                <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
+                                <Card title=" " onClick={() => openDeck(item.idFcg)}>
+                                    <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                                     {item.title}
                                 </Card>
                             </List.Item>
