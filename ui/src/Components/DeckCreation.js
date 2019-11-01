@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import 'antd/dist/antd.css';
-import { Layout, Button, Form,Select, Tag, Input, AutoComplete, Icon} from 'antd';
+import { Layout, Button, Form,Select, Input, AutoComplete, Icon} from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import '../Styles/DeckCreation.css'
@@ -9,13 +9,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import moment from "moment";
 
-const { Search } = Input;
-const { Header, Footer, Sider, Content } = Layout;
-
-function log(e) {
-    console.log(e);
-}
-
+const { Header, Footer, Content } = Layout;
 
 const formItemLayout = {
     labelCol: {
@@ -28,16 +22,10 @@ const formItemLayout = {
     },
 };
 
-const types = [
-    {value: 'privada', label: 'privada'},
-    {value: 'publica', label: 'publica'}
-];
-
 const DeckCreation = props => {
 
-  const { state, actions } = useContext(Context);
+  const { state } = useContext(Context);
 
-    var currtenDate = moment().unix();
     const [deck_data, set_deck_data] = useState({
       idFcg: (Math.random() * 1000000).toString(),
       idUser: state.in_session_data.uid,
@@ -53,10 +41,7 @@ const DeckCreation = props => {
 
     const { Option } = Select;
 
-    const [selected, setSelected] = useState({ page: "Home"});
-
-
-    const [temp, { data_ }] = useMutation(gql`
+    const [temp] = useMutation(gql`
         mutation Create($idUser: ID!, $idFcg: ID!){
             AddUSEROwns(from:{
                 idUser:$idUser
@@ -64,9 +49,9 @@ const DeckCreation = props => {
                 idFcg:$idFcg
             }){from{idUser}}
         }
-    `)
+    `);
 
-    const [CreateDeckInNeo4j, { data }] = useMutation(gql`
+    const [CreateDeckInNeo4j] = useMutation(gql`
         mutation Create(
             $idFcg: ID,
             $idUser: String!,
@@ -99,15 +84,15 @@ const DeckCreation = props => {
     }
 
     const show = () => {
-        const uid = state.in_session_data.uid
-        console.log(uid)
+        const uid = state.in_session_data.uid;
+        console.log(uid);
         console.log(state.user_credentials);
-        console.log(deck_data)
+        console.log(deck_data);
     };
 
     const UpdateInfo = () => {
-        const uid = state.in_session_data.uid
-        console.log(uid)
+        const uid = state.in_session_data.uid;
+        console.log(uid);
         try {
             CreateDeckInNeo4j({
                 variables: {
@@ -123,7 +108,6 @@ const DeckCreation = props => {
                 }
             }).then(res => {
                 console.log(res.data)
-                // props.history.push('decks')
             })
         } catch (error) { console.log("error => ", error) }
         try {
@@ -132,18 +116,18 @@ const DeckCreation = props => {
                     idUser: uid,
                     idFcg: state.deck.idFcg
                 }
-            }).then((res => {
+            }).then((() => {
                 props.history.push('decks');
             }))
         }catch (e) {
             console.log(e);
         }
-    }
+    };
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -152,7 +136,7 @@ const DeckCreation = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         <div className="deck-creation">
@@ -236,6 +220,6 @@ const DeckCreation = props => {
         </div>
 
     )
-}
+};
 
 export default withRouter(DeckCreation)

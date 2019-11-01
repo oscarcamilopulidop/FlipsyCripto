@@ -1,7 +1,5 @@
-import React, {Component, useContext, useEffect, useState} from 'react';
-import CardContent from '@material-ui/core/CardContent';
+import React, {useContext, useEffect, useState} from 'react';
 import { Layout, Button } from 'antd';
-import ReactCardFlip from 'react-card-flip'
 import '../Styles/Home.css'
 import '../Styles/CreateCard.css'
 import '../App.css';
@@ -13,7 +11,7 @@ import moment from "moment";
 import { Auth } from 'aws-amplify'
 
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer } = Layout;
 
 const CreateCard  = props => {
     useEffect(() => {
@@ -21,12 +19,12 @@ const CreateCard  = props => {
             actions({
                 type: 'setState',
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
+            });
             console.log(res.attributes.sub)
-        }).catch(err => {
+        }).catch(() => {
           props.history.push('');
         })
-    }, [])
+    }, []);
 
     const { state, actions } = useContext(Context);
 
@@ -39,24 +37,7 @@ const CreateCard  = props => {
         idFCG: state.current_deck.id,
     });
 
-    const constructor = () => {
-        this.state = {
-            isFlipped: false
-        };
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-    }
-
-    const handleChange = value => {
-        this.setState({ mdeValue: value });
-    };
-
-    const [CreateCardInNeo4j, { data }] = useMutation(gql`
+    const [CreateCardInNeo4j] = useMutation(gql`
         mutation Create(
             $idFc: ID
             $front: String!
@@ -84,8 +65,8 @@ const CreateCard  = props => {
 
     const SendQuery = () => {
       UpdateInfo();
-      console.log(flashCard_data)
-      props.history.push('cards-creation')
+      console.log(flashCard_data);
+      props.history.push('cards-creation');
 
       try {
           CreateCardInNeo4j({
@@ -99,19 +80,17 @@ const CreateCard  = props => {
               }
           }).then(res => {
               console.log(res.data)
-
-              // props.history.push('decks')
           })
       }catch (err) {
           console.log(err);
       }
-    }
+    };
 
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -120,7 +99,7 @@ const CreateCard  = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
         return (
             <Layout className="layout">
                 <Header className = "header">
@@ -161,5 +140,5 @@ const CreateCard  = props => {
             </Layout>
         );
 
-}
+};
 export default CreateCard

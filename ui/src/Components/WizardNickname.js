@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import '../Styles/Wizard2.css'
-import { Button, Input, Checkbox, DatePicker } from 'antd'
+import { Button, Input} from 'antd'
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 
@@ -17,11 +17,11 @@ const WizardNickname = props => {
         actions({
             type: "setState",
             payload: { ...state, user_credentials: { ...state.user_credentials, first_name: wizardName.first_name, last_name: wizardName.last_name } }
-        })
+        });
         console.log(state.user_credentials);
         console.log(wizardName.first_name);
         props.history.push('wizard-personal-info')
-    }
+    };
 
     return (
         <div className="wizard2">

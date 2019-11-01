@@ -2,26 +2,22 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Button, Input } from 'antd'
 import Context from '../GlobalState/context'
 import '../Styles/Wizard.css'
-import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost';
-import { withRouter } from 'react-router-dom'
 
-
-const Wizard = props => {
-    const { state, actions } = useContext(Context)
-    const [nickname, setNickname] = useState("")
+const Wizard = () => {
+    const { state, actions } = useContext(Context);
+    const [nickname, setNickname] = useState("");
     useEffect(() => {
         setNickname(state.user_credentials.nickname || "")
-    }, [])
+    }, []);
 
     const UpdateNickname = () => {
-        const { nickname, email } = state.user_credentials
+        const { nickname} = state.user_credentials;
         actions({
             type: "setState",
             payload: { ...state, user_credentials: { ...state.user_credentials, nickname: nickname } }
-        })
+        });
         console.log(state.user_credentials);
-    }
+    };
 
     return (
         <div className='main-wizard-container'>
@@ -34,6 +30,6 @@ const Wizard = props => {
             </Button>
         </div>
     )
-}
+};
 
 export default Wizard

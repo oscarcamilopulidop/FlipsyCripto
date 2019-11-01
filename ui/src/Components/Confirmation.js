@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState } from 'react'
 import { Input, Button } from 'antd'
 import '../Styles/Confirmation.css'
 
-const Confirmation = () => {
+const Confirmation = props => {
 
-    const [confirmCredentials, setConfirmCredentials] = useState({ newPassword: "", password: "" })
+    const [confirmCredentials, setConfirmCredentials] = useState({ newPassword: "", password: "" });
 
     const Confirm = () => {
-        alert("Contraseña cambiada.")
-    }
+        alert("Contraseña cambiada.");
+        props.history.push('signin');
+    };
 
     return (
         <div className='confirm-main-container'>
@@ -29,6 +30,6 @@ const Confirmation = () => {
             
         </div>
     )
-}
+};
 
 export default Confirmation

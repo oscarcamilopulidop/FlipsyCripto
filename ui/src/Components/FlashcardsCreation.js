@@ -1,78 +1,63 @@
-import React, {useContext, useState, useEffect} from 'react'
-import {Button, List, Card, Layout, Select} from 'antd'
-import '../Styles/Decks.css'
+import React, {useContext, useEffect} from 'react'
+import {Button, List, Card, Layout} from 'antd'
+import '../Styles/FlashcardsCreation.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
-import { useQuery } from '@apollo/react-hooks'
-import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
 
+
+
 const { Header, Footer} = Layout;
-const { Option } = Select;
 
-const GET_DECKS = gql`
-  query Search($id: String!) {
-      FCGroup(idUser: $id)  {
-            idFcg, title
-      }
-  }`;
+const FlascardsCreation = props => {
 
-const Decks = (props) => {
     useEffect(() => {
         Auth.currentAuthenticatedUser().then(res => {
             actions({
                 type: 'setState',
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
+            });
             console.log(res.attributes.sub)
-        }).catch(err => {
+        }).catch(() => {
           props.history.push('');
         })
-    }, [])
+    }, []);
 
     const { state, actions } = useContext(Context);
-    const uid = state.in_session_data.uid
-    console.log(uid)
-    const { loading, error, data } = useQuery(GET_DECKS,
-        {variables:{
-                id: uid //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
-            },
-            pollInterval: 500,
-        });
 
-    if (!loading) { console.log(data) }
-
-    const dataJ = [];
-
-    const show = () => {
-        const { id } = state.user_credentials;
-        console.log(state.user_credentials);
-        console.log(data.USER[0]);
+    const openCard = () => {
+        props.history.push('study')
     };
 
-    const openDeck = idFcg => {
-        console.log(idFcg)
-        actions({
-            type: "setState",
-            payload: {
-                ...state, current_deck:
-                    { ...state.current_deck,
-                        id: idFcg} }
-        })
+    const editDeck = () => {
+        props.history.push('createCard')
+    };
 
-        props.history.push('cards-creation')
-    }
+    const play = () => {
+        props.history.push('study')
+    };
 
-    const handleChange = () => {
-        console.log("mostrando barajas ")
-    }
 
-    var flag = false;
+    const deck_title ='Matematicas I';
+
+    const data = [
+        {
+            front: 'Si dividimos 1 entre 0 el resultado es...',
+        },
+        {
+            front: '¿Cuanto es la cuarta parte de la tercera parte?',
+        },
+        {
+            front: '1+1',
+        },
+
+    ];
+
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -81,13 +66,10 @@ const Decks = (props) => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
-        loading ?
-            <div />
-            :
-        <div className='decks-main-container'>
+        <div className='flashcards-main-container'>
             <Layout>
 
                 <Header className = "header">
@@ -97,33 +79,27 @@ const Decks = (props) => {
                 <div className="home-menu-collapse" id="menu">
                     <Menu/>
                 </div>
-                <div className="decks-container">
-                    <h1 onClick={show}>Barajas</h1>
-
-                    <div className="select-container">
-                        <Select defaultValue="Propias" style={{ width: '60%'}} onChange={handleChange}>
-                            <Option value="Propias">Propias</Option>
-                            <Option value="Compartidas">Compartidas conmigo</Option>
-                        </Select>
-                    </div>
-
-                    <Button onClick={() => props.history.push('deck-creation')} className="new-card" type="dashed" ghost>
+                <div className="flashcards-container">
+                    <h1> <img onClick={editDeck} className = "edit-deck" src={require("../Assets/editDeck.svg")} alt="edit icon"/>
+                        {deck_title}
+                        <img onClick={play} className = "play-deck" src={require("../Assets/play.svg")} alt="play icon"/>
+                    </h1>
+                    <Button onClick={() => props.history.push('createCard')} className="new-flashcard" type="dashed" ghost>
                         Nueva
                         <br/>
-                        Baraja
+                        Tarjeta
                         <br/>
                         +
                     </Button>
                     <List
                         grid={{ gutter: 10, column: 3 }}
-                        dataSource={data.FCGroup}
+                        dataSource={data}
                         renderItem={item => (
                             <List.Item>
-                                <Card onClick={() => openDeck(item.idFcg)} title=" "> <img className = "img-card" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> {item.title}</Card>
+                                <Card onClick={openCard}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>
                             </List.Item>
                         )}
                     />
-                    ,
                 </div>
 
 
@@ -138,6 +114,6 @@ const Decks = (props) => {
             </Layout>
         </div>
     )
-}
+};
 
-export default Decks
+export default FlascardsCreation

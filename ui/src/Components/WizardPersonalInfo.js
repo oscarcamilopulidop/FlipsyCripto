@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import '../Styles/Wizard2.css'
-import {Button, Input, Checkbox, DatePicker, Select} from 'antd'
+import {Button, Checkbox, DatePicker, Select} from 'antd'
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
@@ -9,7 +9,7 @@ import { gql } from 'apollo-boost';
 
 
 const WizardPersonalInfo = props => {
-    const { state, actions } = useContext(Context);
+    const { state } = useContext(Context);
     const [CreateUserInNeo4j] = useMutation(gql`
         mutation Create($idUser: ID!, $nickname: String!, $name: String!, $lastName: String!,
             $birthDate: String!, $email: String!, $gender: String!, $emailNotifications: Boolean!
@@ -47,16 +47,11 @@ const WizardPersonalInfo = props => {
                     emailNotifications: wizardPersonalInfo.notifications
                 }
             }).then(res => {
-                console.log(res.data)
+                console.log(res.data);
                 props.history.push('home')
             })
         } catch (error) { console.log("error => ", error) }
-    }
-
-
-    function onChange(date, dateString) {
-        console.log(date, dateString);
-    }
+    };
 
     return (
         <div className="wizard2">
@@ -68,7 +63,6 @@ const WizardPersonalInfo = props => {
                     <DatePicker
                         className="wizard-datepicker2"
                         onChange={e => setWizardPersonalInfo({...wizardPersonalInfo, date: e.unix().toString()})}
-                        // onChange={e => console.log( (e.unix().toString()))}
                         placeholder="Fecha de Nacimiento"
                     />
 

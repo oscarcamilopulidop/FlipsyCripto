@@ -1,40 +1,35 @@
-import React, { useState, useEffect, useContext } from 'react'
-import ReactDOM from 'react-dom';
+import React, { useEffect, useContext } from 'react'
 import 'antd/dist/antd.css';
 import { Layout } from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import '../Styles/Home.css'
 import { Input } from 'antd';
-import CardContent from "@material-ui/core/CardContent";
 import Menu from "./Menu";
-import Deck from './Decks'
 import { Auth } from 'aws-amplify'
 
 const { Search } = Input;
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
 const Home = props => {
-    const [userId, setUserId] = useState("")
-    const [show, setShow] = useState(false)
-    const { state, actions } = useContext(Context)
+    const { state, actions } = useContext(Context);
 
     useEffect(() => {
         Auth.currentAuthenticatedUser().then(res => {
             actions({
                 type: 'setState',
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
+            });
             console.log(res.attributes.sub)
-        }).catch(err => {
+        }).catch(() => {
           props.history.push('');
         })
-    }, [])
+    }, []);
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -43,7 +38,7 @@ const Home = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         <Layout className="home-container">
@@ -75,14 +70,14 @@ const Home = props => {
                 <div className="outside-container">
                     <div className="card">
                     </div>
-                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-13.jpg" height="100" width="100"/>
+                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-13.jpg" height="100" width="100" alt="circular"/>
                     <div className="text-container">
                         <span className="text"> <span className="link"> Juanita suarez </span> ha creado una nueva baraja <span className="link"> Matemáticas </span> </span>
                     </div>
                 </div>
 
                 <div className="outside-container">
-                    <img className="circular" src ="https://static.ellahoy.es/ellahoy/fotogallery/845X0/459517/cortes-de-cabello-apra-cara-cuadrada-2017.jpg" height="100" width="100"/>
+                    <img className="circular" src ="https://static.ellahoy.es/ellahoy/fotogallery/845X0/459517/cortes-de-cabello-apra-cara-cuadrada-2017.jpg" height="100" width="100" alt="imagen"/>
                     <div className="text-container">
                         <span className="text"> <span className="link" onClick={() => console.log(state.in_session_data.uid)} > Andrés Felipe Ortíz </span> ha aceptado tu invitación de amistad</span>
                     </div>
@@ -91,7 +86,7 @@ const Home = props => {
                 <div className="outside-container">
                     <div className="card">
                     </div>
-                    <img className="circular" src ="http://cdn3.upsocl.com/wp-content/uploads/2016/05/18-24.jpg" height="100" width="100"/>
+                    <img className="circular" src ="http://cdn3.upsocl.com/wp-content/uploads/2016/05/18-24.jpg" height="100" width="100" alt="imagem circular"/>
                     <div className="text-container">
                         <span className="text"> <span className="link"> Juan Carlos Castellanos </span> ha compartido contigo su baraja <span className="link"> Música Instrumental </span> </span>
                     </div>
@@ -107,6 +102,6 @@ const Home = props => {
             </Footer>
         </Layout>
     )
-}
+};
 
 export default withRouter(Home)

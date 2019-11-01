@@ -1,25 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import regis from '../Assets/icon.png';
-import ConfirmCode from './CodConf'
 import '../Styles/Signup.css'
 import { Auth } from 'aws-amplify'
 import { Button, Input, Checkbox } from 'antd'
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { gql } from 'apollo-boost';
-import { useMutation } from '@apollo/react-hooks';
 
 
 
-const Registro = props => {
-    const { state, actions } = useContext(Context)
+const SignUp = props => {
+    const { state, actions } = useContext(Context);
     const [signUpCredentials, setSignUpCredentials] = useState({
         correo: '',
         usuario: '',
         contra: '',
         terminos: false
-    })
+    });
 
     const ValidateCredentials = () => {
         signUpCredentials.terminos
@@ -32,10 +29,10 @@ const Registro = props => {
                         `,
                 footer: '<i> Inténtalo de nuevo :D </i>'
             })
-    }
+    };
 
     const handleSubmit = async () => {
-        const { correo, usuario, contra } = signUpCredentials
+        const { correo, usuario, contra } = signUpCredentials;
         try {
             await Auth.signUp({
                 username: correo,
@@ -55,12 +52,11 @@ const Registro = props => {
                                 id: authUser.userSub
                             }
                         }
-                    })
+                    });
                     props.history.push('confirm-code')
                 })
 
         } catch (error) {
-            //alert(error.name)
             switch (error.name) {
                 case 'UsernameExistsException': {
                     Swal.fire({
@@ -84,7 +80,7 @@ const Registro = props => {
                 }
             }
         }
-    }
+    };
 
 
     return (
@@ -130,13 +126,12 @@ const Registro = props => {
                 </section>
 
                 <section  className="final-options">
-                    <p>¿Ya tienes tu código? <a href="#">Ingrésalo aquí</a> </p>
                     <p>¿Ya tienes tu cuenta? <a onClick={() => props.history.push('signin')}>Inicia sesión</a> </p>
                 </section>
 
             </form>
         </div>
     )
-}
+};
 
-export default withRouter(Registro);
+export default withRouter(SignUp);

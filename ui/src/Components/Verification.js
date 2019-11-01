@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState } from 'react'
 import { Input, Button } from 'antd'
 import '../Styles/Verification.css'
 
-const Verification = () => {
+const Verification = props => {
 
-    const [verificationCredentials, setVerificationCredentials] = useState({ email: "" })
+    const [verificationCredentials, setVerificationCredentials] = useState({ email: "" });
 
     const Verification = () => {
-        alert("Link enviado.")
-    }
+        alert("Link enviado.");
+        props.history.push('confirm');
+    };
 
     return (
         <div className='verification-main-container'>
@@ -30,6 +31,6 @@ const Verification = () => {
 
         </div>
     )
-}
+};
 
 export default Verification

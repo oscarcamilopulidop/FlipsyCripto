@@ -1,29 +1,29 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Login from './componentes/MainLogin'
-import Registro from './componentes/Registro'
-import CodeConfirmation from './componentes/CodConf'
-import Home from './componentes/Home'
-import Verification from './componentes/Verification'
-import Confirmation from './componentes/Confirmation'
-import Searcher from "./componentes/Searcher";
-import Menu from './componentes/Menu'
-import DeckCreation from './componentes/DeckCreation';
-import WizardNickname from "./componentes/WizardNickname";
-import WizardPersonalInfo from "./componentes/WizardPersonalInfo";
-import Wizard from "./componentes/Wizard";
-import FlashcardsCreation from './componentes/FlashcardsCreation'
-import Decks from './componentes/Decks'
-import StudyCards from './componentes/StudyCards'
-import CreateCard from './componentes/CreateCard'
+import Login from './Components/MainLogin'
+import SignUp from './Components/SignUp'
+import CodeConfirmation from './Components/CodConf'
+import Home from './Components/Home'
+import Verification from './Components/Verification'
+import Confirmation from './Components/Confirmation'
+import Searcher from "./Components/Searcher";
+import Menu from './Components/Menu'
+import DeckCreation from './Components/DeckCreation';
+import WizardNickname from "./Components/WizardNickname";
+import WizardPersonalInfo from "./Components/WizardPersonalInfo";
+import Wizard from "./Components/Wizard";
+import FlashcardsCreation from './Components/FlashcardsCreation'
+import Decks from './Components/Decks'
+import StudyCards from './Components/StudyCards'
+import CreateCard from './Components/CreateCard'
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" component={Login} exact />
-        <Route path="/signup" component={Registro} />
+        <Route path="/signup" component={SignUp} />
         <Route path='/signin' component={Login} />
         <Route path='/login' component={Login} />
         <Route path='/confirm-code' component={CodeConfirmation} />

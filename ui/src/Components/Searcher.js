@@ -11,14 +11,14 @@ const Searcher = props => {
 
     const toSearch = () => {
 
-    }
+    };
 
     const { Search } = Input;
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -27,7 +27,7 @@ const Searcher = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         <div className='searcher-main-container'>
@@ -60,6 +60,6 @@ const Searcher = props => {
             </Layout>
         </div>
     )
-}
+};
 
 export default Searcher

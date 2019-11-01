@@ -34,7 +34,7 @@ const ProfileList = () => {
             type: 'success',
             text: "Has agregado a " + friendName,
         })
-    }
+    };
 
     return (
         <div className='list-main-container'>

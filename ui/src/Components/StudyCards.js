@@ -5,25 +5,22 @@ import Typography from '@material-ui/core/Typography';
 import ReactCardFlip from 'react-card-flip';
 import '../Styles/Home.css'
 import '../Styles/StudyCards.css'
-import { gql } from 'apollo-boost'
-import { useMutation } from "@apollo/react-hooks";
-
 import '../App.css';
 import Menu from "./Menu";
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer} = Layout;
 
 const StudyCards = props => {
-    const [isFlipped, setIsFlipped] = useState(false)
+    const [isFlipped, setIsFlipped] = useState(false);
 
     const handleClick = (e) => {
         e.preventDefault();
         setIsFlipped(!isFlipped)
-    }
+    };
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -32,7 +29,7 @@ const StudyCards = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         <Layout className="layout">
@@ -45,18 +42,18 @@ const StudyCards = props => {
             </div>
             <body className="content" >
             <div className="cards-list-study">
-                <img className="arrow-study" src={require("../Assets/prev-card.svg")} />
+                <img className="arrow-study" src={require("../Assets/prev-card.svg")} alt="arrow" />
                 <div className="mini-card-content-study"> Texto de prueba del contenido de la primera tarjeta </div>
                 <div className="mini-card-content-study"> Texto super aleatorio que podria ir en la segunda mini tarjetita </div>
                 <div className="mini-card-content-study"> Parte frontal de la tercera tarjeta </div>
                 <div className="mini-card-content-study"> Parte frontal de la tarjeta, aquí puede ir una imagen u otras cosas... </div>
-                <img className="arrow-study" src={require("../Assets/next-card.svg")} />
+                <img className="arrow-study" src={require("../Assets/next-card.svg")} alt="arrow2"/>
             </div>
             <div className="flip-card-study" onClick={handleClick}>
                 <div className="card-content-study">
                     <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
                         <CardContent className="fill" key="front">
-                            <img class="card-content" src="https://source.unsplash.com/random" alt="Front-imsge" height="100" width="100">
+                            <img className="card-content" src="https://source.unsplash.com/random" alt="Front-imsge" height="100" width="100">
                             </img>
                             <Typography variant="h6" align="center" paragraph>
                                 Parte frontal de la tarjeta, aquí puede ir una imagen u otras cosas...
@@ -81,5 +78,5 @@ const StudyCards = props => {
             </Footer>
         </Layout>
     );
-}
+};
 export default StudyCards
