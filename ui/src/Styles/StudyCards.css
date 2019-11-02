@@ -12,6 +12,7 @@
     padding: 10px;
     height: 80%;
     display: table;
+    overflow: hidden;
 }
 
 .card-content-study{
@@ -20,6 +21,7 @@
     horizontal-align: middle;
     background: white;
     color: #094C6D;
+    overflow: hidden;
 }
 
 .fill-study{

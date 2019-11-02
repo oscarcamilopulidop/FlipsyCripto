@@ -100,7 +100,7 @@ const StudyCards = props => {
                                 </img>
                             </center>
                             <Typography variant="h6" align="center" paragraph>
-                                P
+                                Paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                             </Typography>
 
                         </CardContent>
