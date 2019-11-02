@@ -37,13 +37,13 @@ const Decks = (props) => {
 
     const { state, actions } = useContext(Context);
     const uid = state.in_session_data.uid
-    console.log(uid)
+    console.log(uid);
     const { loading, error, data } = useQuery(GET_DECKS,
         {variables:{
                 id: uid //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
-        });
+    });
 
     if (!loading) { console.log(data) }
 

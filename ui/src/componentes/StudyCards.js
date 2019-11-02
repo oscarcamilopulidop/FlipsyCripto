@@ -6,7 +6,7 @@ import ReactCardFlip from 'react-card-flip';
 import '../Styles/Home.css'
 import '../Styles/StudyCards.css'
 import { gql } from 'apollo-boost'
-import { useMutation } from "@apollo/react-hooks";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 
 import '../App.css';
 import Menu from "./Menu";
@@ -15,8 +15,6 @@ import Context from "../GlobalState/context";
 const { Header, Footer, Sider, Content } = Layout;
 
 const StudyCards = props => {
-
-    const { state, actions } = useContext(Context);
 
     useEffect(() => {
         Auth.currentAuthenticatedUser().then(res => {
@@ -28,8 +26,24 @@ const StudyCards = props => {
         }).catch(err => {
             props.history.push('');
         })
-    }, [])
+    }, []);
 
+    const GET_CARD_DATA = gql`
+        query Seacrh($id: ID! = "997690.2499482292" ) {
+            FC(idFc: $id)  {
+                front, back
+        }        
+    }`;
+
+    const { state, actions } = useContext(Context);
+
+    const { loading, error, data } = useQuery(GET_CARD_DATA,
+        {variables:{
+                id: state.current_flashcard.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+            },
+            pollInterval: 500,
+        });
+    if (!loading) { console.log(data) }
 
     const [isFlipped, setIsFlipped] = useState(false)
 
@@ -53,6 +67,9 @@ const StudyCards = props => {
     }
 
     return (
+        loading ?
+            <div />
+            :
         <Layout className="layout">
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
@@ -100,13 +117,13 @@ const StudyCards = props => {
                                 </img>
                             </center>
                             <Typography variant="h6" align="center" paragraph>
-                                Paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                {data.FC[0].front}
                             </Typography>
 
                         </CardContent>
                         <CardContent className="fill-study" key="back">
                             <Typography variant="h6" align="center" paragraph>
-                                Con
+                                {data.FC[0].back}
                             </Typography>
 
                         </CardContent>
