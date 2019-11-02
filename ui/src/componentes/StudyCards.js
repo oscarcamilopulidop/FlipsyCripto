@@ -91,29 +91,29 @@ const StudyCards = props => {
                 <img className="arrow-study" src={require("../Assets/next-card.svg")} />
             </div>
 
-            <div className="flip-card-study" onClick={handleClick}>
+            <div className="flip-card-study fill-study" onClick={handleClick}>
                 <div className="card-content-study">
                     <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-                        <CardContent className="fill" key="front">
+                        <CardContent className="fill-study" key="front">
                             <center>
                                 <img class="card-content" src="https://source.unsplash.com/random" alt="Front-imsge" height="100" width="100">
                                 </img>
                             </center>
                             <Typography variant="h6" align="center" paragraph>
-                                Parte frontal de la tarjeta, aquí puede ir una imagen u otras cosas...
+                                P
                             </Typography>
 
                         </CardContent>
-                        <CardContent className="fill" key="back">
+                        <CardContent className="fill-study" key="back">
                             <Typography variant="h6" align="center" paragraph>
-                                Contenido de la tarjeta en la parte de atrás, aquí irán los datos y demás.
+                                Con
                             </Typography>
 
                         </CardContent>
                     </ReactCardFlip>
 
                     <span>
-                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="150" width="150"/>
+                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="90" width="90"/>
                     </span>
 
                 </div>
