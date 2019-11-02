@@ -64,29 +64,58 @@ const StudyCards = props => {
             <body className="content" >
             <div className="cards-list-study">
                 <img className="arrow-study" src={require("../Assets/prev-card.svg")} />
-                <div className="mini-card-content-study"> Texto de prueba del contenido de la primera tarjeta </div>
-                <div className="mini-card-content-study"> Texto super aleatorio que podria ir en la segunda mini tarjetita </div>
-                <div className="mini-card-content-study"> Parte frontal de la tercera tarjeta </div>
-                <div className="mini-card-content-study"> Parte frontal de la tarjeta, aquí puede ir una imagen u otras cosas... </div>
+                <div className="mini-card-content-study">
+                    <div> Texto de prueba del contenido de la primera tarjeta </div>
+                    <span>
+                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
+                    </span>
+                </div>
+                <div className="mini-card-content-study">
+                    <div> Texto super aleatorio que podria ir en la segunda mini tarjetita </div>
+                    <span>
+                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
+                    </span>
+                </div>
+                <div className="mini-card-content-study">
+                    <div> Parte frontal de la tercera tarjeta </div>
+                    <span>
+                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
+                    </span>
+                </div>
+                <div className="mini-card-content-study">
+                    <div> Parte frontal de la tarjeta, aquí puede ir una imagen u otras cosas... </div>
+                    <span>
+                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
+                    </span>
+                </div>
                 <img className="arrow-study" src={require("../Assets/next-card.svg")} />
             </div>
+
             <div className="flip-card-study" onClick={handleClick}>
                 <div className="card-content-study">
                     <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
                         <CardContent className="fill" key="front">
-                            <img class="card-content" src="https://source.unsplash.com/random" alt="Front-imsge" height="100" width="100">
-                            </img>
+                            <center>
+                                <img class="card-content" src="https://source.unsplash.com/random" alt="Front-imsge" height="100" width="100">
+                                </img>
+                            </center>
                             <Typography variant="h6" align="center" paragraph>
                                 Parte frontal de la tarjeta, aquí puede ir una imagen u otras cosas...
                             </Typography>
+
                         </CardContent>
                         <CardContent className="fill" key="back">
                             <Typography variant="h6" align="center" paragraph>
                                 Contenido de la tarjeta en la parte de atrás, aquí irán los datos y demás.
                             </Typography>
+
                         </CardContent>
-                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                     </ReactCardFlip>
+
+                    <span>
+                        <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="150" width="150"/>
+                    </span>
+
                 </div>
             </div>
             </body>

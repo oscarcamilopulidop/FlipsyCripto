@@ -7,6 +7,7 @@
 }
 
 .flip-card-study{
+    position: relative;
     background-color: #094c6d;
     padding: 10px;
     height: 80%;
@@ -33,6 +34,7 @@
 }
 
 .mini-card-content-study{
+    position: relative;
     vertical-align: middle;
     horizontal-align: middle;
     display: flex;
@@ -54,5 +56,19 @@
 }
 
 .img-flashcard-study{
-
+    vertical-align:bottom;
+    float:right;
 }
+
+.flip-card-study span {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+}
+
+.mini-card-content-study span {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+}
+
