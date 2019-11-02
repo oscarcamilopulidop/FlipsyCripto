@@ -16,7 +16,6 @@ import { Auth } from 'aws-amplify'
 const { Header, Footer, Sider, Content } = Layout;
 
 const CreateCard  = props => {
-
     useEffect(() => {
         Auth.currentAuthenticatedUser().then(res => {
             actions({
@@ -37,7 +36,7 @@ const CreateCard  = props => {
         back: '',
         lastModifyDate: moment().unix().toString(),
         creationDate: moment().unix().toString(),
-        idFCG: state.current_deck.id,
+        idFCG: "hey",
     });
 
     const constructor = () => {
@@ -46,7 +45,7 @@ const CreateCard  = props => {
         };
         this.handleClick = this.handleClick.bind(this);
     }
-    
+
     const handleClick = (e) => {
         e.preventDefault();
         this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
@@ -85,8 +84,6 @@ const CreateCard  = props => {
     const SendQuery = () => {
       UpdateInfo();
       console.log(flashCard_data)
-      props.history.push('cards-creation')
-
       try {
           CreateCardInNeo4j({
               variables: {
@@ -99,8 +96,16 @@ const CreateCard  = props => {
               }
           }).then(res => {
               console.log(res.data)
+              console.log(props)
 
-              // props.history.push('decks')
+              props.history.push({
+                pathname: 'cards-creation',
+                search: props.location.state.idFcg,
+                state: {
+                  idFcg: flashCard_data.idFCG,
+                  title: props.location.state.title
+                }
+              })
           })
       }catch (err) {
           console.log(err);

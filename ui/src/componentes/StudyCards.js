@@ -17,12 +17,14 @@ const { Header, Footer, Sider, Content } = Layout;
 const StudyCards = props => {
 
     useEffect(() => {
+      console.log(props)
         Auth.currentAuthenticatedUser().then(res => {
             actions({
                 type: 'setState',
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
             })
             console.log(res.attributes.sub)
+            console.log(props)
         }).catch(err => {
             props.history.push('');
         })
@@ -32,17 +34,18 @@ const StudyCards = props => {
         query Seacrh($id: ID! = "997690.2499482292" ) {
             FC(idFc: $id)  {
                 front, back
-        }        
+        }
     }`;
 
     const { state, actions } = useContext(Context);
 
     const { loading, error, data } = useQuery(GET_CARD_DATA,
         {variables:{
-                id: state.current_flashcard.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                id: props.location.state.idFc //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
         });
+
     if (!loading) { console.log(data) }
 
     const [isFlipped, setIsFlipped] = useState(false)
