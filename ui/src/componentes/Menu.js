@@ -6,9 +6,9 @@ import {Auth} from "aws-amplify";
 const Menu = props => {
 
     const logout = () => {
-        Auth.signOut()
+        Auth.signOut();
         props.history.push("/")
-    }
+    };
 
     return (
         <div className='menu-main-container'>
@@ -39,6 +39,6 @@ const Menu = props => {
 
         
     )
-}
+};
 
 export default withRouter(Menu)

@@ -1,11 +1,10 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Button, List, Card, Layout, Select} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { useQuery } from '@apollo/react-hooks'
-import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
 import Swal from 'sweetalert2'
@@ -28,17 +27,17 @@ const Decks = (props) => {
             actions({
                 type: 'setState',
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
+            });
             console.log(res.attributes.sub)
-        }).catch(err => {
+        }).catch(() => {
           props.history.push('');
         })
-    }, [])
+    }, []);
 
     const { state, actions } = useContext(Context);
-    const uid = state.in_session_data.uid
+    const uid = state.in_session_data.uid;
     console.log(uid);
-    const { loading, error, data } = useQuery(GET_DECKS,
+    const { loading, data } = useQuery(GET_DECKS,
         {variables:{
                 id: uid //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
@@ -47,26 +46,26 @@ const Decks = (props) => {
 
     if (!loading) { console.log(data) }
 
-    const dataJ = [];
-
     const show = () => {
-        const { id } = state.user_credentials;
         console.log(state.user_credentials);
         console.log(data.USER[0]);
     };
 
-    const openDeck = idFcg => {
-        console.log(idFcg)
+    const openDeck = (idFcg,title) => {
+        console.log(idFcg);
         actions({
             type: "setState",
             payload: {
                 ...state, current_deck:
                     { ...state.current_deck,
-                        id: idFcg} }
-        })
+                        id: idFcg,
+                        title: title
+                    }
+            }
+        });
 
         props.history.push('cards-creation')
-    }
+    };
 
 
     const deleteDeck = idFcg => {
@@ -87,16 +86,16 @@ const Decks = (props) => {
                 )
             }
         })
-    }
+    };
 
     const handleChange = () => {
         console.log("mostrando barajas ")
-    }
+    };
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -105,7 +104,7 @@ const Decks = (props) => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         loading ?
@@ -145,7 +144,7 @@ const Decks = (props) => {
                             <List.Item>
                                 <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
                                 <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
-                                <Card title=" " onClick={() => openDeck(item.idFcg)}>
+                                <Card title=" " onClick={() => openDeck(item.idFcg,item.title)}>
                                     <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                                     {item.title}
                                 </Card>
@@ -154,8 +153,6 @@ const Decks = (props) => {
                     />
                     ,
                 </div>
-
-
 
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
@@ -167,6 +164,6 @@ const Decks = (props) => {
             </Layout>
         </div>
     )
-}
+};
 
 export default Decks

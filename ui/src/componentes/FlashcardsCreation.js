@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect } from 'react'
 import {Button, List, Card, Layout} from 'antd'
 import '../Styles/FlashcardsCreation.css'
 import '../Styles/Home.css'
@@ -27,16 +27,16 @@ const FlascardsCreation = props => {
             actions({
                 type: 'setState',
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
+            });
             console.log(res.attributes.sub)
-        }).catch(err => {
+        }).catch(() => {
           props.history.push('');
         })
-    }, [])
+    }, []);
 
     const { state, actions } = useContext(Context);
 
-    const { loading, error, data } = useQuery(GET_FLASHCARDS,
+    const { loading, data } = useQuery(GET_FLASHCARDS,
         {variables:{
                 id: state.current_deck.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
@@ -58,7 +58,7 @@ const FlascardsCreation = props => {
 
     const editDeck = () => {
         props.history.push('createCard')
-    }
+    };
 
     const deleteCard = idFc => {
         Swal.fire({
@@ -78,32 +78,19 @@ const FlascardsCreation = props => {
                 )
             }
         })
-    }
+    };
 
     const play = () => {
         props.history.push('study')
-    }
+    };
 
 
-    const deck_title ='Matematicas I';
+    const deck_title = state.current_deck.title;
 
-    const dataL = [
-        {
-            front: 'Si dividimos 1 entre 0 el resultado es...',
-        },
-        {
-            front: '¿Cuanto es la cuarta parte de la tercera parte?',
-        },
-        {
-            front: '1+1',
-        },
-
-    ];
-
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -112,7 +99,7 @@ const FlascardsCreation = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         loading ?
@@ -165,6 +152,6 @@ const FlascardsCreation = props => {
             </Layout>
         </div>
     )
-}
+};
 
 export default FlascardsCreation
