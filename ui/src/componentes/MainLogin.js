@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Input, Button } from 'antd'
 import '../Styles/MainLogin.css'
 import { withRouter } from 'react-router-dom'
@@ -11,21 +11,16 @@ const MainLogin = props => {
 
     const { state, actions } = useContext(Context);
 
-    // useEffect(() => {
-    //   Auth.currentAuthenticatedUser().then(() => props.history.push('home'))
-    // }, [])
-
-    const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" })
+    const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" });
 
     const Login = async () => {
 
-      console.log(loginCredentials)
+      console.log(loginCredentials);
 
         !Object.values(loginCredentials).includes("") ?
       await Auth.signIn(loginCredentials.email, loginCredentials.password)
         .then((user) => {
 
-          const { id } = state.user_credentials;
           console.log(state.user_credentials);
           props.history.push('home');
           actions({
@@ -88,12 +83,7 @@ const MainLogin = props => {
                 ,
                 footer: '<i> Inténtalo de nuevo :D </i>'
             });
-      // Auth.currentAuthenticatedUser()
-
-
-      // console.log(state.user_credentials);
-
-    }
+    };
 
 
     return (
@@ -114,11 +104,11 @@ const MainLogin = props => {
             </section>
 
             <section className="final-options">
-                <p>¿Olvidaste la contraseña? <a href="#"> Click aquí </a> </p>
+                <p>¿Olvidaste la contraseña? <a onClick={() => props.history.push('verification')}> Click aquí </a> </p>
                 <p>¿No tiene cuenta? <a onClick={() => props.history.push('signup')}> Regístrate aquí </a> </p>
             </section>
         </div>
     )
-}
+};
 
 export default withRouter(MainLogin)
