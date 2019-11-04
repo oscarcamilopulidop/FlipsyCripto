@@ -10,6 +10,7 @@ import Confirmation from './componentes/Confirmation'
 import Searcher from "./componentes/Searcher";
 import Menu from './componentes/Menu'
 import DeckCreation from './componentes/DeckCreation';
+import DeckEdit from './componentes/DeckEdit';
 import WizardNickname from "./componentes/WizardNickname";
 import WizardPersonalInfo from "./componentes/WizardPersonalInfo";
 import Wizard from "./componentes/Wizard";
@@ -37,6 +38,7 @@ function App() {
         <Route path="/wizard-personal-info" component={WizardPersonalInfo} />
         <Route path="/wizard" component={Wizard}/>
         <Route path='/cards-creation' component={FlashcardsCreation} />
+        <Route path="/deck-edit" component={DeckEdit} />
         <Route path='/decks' component={Decks} />
         <Route path="/study" component={StudyCards} />
         <Route path="/createCard" component={CreateCard}/>
