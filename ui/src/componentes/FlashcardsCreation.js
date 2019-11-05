@@ -14,50 +14,56 @@ import {gql} from "apollo-boost";
 const { Header, Footer} = Layout;
 
 const FlascardsCreation = props => {
+    useEffect(() => {
+      Auth.currentAuthenticatedUser().then(res => {
+        actions({
+          type: 'setState',
+          payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+        })
+        console.log(res.attributes.sub)
+      }).catch(err => {
+        props.history.push('');
+      })
+    }, [])
 
     const GET_FLASHCARDS = gql`
         query Seacrh($id: String!) {
             FC(idFCG: $id)  {
                 idFc, front
-        }        
+        }
     }`;
-
-    useEffect(() => {
-        Auth.currentAuthenticatedUser().then(res => {
-            actions({
-                type: 'setState',
-                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
-            console.log(res.attributes.sub)
-        }).catch(err => {
-          props.history.push('');
-        })
-    }, [])
 
     const { state, actions } = useContext(Context);
 
     const { loading, error, data } = useQuery(GET_FLASHCARDS,
         {variables:{
-                id: state.current_deck.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                id: props.location.state.idFcg //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
     });
     if (!loading) { console.log(data) }
-    const openCard= idFc => {
-        console.log(idFc);
-        actions({
-            type: "setState",
-            payload: {
-                ...state, current_flashcard:
-                    { ...state.current_flashcard,
-                        id: idFc} }
-        });
 
-        props.history.push('study')
+    const openCard= idFc => {
+      // console.log(idFc)
+      props.history.push({
+        pathname: 'study',
+        search: idFc,
+        state: {
+          idFc: idFc,
+          idFcg: props.location.state.id,
+          title: props.location.state.title
+        }
+      })
     };
 
     const editDeck = () => {
-        props.history.push('createCard')
+      props.history.push({
+        pathname: 'createCard',
+        state: {
+          idFcg: props.location.state.idFcg,
+          title: props.location.state.title
+        }
+      })
     }
 
     const deleteCard = idFc => {
@@ -85,20 +91,7 @@ const FlascardsCreation = props => {
     }
 
 
-    const deck_title ='Matematicas I';
-
-    const dataL = [
-        {
-            front: 'Si dividimos 1 entre 0 el resultado es...',
-        },
-        {
-            front: '¿Cuanto es la cuarta parte de la tercera parte?',
-        },
-        {
-            front: '1+1',
-        },
-
-    ];
+    const deck_title = props.location.state.title;
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -133,7 +126,13 @@ const FlascardsCreation = props => {
                         {deck_title}
                         <img onClick={play} className = "play-deck" src={require("../Assets/play.svg")} alt="play icon"/>
                     </h1>
-                    <Button onClick={() => props.history.push('createCard')} className="new-flashcard" type="dashed" ghost>
+                    <Button onClick={() => props.history.push({
+                            pathname: 'createCard',
+                            state: {
+                              idFcg: props.location.state.idFcg,
+                              title: props.location.state.title
+                            }
+                          })} className="new-flashcard" type="dashed" ghost>
                         Nueva
                         <br/>
                         Tarjeta
