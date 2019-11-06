@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect } from 'react'
 import {Button, List, Card, Layout} from 'antd'
 import '../Styles/FlashcardsCreation.css'
 import '../Styles/Home.css'
@@ -33,9 +33,21 @@ const FlascardsCreation = props => {
         }
     }`;
 
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            });
+            console.log(res.attributes.sub)
+        }).catch(() => {
+          props.history.push('');
+        })
+    }, []);
+
     const { state, actions } = useContext(Context);
 
-    const { loading, error, data } = useQuery(GET_FLASHCARDS,
+    const { loading, data } = useQuery(GET_FLASHCARDS,
         {variables:{
                 id: props.location.state.idFcg //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
@@ -64,7 +76,7 @@ const FlascardsCreation = props => {
           title: props.location.state.title
         }
       })
-    }
+      }
 
     const deleteCard = idFc => {
         Swal.fire({
@@ -84,7 +96,7 @@ const FlascardsCreation = props => {
                 )
             }
         })
-    }
+    };
 
     const play = () => {
         props.history.push('study')
@@ -93,10 +105,10 @@ const FlascardsCreation = props => {
 
     const deck_title = props.location.state.title;
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -105,7 +117,7 @@ const FlascardsCreation = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         loading ?
@@ -164,6 +176,6 @@ const FlascardsCreation = props => {
             </Layout>
         </div>
     )
-}
+};
 
 export default FlascardsCreation

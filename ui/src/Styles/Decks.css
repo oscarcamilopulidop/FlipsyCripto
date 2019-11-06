@@ -7,7 +7,6 @@
 
 
 .decks-main-container{
-    height: 100vh;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -36,6 +35,7 @@
 
 .decks-container .ant-card-head {
     height: 1.7em;
+    width: 114.31px;
     margin-bottom: 0.4em !important;
     min-height: 0;
     background-color: #00558c;
@@ -50,6 +50,8 @@
     display: flex;
     flex-flow: column;
     text-align: center;
+    width: 114.31px;
+    height: 125px;
 }
 
 .decks-container .ant-card:hover {
