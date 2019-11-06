@@ -51,8 +51,8 @@ const Decks = (props) => {
         console.log(data.USER[0]);
     };
 
-    const openDeck = (idFcg,title) => {
-        console.log(idFcg);
+    const openDeck = (idFcg, title) => {
+        console.log(idFcg)
         actions({
             type: "setState",
             payload: {
@@ -63,10 +63,17 @@ const Decks = (props) => {
                     }
             }
         });
-
         props.history.push('cards-creation')
     };
-
+        props.history.push({
+          pathname: 'cards-creation',
+          search: idFcg,
+          state: {
+            idFcg: idFcg,
+            title: title
+          }
+        })
+    }
 
     const deleteDeck = idFcg => {
         Swal.fire({
@@ -144,7 +151,7 @@ const Decks = (props) => {
                             <List.Item>
                                 <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
                                 <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
-                                <Card title=" " onClick={() => openDeck(item.idFcg,item.title)}>
+                                <Card title=" " onClick={() => openDeck(item.idFcg, item.title)}>
                                     <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                                     {item.title}
                                 </Card>
