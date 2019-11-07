@@ -53,18 +53,6 @@ const Decks = (props) => {
 
     const openDeck = (idFcg, title) => {
         console.log(idFcg)
-        actions({
-            type: "setState",
-            payload: {
-                ...state, current_deck:
-                    { ...state.current_deck,
-                        id: idFcg,
-                        title: title
-                    }
-            }
-        });
-        props.history.push('cards-creation')
-    };
         props.history.push({
           pathname: 'cards-creation',
           search: idFcg,
