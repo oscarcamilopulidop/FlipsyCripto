@@ -107,7 +107,7 @@ const FlascardsCreation = props => {
                 )
             }
         })
-    }
+    };
 
     const play = () => {
         props.history.push('study')
