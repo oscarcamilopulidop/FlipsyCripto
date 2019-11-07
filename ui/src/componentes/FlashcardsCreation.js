@@ -76,7 +76,7 @@ const FlascardsCreation = props => {
           title: props.location.state.title
         }
       })
-      }
+      };
 
     const deleteCard = idFc => {
         Swal.fire({
@@ -96,7 +96,7 @@ const FlascardsCreation = props => {
                 )
             }
         })
-    };
+    }
 
     const play = () => {
         props.history.push('study')

@@ -63,6 +63,7 @@ const Decks = (props) => {
         })
     }
 
+
     const deleteDeck = idFcg => {
         Swal.fire({
             title: 'Seguro que desea eliminar la baraja?',
