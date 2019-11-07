@@ -136,7 +136,6 @@ const StudyCards = props => {
                             <Typography variant="h6" align="center" paragraph>
                                 {data.FC[0].front}
                             </Typography>
-
                         </CardContent>
                         <CardContent className="fill-study" key="back">
                             <Typography variant="h6" align="center" paragraph>

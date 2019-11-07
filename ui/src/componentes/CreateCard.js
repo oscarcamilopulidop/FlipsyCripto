@@ -13,6 +13,7 @@ import moment from "moment";
 import { Auth } from 'aws-amplify'
 
 
+
 const { Header, Footer, Sider, Content } = Layout;
 
 const CreateCard  = props => {
@@ -127,7 +128,6 @@ const CreateCard  = props => {
         flag = !flag;
     }
         return (
-
             <Layout className="layout">
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
@@ -181,5 +181,5 @@ const CreateCard  = props => {
             </Layout>
         );
 
-}
+};
 export default CreateCard
