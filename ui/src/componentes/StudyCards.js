@@ -49,6 +49,7 @@ const StudyCards = props => {
     if (!loading) { console.log(data) }
 
     const [isFlipped, setIsFlipped] = useState(false)
+    const [current, setCurrent] = useState(false)
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -57,7 +58,6 @@ const StudyCards = props => {
 
     var flag = false;
     const ShowSideMenu = () => {
-
         var element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
@@ -67,6 +67,20 @@ const StudyCards = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
+    }
+
+    const nextCard = () => {
+        if(current + 1 <= data.FC.length){
+            setCurrent(current+1);
+        }
+        console.log(current)
+    }
+
+    const prevCard = () => {
+        if(current - 1 >= 0){
+            setCurrent(current-1);
+        }
+        console.log(current)
     }
 
     return (
@@ -83,7 +97,7 @@ const StudyCards = props => {
             </div>
             <body className="content" >
             <div className="cards-list-study">
-                <img className="arrow-study" src={require("../Assets/prev-card.svg")} />
+                <img className="arrow-study" src={require("../Assets/prev-card.svg")} onClick={prevCard} />
                 <div className="mini-card-content-study">
                     <div> Texto de prueba del contenido de la primera tarjeta </div>
                     <span>
@@ -108,7 +122,7 @@ const StudyCards = props => {
                         <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
                     </span>
                 </div>
-                <img className="arrow-study" src={require("../Assets/next-card.svg")} />
+                <img className="arrow-study" src={require("../Assets/next-card.svg")} onClick={nextCard}/>
             </div>
 
             <div className="flip-card-study fill-study" onClick={handleClick}>

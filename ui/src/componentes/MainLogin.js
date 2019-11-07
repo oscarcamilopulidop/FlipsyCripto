@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Input, Button } from 'antd'
 import '../Styles/MainLogin.css'
 import { withRouter } from 'react-router-dom'
@@ -105,7 +105,7 @@ const MainLogin = props => {
 
             <section className="final-options">
                 <p>¿Olvidaste la contraseña? <a onClick={() => props.history.push('verification')}> Click aquí </a> </p>
-                <p>¿No tiene cuenta? <a onClick={() => props.history.push('signup')}> Regístrate aquí </a> </p>
+                <p>¿No tienes cuenta? <a onClick={() => props.history.push('signup')}> Regístrate aquí </a> </p>
             </section>
         </div>
     )

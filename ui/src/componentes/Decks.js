@@ -1,10 +1,11 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {Button, List, Card, Layout, Select} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
 import Swal from 'sweetalert2'
@@ -43,6 +44,8 @@ const Decks = (props) => {
             },
             pollInterval: 500,
     });
+
+    console.log(data)
 
     if (!loading) { console.log(data) }
 
