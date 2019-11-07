@@ -55,6 +55,17 @@ const FlascardsCreation = props => {
 
         props.history.push('study')
     };
+    const editCard= idFc => {
+        console.log(idFc);
+        actions({
+            type: "setState",
+            payload: {
+                ...state, current_flashcard:
+                    { ...state.current_flashcard,
+                        id: idFc} }
+        });
+        props.history.push('editCard')
+    };
 
     const editDeck = () => {
         props.history.push('createCard')
@@ -145,7 +156,7 @@ const FlascardsCreation = props => {
                         dataSource={data.FC}
                         renderItem={item => (
                             <List.Item>
-                                <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
+                                <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")} onClick={ () => editCard(item.idFcg)} alt="delete-button"/>
                                 <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFcg)} alt="delete-button"/>
                                 <Card onClick={() => openCard(item.idFc)}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>
                             </List.Item>

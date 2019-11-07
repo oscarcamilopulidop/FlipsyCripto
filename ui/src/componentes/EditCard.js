@@ -1,5 +1,4 @@
 import React, {Component, useContext, useEffect, useState} from 'react';
-import CardContent from '@material-ui/core/CardContent';
 import { Layout, Button } from 'antd';
 import ReactCardFlip from 'react-card-flip'
 import '../Styles/Home.css'
@@ -7,7 +6,7 @@ import '../Styles/CreateCard.css'
 import '../App.css';
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
-import { useMutation } from '@apollo/react-hooks'
+import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import moment from "moment";
 import { Auth } from 'aws-amplify'
@@ -15,7 +14,14 @@ import { Auth } from 'aws-amplify'
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const CreateCard  = props => {
+const GET_CARD_DATA = gql`
+    query Seacrh($id: ID! ) {
+        FC(idFc: $id)  {
+            front, back
+        }
+    }`;
+
+const EditCard  = props => {
 
     useEffect(() => {
         Auth.currentAuthenticatedUser().then(res => {
@@ -56,7 +62,14 @@ const CreateCard  = props => {
         this.setState({ mdeValue: value });
     };
 
-    const [CreateCardInNeo4j, { data }] = useMutation(gql`
+    const { loading, error, data } = useQuery(GET_CARD_DATA,
+        {variables:{
+                id: state.current_flashcard.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+            },
+            pollInterval: 500,
+        });
+
+    const [CreateCardInNeo4j] = useMutation(gql`
         mutation Create(
             $idFc: ID
             $front: String!
@@ -121,20 +134,23 @@ const CreateCard  = props => {
         element.style.transition = 'transform 500ms';
         flag = !flag;
     }
-        return (
 
+    if(!loading)
+        console.log(data);
+        return (
+            !loading && 
             <Layout className="layout">
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
-                </Header>
+                </Header>c
                 <div className="home-menu-collapse" id="menu">
                     <Menu/>
                 </div>
                  <form className="content" action="" method="post">
                     <div className="center">
                         <div className="desk-creation-title">
-                            <h1>Crear Carta</h1>
+                            <h1>Editar Carta</h1>
                         </div>
                     </div>
                     <div className="cart-side">
@@ -146,6 +162,7 @@ const CreateCard  = props => {
                         */}
                         <textarea  className="text-area flip-card"
                                    onChange={e => setFlashCard_data({ ...flashCard_data, front: e.target.value})}
+                            /*value={data.FC[0].front}*/
                         />
                     </div>
                     <div className="cart-side">
@@ -157,11 +174,12 @@ const CreateCard  = props => {
                         */}
                         <textarea  className="text-area flip-card"
                                    onChange={e => setFlashCard_data({ ...flashCard_data, back: e.target.value})}
+                            /*value={data.FC[0].back}*/
                         />
                     </div>]
                     <div className="deck-creation-button-final">
                         <Button size="large" type="primary" onClick={SendQuery}>
-                            Crear
+                            Editar
                         </Button>
                     </div>
                 </form>
@@ -177,4 +195,4 @@ const CreateCard  = props => {
         );
 
 }
-export default CreateCard
+export default EditCard

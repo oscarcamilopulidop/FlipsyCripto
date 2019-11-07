@@ -115,7 +115,7 @@ const MainLogin = props => {
 
             <section className="final-options">
                 <p>¿Olvidaste la contraseña? <a href="#"> Click aquí </a> </p>
-                <p>¿No tiene cuenta? <a onClick={() => props.history.push('signup')}> Regístrate aquí </a> </p>
+                <p>¿No tienes cuenta? <a onClick={() => props.history.push('signup')}> Regístrate aquí </a> </p>
             </section>
         </div>
     )
