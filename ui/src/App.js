@@ -17,6 +17,7 @@ import FlashcardsCreation from './componentes/FlashcardsCreation'
 import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
 import CreateCard from './componentes/CreateCard'
+import SearchFlashCards from "./componentes/SearchFlashCards";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path='/decks' component={Decks} />
         <Route path="/study" component={StudyCards} />
         <Route path="/createCard" component={CreateCard}/>
+        <Route path='/search-flashcard' component={SearchFlashCards}/>
       </Switch>
     </BrowserRouter>
   );
