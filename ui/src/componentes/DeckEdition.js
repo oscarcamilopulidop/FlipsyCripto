@@ -6,16 +6,24 @@ import { withRouter } from 'react-router-dom'
 import '../Styles/DeckCreation.css'
 import Menu from "./Menu";
 import { useMutation } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import moment from "moment";
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
 
+
+const GET_DECKS_INFO = gql`
+  query Search($id: ID!) {
+      FCGroup(idFcg: $id)  {
+            idFcg, title, public, idCat, creationDate
+      }
+  }`;
+
 function log(e) {
     console.log(e);
 }
-
 
 const formItemLayout = {
     labelCol: {
@@ -33,62 +41,51 @@ const types = [
     {value: 'publica', label: 'publica'}
 ];
 
-const GET_DECKS = gql`
-    query Search($id: String!) {
-        FCGroup(idUser: $id)  {
-            idFcg, title
-        }
-    }`;
-
 const DeckEdition = props => {
 
+  const [localData, setLocalData] = useState([])
+
+  const [UpdateDeckInNeo4j, { variables }] = useMutation(gql`
+      mutation Update(
+          $idFcg: ID!,
+          $idCat: String!,
+          $idScat: String!,
+          $title: String!,
+          $public_: Boolean!,
+          $lastModifyDate: String!,
+      ){
+          UpdateFCGroup(
+              idFcg: $idFcg,
+              idCat: $idCat,
+              idScat: $idScat,
+              title: $title,
+              public: $public_,
+              lastModifyDate: $lastModifyDate,
+          ){
+              idFcg, idUser, idCat, idScat, title, public, lastModifyDate
+          }
+      }
+  `);
+
   const { state, actions } = useContext(Context);
+  const uid = state.in_session_data.uid
+  const { loading, error, data } = useQuery(GET_DECKS_INFO,
+        {variables:{
+                id:  props.location.state.idFcg
+            }
+    });
+
+    useEffect( () => {
+      !loading && setLocalData(data.FCGroup[0])
+
+    }, [loading])
 
     var currtenDate = moment().unix();
-    const [deck_data, set_deck_data] = useState({
-      idFcg: (Math.random() * 1000000).toString(),
-      idUser: state.in_session_data.uid,
-      idCat: "",
-      idScat: "",
-      title: "",
-      public_: true,
-      isStudying: true,
-      lastModifyDate: moment().unix().toString(),
-      creationDate: moment().unix().toString(),
-    });
     const dataSource = ['Matematicas', 'Quimica', 'Fisica', 'Biologia'];
 
     const { Option } = Select;
 
     const [selected, setSelected] = useState({ page: "Home"});
-
-    const [CreateDeckInNeo4j, { data }] = useMutation(gql`
-        mutation Create(
-            $idFcg: ID,
-            $idUser: String!,
-            $idCat: String!,
-            $idScat: String!,
-            $title: String!,
-            $public_: Boolean!,
-            $isStudying: Boolean!,
-            $lastModifyDate: String!,
-            $creationDate: String!,
-        ){
-            CreateFCGroup(
-                idFcg: $idFcg,
-                idUser: $idUser,
-                idCat: $idCat,
-                idScat: $idScat,
-                title: $title,
-                public: $public_,
-                isStudying: $isStudying,
-                lastModifyDate: $lastModifyDate,
-                creationDate: $creationDate,
-            ){
-                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate,
-            }
-        }
-    `);
 
     function onSelect(value) {
         console.log('onSelect', value);
@@ -98,32 +95,7 @@ const DeckEdition = props => {
         const uid = state.in_session_data.uid
         console.log(uid)
         console.log(state.user_credentials);
-        console.log(deck_data)
     };
-
-    const UpdateInfo = () => {
-        const uid = state.in_session_data.uid
-        console.log(uid)
-        try {
-            CreateDeckInNeo4j({
-                variables: {
-                    idFcg: deck_data.idFcg,
-                    idUser: deck_data.idUser,
-                    idCat: deck_data.idCat,
-                    idScat: deck_data.idCat,
-                    title: deck_data.title,
-                    public_: deck_data.public_,
-                    isStudying: deck_data.public_,
-                    lastModifyDate: deck_data.lastModifyDate,
-                    creationDate: deck_data.creationDate,
-                }
-            }).then(res => {
-                console.log(res.data)
-                props.history.push('decks')
-            })
-        } catch (error) { console.log("error => ", error) }
-
-    }
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -139,7 +111,29 @@ const DeckEdition = props => {
         flag = !flag;
     }
 
+    const UpdateInfo = () => {
+        try {
+            UpdateDeckInNeo4j({
+                variables: {
+                    idFcg: localData.idFcg,
+                    idCat: localData.idCat,
+                    idScat: localData.idCat,
+                    title: localData.title,
+                    public_: localData.public_,
+                    lastModifyDate: moment().unix().toString(),
+                }
+            }).then(res => {
+                console.log(res.data)
+                // props.history.push('decks')
+            })
+        } catch (error) { console.log("error => ", error) }
+
+    }
+
     return (
+      loading ?
+          <div />
+          :
         <div className="deck-creation">
             <Layout>
                 <Header className = "header">
@@ -152,7 +146,7 @@ const DeckEdition = props => {
                 <Content className="content">
                     <div className="center">
                         <div className="desk-creation-title">
-                            <h1>Editar Baraja</h1>
+                            <h1>Actualizar Baraja</h1>
                         </div>
                         <div className="desk-creation-button">
                             <Button size="large" type="primary" shape="round" icon="plus-circle-o">
@@ -166,14 +160,15 @@ const DeckEdition = props => {
                             <Form.Item label="Nombre">
                                 <Input
                                     className="name-input"
-                                    onChange={e => set_deck_data({ ...deck_data, title: e.target.value})}
+                                    onChange={e => setLocalData({ ...localData, title: e.target.value})}
                                     placeholder="Nombre"
+                                    value = {localData.title}
                                     onClick={show}
                                 />
                             </Form.Item>
                             <Form.Item label="Tipo">
                                 <Select placeholder="Seleccionar tipo"
-                                        onChange={e => set_deck_data({ ...deck_data, public_: (e === "publica")})}
+                                        onChange={e => setLocalData({ ...localData, public_: (e === "publica")})}
                                 >
                                     <Option value="publica">Publica</Option>
                                     <Option value="privada">Privada</Option>
@@ -183,9 +178,10 @@ const DeckEdition = props => {
                                 <AutoComplete
                                     className="category-input"
                                     placeholder="Buscar categoría"
-                                    onChange={e => set_deck_data({ ...deck_data, idCat: e, idScat: e})}
+                                    onChange={e => setLocalData({ ...localData, idCat: e, idScat: e})}
                                     onSelect={onSelect}
                                     dataSource={dataSource}
+                                    value={localData.idCat}
                                 >
                                     <Input
                                         suffix={
@@ -202,9 +198,9 @@ const DeckEdition = props => {
                             </Form.Item>
                         </Form>
                         <div className="deck-creation-button-final">
-                            <Button size="large" type="primary" onClick={UpdateInfo}>
-                                Crear
-                            </Button>
+                           { <Button size="large" type="primary" onClick={UpdateInfo}>
+                                Actualizar
+                                    </Button>}
                         </div>
                     </div>
 
@@ -223,4 +219,4 @@ const DeckEdition = props => {
     )
 }
 
-export default withRouter(DeckEdition)
+export default DeckEdition

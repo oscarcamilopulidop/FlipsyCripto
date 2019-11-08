@@ -53,6 +53,19 @@ const Decks = (props) => {
         console.log(data.USER[0]);
     };
 
+    const openDeckEdit = (idFcg, title) => {
+        console.log(idFcg)
+        props.history.push({
+          pathname: 'deck-edition',
+          search: idFcg,
+          state: {
+            idFcg: idFcg,
+            title: title
+          }
+        })
+    }
+
+
     const openDeck = (idFcg, title) => {
         console.log(idFcg)
         props.history.push({
@@ -140,7 +153,7 @@ const Decks = (props) => {
                         dataSource={data.FCGroup}
                         renderItem={item => (
                             <List.Item>
-                                <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
+                                <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => openDeckEdit(item.idFcg)} alt="delete-button"/>
                                 <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
                                 <Card title=" " onClick={() => openDeck(item.idFcg, item.title)}>
                                     <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
