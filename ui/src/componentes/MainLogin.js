@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Input, Button } from 'antd'
 import '../Styles/MainLogin.css'
 import { withRouter } from 'react-router-dom'
 import { Auth } from 'aws-amplify'
 import Context from "../GlobalState/context";
 import Swal from 'sweetalert2'
-
 
 const MainLogin = props => {
 

@@ -1,6 +1,5 @@
-import React, {Component, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Layout, Button } from 'antd';
-import ReactCardFlip from 'react-card-flip'
 import '../Styles/Home.css'
 import '../Styles/CreateCard.css'
 import '../App.css';
@@ -10,9 +9,11 @@ import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import moment from "moment";
 import { Auth } from 'aws-amplify'
+import { Badge} from 'antd';
 
 
-const { Header, Footer, Sider, Content } = Layout;
+
+const { Header, Footer, } = Layout;
 
 const GET_CARD_DATA = gql`
     query Seacrh($id: ID! ) {
@@ -188,7 +189,7 @@ const EditCard  = props => {
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                     <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         );
