@@ -1,0 +1,23 @@
+.play-questionnaire{
+    height: 40px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.item-quest {
+    border-color: white;
+    background: #00558c;
+    margin: 15px;
+    border-radius: 15px;
+}
+
+.list-main-container{
+    margin-top: 42px;
+    margin-bottom: 42px;
+}
+
+.questionnaires-main-container .ant-list-item-meta-title {
+    text-align: center;
+    color: white;
+}
+
