@@ -44,7 +44,6 @@ const FlascardsCreation = props => {
     if (!loading) { console.log(data) }
 
     const openCard= idFc => {
-      // console.log(idFc)
       props.history.push({
         pathname: 'study',
         search: idFc,
@@ -56,14 +55,12 @@ const FlascardsCreation = props => {
       })
     };
     const editCard= idFc => {
-        // console.log(idFcg);
         props.history.push({
             pathname: 'editCard',
             state:{
                 item: idFc
             }
         })
-        // props.history.push('editCard')
     };
 
     const editDeck = () => {
@@ -97,7 +94,6 @@ const FlascardsCreation = props => {
     };
 
     const play = () => {
-        // console.log(props.location.state)
         props.history.push('study')
     }
 
