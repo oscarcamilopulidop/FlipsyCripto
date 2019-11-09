@@ -23,6 +23,8 @@ const GET_CARD_DATA = gql`
 
 const EditCard  = props => {
 
+    const [localData, setLocalData] = useState([])
+
     useEffect(() => {
         Auth.currentAuthenticatedUser().then(res => {
             actions({
@@ -38,12 +40,12 @@ const EditCard  = props => {
     const { state, actions } = useContext(Context);
 
     const [flashCard_data, setFlashCard_data] = useState(  {
-        idFc: (Math.random() * 1000000).toString(),
+        idFc: props.location.state.item,
         front: '',
         back: '',
         lastModifyDate: moment().unix().toString(),
         creationDate: moment().unix().toString(),
-        idFCG: state.current_deck.id,
+        // idFCG: props.location.state[0].idFcg,
     });
 
     const constructor = () => {
@@ -64,29 +66,30 @@ const EditCard  = props => {
 
     const { loading, error, data } = useQuery(GET_CARD_DATA,
         {variables:{
-                id: state.current_flashcard.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                id: props.location.state.item //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                // id: 'ss'
             },
             pollInterval: 500,
         });
+    // if(!loading){ console.log(data)}
+    useEffect( () => {
+        !loading && setLocalData(data.FC[0])
 
-    const [CreateCardInNeo4j] = useMutation(gql`
-        mutation Create(
-            $idFc: ID
+    }, [loading])
+    const [UpdateCardInNeo4j] = useMutation(gql`
+        mutation Update(
+            $idFc: ID!
             $front: String!
             $back: String!
             $lastModifyDate: String!
-            $creationDate: String!
-            $idFCG: String!
         ){
-            CreateFC(
+            UpdateFC(
                 idFc: $idFc,
                 front: $front,
                 back: $back,
-                lastModifyDate: $lastModifyDate,
-                creationDate: $creationDate,
-                idFCG: $idFCG,
+                lastModifyDate: $lastModifyDate
             ){
-                idFc, front, back, lastModifyDate, creationDate, idFCG
+                idFc, front, back, lastModifyDate
             }
         }
     `);
@@ -96,24 +99,17 @@ const EditCard  = props => {
     };
 
     const SendQuery = () => {
-      UpdateInfo();
-      console.log(flashCard_data)
-      props.history.push('cards-creation')
-
       try {
-          CreateCardInNeo4j({
+          UpdateCardInNeo4j({
               variables: {
-                  idFc: flashCard_data.idFc,
-                  front: flashCard_data.front,
-                  back: flashCard_data.back,
-                  lastModifyDate: flashCard_data.lastModifyDate,
-                  creationDate: flashCard_data.creationDate,
-                  idFCG: flashCard_data.idFCG,
+                  idFc: props.location.state.item,
+                  front: localData.front,
+                  back: localData.back,
+                  lastModifyDate: moment().unix().toString(),
               }
           }).then(res => {
               console.log(res.data)
-
-              // props.history.push('decks')
+              // props.history.push('cards-creation')
           })
       }catch (err) {
           console.log(err);
@@ -135,10 +131,11 @@ const EditCard  = props => {
         flag = !flag;
     }
 
-    if(!loading)
-        console.log(data);
+
         return (
-            !loading && 
+            loading ?
+                <div />
+                :
             <Layout className="layout">
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
@@ -154,14 +151,17 @@ const EditCard  = props => {
                         </div>
                     </div>
                     <div className="cart-side">
-                        <h3>Parte Frontal:</h3>
+                        <h3 onClick={() => console.log(localData)}>
+                            Parte Frontal:
+                        </h3>
                         {/*
                         <Button size="large" type="primary" shape="round" icon="plus-circle-o">
                             Imagen opcional
                         </Button>
                         */}
                         <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard_data({ ...flashCard_data, front: e.target.value})}
+                                   onChange={e => setLocalData({ ...localData, front: e.target.value})}
+                                   value={localData.front}
                             /*value={data.FC[0].front}*/
                         />
                     </div>
@@ -173,7 +173,8 @@ const EditCard  = props => {
                         </Button>
                         */}
                         <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard_data({ ...flashCard_data, back: e.target.value})}
+                                   onChange={e => setLocalData({ ...localData, back: e.target.value})}
+                                   value={localData.back}
                             /*value={data.FC[0].back}*/
                         />
                     </div>]
