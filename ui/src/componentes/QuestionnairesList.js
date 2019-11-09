@@ -5,6 +5,7 @@ import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import {Auth} from "aws-amplify";
+import { Badge} from 'antd';
 
 const { Header, Footer} = Layout;
 
@@ -129,7 +130,7 @@ const QuestionnairesList = props => {
                     <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                     <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item-selected" src={require("../Assets/Notification-selected.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item-selected" src={require("../Assets/Notification-selected.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>
