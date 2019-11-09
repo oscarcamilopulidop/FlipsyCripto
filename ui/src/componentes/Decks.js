@@ -50,7 +50,8 @@ const Decks = (props) => {
 
     const show = () => {
         console.log(state.user_credentials);
-        console.log(data.USER[0]);
+        // console.log(data.USER[0]);
+        console.log(props.location.state)
     };
 
     const openDeckEdit = (idFcg, title) => {
