@@ -63,13 +63,6 @@ const FlascardsCreation = props => {
                 item: idFc
             }
         })
-        // actions({
-        //     type: "setState",
-        //     payload: {
-        //         ...state, current_flashcard:
-        //             { ...state.current_flashcard,
-        //                 id: idFcg} }
-        // });
         // props.history.push('editCard')
     };
 
