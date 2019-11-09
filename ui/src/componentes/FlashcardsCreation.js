@@ -33,18 +33,6 @@ const FlascardsCreation = props => {
         }
     }`;
 
-    useEffect(() => {
-        Auth.currentAuthenticatedUser().then(res => {
-            actions({
-                type: 'setState',
-                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            });
-            console.log(res.attributes.sub)
-        }).catch(() => {
-          props.history.push('');
-        })
-    }, []);
-
     const { state, actions } = useContext(Context);
 
     const { loading, data } = useQuery(GET_FLASHCARDS,

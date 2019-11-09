@@ -37,7 +37,7 @@ const CreateCard  = props => {
         back: '',
         lastModifyDate: moment().unix().toString(),
         creationDate: moment().unix().toString(),
-        idFCG: "hey",
+        idFCG: props.location.state.idFcg,
     });
 
     const constructor = () => {
@@ -143,7 +143,7 @@ const CreateCard  = props => {
                         </div>
                     </div>
                     <div className="cart-side">
-                        <h3>Parte Frontal:</h3>
+                        <h3 onClick={() => console.log(props.location.state)}>Parte Frontal:</h3>
                         {/*
                         <Button size="large" type="primary" shape="round" icon="plus-circle-o">
                             Imagen opcional
