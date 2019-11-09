@@ -3,9 +3,18 @@
     text-align: center;
 }
 
+.home-menu-collapse{
+    width: 60vw;
+    height: 100vh;
+    padding-top: 4%;
+    overflow: hidden;
+    background-color: #143256;
+    position: fixed;
+    z-index: 100;
+    left: 100%;
+}
 
 .flashcards-main-container{
-    height: 100vh;
     width: 100%;
     overflow: hidden;
     position: relative;

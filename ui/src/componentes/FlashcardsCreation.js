@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect } from 'react'
 import {Button, List, Card, Layout} from 'antd'
 import '../Styles/FlashcardsCreation.css'
 import '../Styles/Home.css'
@@ -14,36 +14,48 @@ import {gql} from "apollo-boost";
 const { Header, Footer} = Layout;
 
 const FlascardsCreation = props => {
+    useEffect(() => {
+      Auth.currentAuthenticatedUser().then(res => {
+        actions({
+          type: 'setState',
+          payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+        })
+        console.log(res.attributes.sub)
+      }).catch(err => {
+        props.history.push('');
+      })
+    }, [])
 
     const GET_FLASHCARDS = gql`
         query Seacrh($id: String!) {
             FC(idFCG: $id)  {
                 idFc, front
-        }        
+        }
     }`;
-
-    useEffect(() => {
-        Auth.currentAuthenticatedUser().then(res => {
-            actions({
-                type: 'setState',
-                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
-            console.log(res.attributes.sub)
-        }).catch(err => {
-          props.history.push('');
-        })
-    }, [])
 
     const { state, actions } = useContext(Context);
 
-    const { loading, error, data } = useQuery(GET_FLASHCARDS,
+    const { loading, data } = useQuery(GET_FLASHCARDS,
         {variables:{
-                id: state.current_deck.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                id: props.location.state.idFcg //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
     });
     if (!loading) { console.log(data) }
+
     const openCard= idFc => {
+      // console.log(idFc)
+      props.history.push({
+        pathname: 'study',
+        search: idFc,
+        state: {
+          idFc: idFc,
+          idFcg: props.location.state.id,
+          title: props.location.state.title
+        }
+      })
+    };
+    const editCard= idFc => {
         console.log(idFc);
         actions({
             type: "setState",
@@ -52,13 +64,18 @@ const FlascardsCreation = props => {
                     { ...state.current_flashcard,
                         id: idFc} }
         });
-
-        props.history.push('study')
+        props.history.push('editCard')
     };
 
     const editDeck = () => {
-        props.history.push('createCard')
-    }
+      props.history.push({
+        pathname: 'createCard',
+        state: {
+          idFcg: props.location.state.idFcg,
+          title: props.location.state.title
+        }
+      })
+      };
 
     const deleteCard = idFc => {
         Swal.fire({
@@ -78,32 +95,19 @@ const FlascardsCreation = props => {
                 )
             }
         })
-    }
+    };
 
     const play = () => {
         props.history.push('study')
     }
 
 
-    const deck_title ='Matematicas I';
+    const deck_title = props.location.state.title;
 
-    const dataL = [
-        {
-            front: 'Si dividimos 1 entre 0 el resultado es...',
-        },
-        {
-            front: '¿Cuanto es la cuarta parte de la tercera parte?',
-        },
-        {
-            front: '1+1',
-        },
-
-    ];
-
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -112,7 +116,7 @@ const FlascardsCreation = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         loading ?
@@ -133,7 +137,13 @@ const FlascardsCreation = props => {
                         {deck_title}
                         <img onClick={play} className = "play-deck" src={require("../Assets/play.svg")} alt="play icon"/>
                     </h1>
-                    <Button onClick={() => props.history.push('createCard')} className="new-flashcard" type="dashed" ghost>
+                    <Button onClick={() => props.history.push({
+                            pathname: 'createCard',
+                            state: {
+                              idFcg: props.location.state.idFcg,
+                              title: props.location.state.title
+                            }
+                          })} className="new-flashcard" type="dashed" ghost>
                         Nueva
                         <br/>
                         Tarjeta
@@ -145,7 +155,7 @@ const FlascardsCreation = props => {
                         dataSource={data.FC}
                         renderItem={item => (
                             <List.Item>
-                                <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
+                                <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")} onClick={ () => editCard(item.idFcg)} alt="delete-button"/>
                                 <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFcg)} alt="delete-button"/>
                                 <Card onClick={() => openCard(item.idFc)}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>
                             </List.Item>
@@ -165,6 +175,6 @@ const FlascardsCreation = props => {
             </Layout>
         </div>
     )
-}
+};
 
 export default FlascardsCreation

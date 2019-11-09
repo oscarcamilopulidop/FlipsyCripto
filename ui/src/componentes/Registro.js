@@ -60,7 +60,7 @@ const Registro = props => {
                 })
 
         } catch (error) {
-            //alert(error.name)
+            alert(error.name)
             switch (error.name) {
                 case 'UsernameExistsException': {
                     Swal.fire({
@@ -130,7 +130,6 @@ const Registro = props => {
                 </section>
 
                 <section  className="final-options">
-                    <p>¿Ya tienes tu código? <a href="#">Ingrésalo aquí</a> </p>
                     <p>¿Ya tienes tu cuenta? <a onClick={() => props.history.push('signin')}>Inicia sesión</a> </p>
                 </section>
 
