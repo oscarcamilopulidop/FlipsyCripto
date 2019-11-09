@@ -43,9 +43,7 @@ const EditCard  = props => {
         idFc: props.location.state.item,
         front: '',
         back: '',
-        lastModifyDate: moment().unix().toString(),
-        creationDate: moment().unix().toString(),
-        // idFCG: props.location.state[0].idFcg,
+        lastModifyDate: moment().unix().toString()
     });
 
     const constructor = () => {
