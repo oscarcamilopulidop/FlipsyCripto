@@ -15,11 +15,11 @@ import WizardNickname from "./componentes/WizardNickname";
 import WizardPersonalInfo from "./componentes/WizardPersonalInfo";
 import Wizard from "./componentes/Wizard";
 import FlashcardsCreation from './componentes/FlashcardsCreation'
+import QuestionnairesList from './componentes/QuestionnairesList'
 import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
 import CreateCard from './componentes/CreateCard'
 import EditCard from './componentes/EditCard'
-import QuestionnairesList from './componentes/QuestionnairesList'
 
 function App() {
   return (
@@ -40,12 +40,12 @@ function App() {
         <Route path="/wizard-name" component={WizardNickname} />
         <Route path="/wizard-personal-info" component={WizardPersonalInfo} />
         <Route path="/wizard" component={Wizard}/>
+        <Route path="/questionnaires-list" component={QuestionnairesList}/>
         <Route path='/cards-creation' component={FlashcardsCreation} />
         <Route path='/decks' component={Decks} />
         <Route path="/study" component={StudyCards} />
         <Route path="/createCard" component={CreateCard}/>
         <Route path="/editCard" component={EditCard}/>
-        <Route path="/questionnaires-list" component={QuestionnairesList}/>
       </Switch>
     </BrowserRouter>
   );
