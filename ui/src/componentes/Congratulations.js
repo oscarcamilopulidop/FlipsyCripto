@@ -1,16 +1,16 @@
 import React, {useContext, useEffect} from 'react'
 import {Layout} from 'antd'
 import '../Styles/Home.css'
-import '../Styles/Question.css'
+import '../Styles/Congratulations.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import {Auth} from "aws-amplify";
-import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import { Button, Badge } from 'antd';
+import { Statistic } from 'antd';
 
 const { Header, Footer} = Layout;
 
-const Question = props => {
+const Congratulations = props => {
 
     const { state, actions } = useContext(Context);
 
@@ -41,26 +41,18 @@ const Question = props => {
     };
 
     const question_title = "Sumas";
-    const front = "1+1";
-    const back = "2";
+    const success_rate= ( 5 / 6 )*100;
 
-    const remember = ()=>{
-        console.log("si recuerdo esta pregunta");
-        props.history.push({
-            pathname: 'congratulations'
-        })
-    };
-
-    const dontRemember = ()=>{
-        console.log("no recuerdo esta pregunta");
-        props.history.push({
-            pathname: 'congratulations'
-
-        })
+    const color_rate = (number) => {
+      if (number > 50){
+          return '#3f8600'
+      } else {
+          return '#cf1322'
+      }
     };
 
     return (
-        <div className='question-main-container'>
+        <div className='congratulations-main-container'>
             <Layout>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
@@ -70,33 +62,19 @@ const Question = props => {
                     <Menu/>
                 </div>
 
-                <div className="question-container">
-                    <h1>{question_title}</h1>
-                    <div className="flashcard-container">
-                        <Flippy
-                            flipDirection="horizontal"
-                            style={{ width: '229px', height: '319px', margin:'auto' }}
-                        >
-                            <FrontSide
-                                style={{ backgroundColor: 'white', border:'solid 7px #00558c', color:'#00558c' }}
-                            >
-                                {front}
-                                <img className = "logo-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
-                            </FrontSide>
-                            <BackSide
-                                style={{ backgroundColor: 'white', border:'solid 7px #00558c', color:'#00558c'}}
-                            >
-                                {back}
-                                <img className = "logo-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
-                            </BackSide>
-                        </Flippy>
+                <div className="congratulations-container">
+                    <h1> ¡Felicitaciones! </h1>
+                    <h2> Tu resultado fue:</h2>
+                    <Statistic
+                        className="result"
+                        value={success_rate}
+                        precision={2}
+                        valueStyle={{ color: color_rate(success_rate) }}
+                        suffix="%"
+                    />
+                    <h3> Te notificaremos cuando necesites estudiar de nuevo acerca de {question_title} </h3>
 
-                        <div className="rta-container">
-                            <h2>¿Recuerdas la respuesta?</h2>
-                            <Button className="btn-yes" type="danger" size="large" onClick={remember}> SI </Button>
-                            <Button className="btn-no" type="danger" size="large" onClick={dontRemember}> NO </Button>
-                        </div>
-                    </div>
+                    <Button className="btn-back" type="primary" size="large" onClick={() => props.history.push('questionnaires-list')}> Volver </Button>
                 </div>
 
                 <Footer className="footer">
@@ -111,4 +89,4 @@ const Question = props => {
     )
 };
 
-export default Question
+export default Congratulations

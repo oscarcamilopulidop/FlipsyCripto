@@ -7,6 +7,10 @@
 
 }
 
+.ant-layout{
+    height: 100%;
+}
+
 .header{
     background: #013C63;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */

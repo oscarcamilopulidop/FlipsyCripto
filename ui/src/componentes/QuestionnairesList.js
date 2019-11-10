@@ -75,6 +75,7 @@ const QuestionnairesList = props => {
 
     const open = (cat,name) => {
         console.log("abriendo " + name +" " + cat)
+        props.history.push('question')
     };
 
     const selectImg =(cat) => {
