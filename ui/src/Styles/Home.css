@@ -43,6 +43,7 @@
 }
 
 .footer-item{
+    width: 61px;
     height: 100%;
     color: white;
     float: right;
@@ -71,7 +72,15 @@
     font-family: Arial;
 }
 
+.ant-scroll-number, ant-badge-count{
+    margin-left: -5px;
+    position: absolute;
+    right: 17px;
+    top: 7px;
+}
+
 .footer-item-selected{
+    width: 61px;
     border-top-style: solid;
     border-top-color: #1a6b8f;
     height: 100%;

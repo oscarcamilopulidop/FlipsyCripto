@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Layout } from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import '../Styles/Home.css'
 import { Input } from 'antd';
-import CardContent from "@material-ui/core/CardContent";
 import Menu from "./Menu";
-import Deck from './Decks'
 import { Auth } from 'aws-amplify'
+import { Badge} from 'antd';
 
 const { Search } = Input;
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
 const Home = props => {
     const [userId, setUserId] = useState("")
@@ -103,7 +101,7 @@ const Home = props => {
                 <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                 <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                 <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
             </Footer>
         </Layout>
     )
