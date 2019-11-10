@@ -7,8 +7,8 @@ import Context from "../GlobalState/context";
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
+import { useMutation } from '@apollo/react-hooks'
 import Swal from 'sweetalert2'
-import { Badge} from 'antd';
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
@@ -81,6 +81,34 @@ const Decks = (props) => {
     }
 
 
+    const [CreateFifiNeo4j, { data1 }] = useMutation(gql`
+                        mutation Create(
+                            $idFcgDel: ID!
+                        ){
+                            CreateFifi(
+                                idFcgDel: $idFcgDel
+                            ){
+                                idFcgDel
+                            }
+                        }
+                    `);
+
+
+    const DeleteInfo = (idFcg) => {
+        const uid = state.in_session_data.uid
+        console.log(uid)
+        try {
+            CreateFifiNeo4j({
+                variables: {
+                    idFcgDel: idFcg,
+            }}).then(res => {
+                console.log(res.data1)
+                props.history.push('home')
+            })
+        } catch (error) { console.log("error => ", error) }
+
+    }
+
     const deleteDeck = idFcg => {
         Swal.fire({
             title: 'Seguro que desea eliminar la baraja?',
@@ -91,6 +119,7 @@ const Decks = (props) => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
+                DeleteInfo(idFcg);
                 console.log("AQUÍ DEBERÍA BORRAR LA BAEAJA "+idFcg);
                 Swal.fire(
                     '',
@@ -174,7 +203,7 @@ const Decks = (props) => {
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                     <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
+                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
                 </Footer>
             </Layout>
         </div>
