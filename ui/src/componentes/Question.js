@@ -47,14 +47,15 @@ const Question = props => {
     const remember = ()=>{
         console.log("si recuerdo esta pregunta");
         props.history.push({
-            pathname: 'question'
+            pathname: 'congratulations'
         })
     };
 
     const dontRemember = ()=>{
         console.log("no recuerdo esta pregunta");
         props.history.push({
-            pathname: 'question'
+            pathname: 'congratulations'
+
         })
     };
 
