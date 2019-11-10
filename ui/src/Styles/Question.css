@@ -1,0 +1,65 @@
+.question-container{
+    margin-top: 60px;
+    margin-bottom: 42px;
+}
+
+.question-container h1{
+    text-align: center;
+    color: #40a9ff;
+    margin-bottom: 2em;
+}
+
+.rta-container h2{
+    text-align: center;
+    color: #40a9ff;
+    margin-top: 2em;
+}
+
+.flippy-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-flashcard{
+    height: 60px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.btn-yes{
+    background-color: #a5dc86;
+    border-color: #a5dc86;
+    width: 5em;
+    margin: 0.5em 1em;
+}
+
+.btn-yes:focus{
+    background-color: #a5dc86;
+    border-color: #a5dc86;
+    width: 5em;
+}
+
+.btn-yes:hover{
+    background-color: #42DC3D;
+    border-color: #42DC3D;
+    width: 5em;
+}
+
+.btn-no{
+    background-color: #f27474;
+    border-color: #f27474;
+    width: 5em;
+    margin: 0.5em 1em;
+}
+
+.btn-no:hover{
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+    width: 5em;
+}
+
+.rta-container{
+    text-align: center;
+}
