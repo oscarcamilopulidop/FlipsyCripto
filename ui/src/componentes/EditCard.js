@@ -108,7 +108,7 @@ const EditCard  = props => {
               }
           }).then(res => {
               console.log(res.data)
-              // props.history.push('cards-creation')
+              props.history.push('home')
           })
       }catch (err) {
           console.log(err);

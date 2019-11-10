@@ -122,7 +122,7 @@ const DeckEdition = props => {
                 }
             }).then(res => {
                 console.log(res.data)
-                // props.history.push('decks')
+                props.history.push('home')
             })
         } catch (error) { console.log("error => ", error) }
 
