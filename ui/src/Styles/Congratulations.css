@@ -1,0 +1,50 @@
+.congratulations-main-container{
+    height: 100%;
+}
+
+.congratulations-container{
+    margin-top: 42px;
+    margin-bottom: 42px;
+}
+
+.congratulations-container h1,.congratulations-container h2,.congratulations-container h3{
+    text-align: center;
+    margin-bottom: 0.8em;
+    margin-top: 2em;
+    color: #40a9ff;
+}
+
+.congratulations-container h1{
+    font-size: xx-large;
+    color: #40a9ff;
+}
+
+.congratulations-container h3{
+    font-size: medium;
+    color: #00558c;
+
+}
+
+.result{
+    text-align: center;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.congratulations-container .ant-statistic-content-value-int{
+    font-size: 3em;
+}
+
+.congratulations-container .ant-statistic-content-value-decimal{
+    font-size: 2.3em;
+}
+
+.congratulations-container .ant-statistic-content-suffix{
+    font-size: 2.3em;
+}
+
+.btn-back{
+    display: flex;
+    margin: auto;
+    margin-top: 5em;
+}

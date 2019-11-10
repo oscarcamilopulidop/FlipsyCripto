@@ -21,6 +21,7 @@ import StudyCards from './componentes/StudyCards'
 import CreateCard from './componentes/CreateCard'
 import EditCard from './componentes/EditCard'
 import Question from './componentes/Question'
+import Congratulations from './componentes/Congratulations'
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path="/createCard" component={CreateCard}/>
         <Route path="/editCard" component={EditCard}/>
         <Route path="/question" component={Question}/>
+        <Route path="/congratulations" component={Congratulations}/>
       </Switch>
     </BrowserRouter>
   );
