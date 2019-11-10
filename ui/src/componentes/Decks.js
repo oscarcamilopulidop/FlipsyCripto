@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-import {Button, List, Card, Layout, Select} from 'antd'
+import {Button, List, Card, Layout, Select, Badge} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
@@ -7,8 +7,8 @@ import Context from "../GlobalState/context";
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
-import { useMutation } from '@apollo/react-hooks'
-import Swal from 'sweetalert2'
+import { useMutation } from '@apollo/react-hooks';
+import Swal from 'sweetalert2';
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
@@ -203,7 +203,7 @@ const Decks = (props) => {
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                     <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>
