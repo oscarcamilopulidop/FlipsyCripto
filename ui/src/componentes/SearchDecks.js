@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-import {Input, Layout} from 'antd'
+import {Avatar, Button, Card, Input, Layout, List} from 'antd'
 import '../Styles/SearchFlashCards.css'
 import '../Styles/Home.css'
 import ProfileList from "./ProfileList";
@@ -9,7 +9,7 @@ import {Auth} from "aws-amplify";
 
 const { Header, Footer} = Layout;
 
-const SearchFlashCards = props => {
+const SearchDecks = props => {
 
     const { state, actions } = useContext(Context);
 
@@ -29,6 +29,29 @@ const SearchFlashCards = props => {
 
     }
 
+    const dataTemp = [
+        {
+            name: 'Baraja de Ronald',
+        },
+        {
+            name: 'Baraja de Juan',
+        },
+        {
+            name: 'Baraja de Organista',
+        },
+        {
+            name: 'Baraja de Camilo',
+        },
+        {
+            name: 'Baraja de Maria',
+        },
+        {
+            name: 'Baraja de Cristian'
+        },
+        {
+            name: 'Baraja de Brayan',
+        },
+    ];
     const { Search } = Input;
 
     var flag = false;
@@ -58,12 +81,39 @@ const SearchFlashCards = props => {
                 </div>
                 <div className="search-container">
                     <Search
-                        placeholder="Busca flashcards"
+                        placeholder="Tema"
                         onSearch={toSearch}
                         size="large"
                         enterButton />
                 </div>
 
+                <div className='list-main-container'>
+
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={dataTemp}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    color="white"
+                                    avatar={
+                                        <Card title=" " onClick={() => console.log("baraja ...")}>
+                                            <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
+                                        </Card>
+                                    }
+                                    title={item.name}
+                                />
+                                <Button
+                                    type="primary"
+                                    shape="circle"
+                                    size={"large"}
+                                    onClick={() => console.log("wait") }>
+                                    +
+                                </Button>
+                            </List.Item>
+                        )}
+                    />
+                </div>
 
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
@@ -77,4 +127,4 @@ const SearchFlashCards = props => {
     )
 }
 
-export default SearchFlashCards
+export default SearchDecks
