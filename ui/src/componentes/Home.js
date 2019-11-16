@@ -70,7 +70,7 @@ const Home = props => {
             setCurrent(current+1);
         }
         console.log(current)
-    }
+    };
 
     const prevCard = () => {
         if(current > 0){
