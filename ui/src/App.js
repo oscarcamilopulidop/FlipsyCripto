@@ -18,6 +18,7 @@ import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
 import CreateCard from './componentes/CreateCard'
 import SearchDecks from "./componentes/SearchDecks";
+import CategoryDecks from "./componentes/CategoryDecks";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/study" component={StudyCards} />
         <Route path="/createCard" component={CreateCard}/>
         <Route path='/search-deck' component={SearchDecks}/>
+        <Route path='/search-category' component={CategoryDecks}/>
       </Switch>
     </BrowserRouter>
   );

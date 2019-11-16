@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Avatar, Button, Card, Input, Layout, List} from 'antd'
 import '../Styles/SearchFlashCards.css'
 import '../Styles/Home.css'
@@ -6,11 +6,21 @@ import ProfileList from "./ProfileList";
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import {Auth} from "aws-amplify";
+import {useQuery} from "@apollo/react-hooks";
+import {gql} from "apollo-boost";
 
 const { Header, Footer} = Layout;
 
-const SearchDecks = props => {
+// const GET_DECKS = gql`
+//     query Search($id: String) {
+//         CAT(name: $id) {
+//             fcg {
+//                 title
+//             }
+//     }
+// }`;
 
+const SearchDecks = props => {
     const { state, actions } = useContext(Context);
 
     useEffect(() => {
@@ -25,33 +35,48 @@ const SearchDecks = props => {
         })
     }, [])
 
+    const[searchDeck, setSearchDeck] = useState({
+        category: "",
+    })
+
+    // const { loading, error, data } = useQuery(GET_DECKS,
+    //     {variables:{
+    //                 id:  searchDeck.category//"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+    //     },
+    //     pollInterval: 500,
+    // });
+    //
+    // if (!loading) { console.log(data) }
+
     const toSearch = () => {
+        dataTemp1.push({
+            name: 'testing',
+        })
+        console.log(searchDeck.category);
+        console.log(dataTemp1);
 
     }
 
-    const dataTemp = [
+    const dataTemp1 = [
         {
             name: 'Baraja de Ronald',
-        },
-        {
-            name: 'Baraja de Juan',
         },
         {
             name: 'Baraja de Organista',
         },
         {
-            name: 'Baraja de Camilo',
-        },
-        {
             name: 'Baraja de Maria',
         },
+    ];
+
+    const dataTemp2 = [
         {
             name: 'Baraja de Cristian'
         },
         {
             name: 'Baraja de Brayan',
         },
-    ];
+    ]
     const { Search } = Input;
 
     var flag = false;
@@ -83,15 +108,15 @@ const SearchDecks = props => {
                     <Search
                         placeholder="Tema"
                         onSearch={toSearch}
+                        onChange={e=>setSearchDeck({...searchDeck,category: e.target.value})}
                         size="large"
                         enterButton />
                 </div>
 
                 <div className='list-main-container'>
-
                     <List
                         itemLayout="horizontal"
-                        dataSource={dataTemp}
+                        dataSource={dataTemp1}
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
