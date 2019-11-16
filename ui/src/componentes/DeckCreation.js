@@ -61,6 +61,7 @@ const DeckCreation = props => {
             $isStudying: Boolean!,
             $lastModifyDate: String!,
             $creationDate: String!,
+            $remainingNotifications: Int,
         ){
             CreateFCGroup(
                 idFcg: $idFcg,
@@ -72,8 +73,9 @@ const DeckCreation = props => {
                 isStudying: $isStudying,
                 lastModifyDate: $lastModifyDate,
                 creationDate: $creationDate,
+                remainingNotifications: $remainingNotifications,
             ){
-                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate,
+                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate, remainingNotifications,
             }
         }
     `);
@@ -104,6 +106,7 @@ const DeckCreation = props => {
                     isStudying: deck_data.public_,
                     lastModifyDate: deck_data.lastModifyDate,
                     creationDate: deck_data.creationDate,
+                    remainingNotifications: 3,
                 }
             }).then(res => {
                 console.log(res.data)

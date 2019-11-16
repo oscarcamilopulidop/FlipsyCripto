@@ -4,10 +4,9 @@ import '../Styles/Decks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
-import { useQuery } from '@apollo/react-hooks'
+import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
-import { useMutation } from '@apollo/react-hooks';
 import Swal from 'sweetalert2';
 
 const { Header, Footer} = Layout;
@@ -121,6 +120,7 @@ const Decks = (props) => {
             if (result.value) {
                 DeleteInfo(idFcg);
                 console.log("AQUÍ DEBERÍA BORRAR LA BAEAJA "+idFcg);
+                SendQuery(idFcg);
                 Swal.fire(
                     '',
                     'Su baraja ha sido eliminada.',
@@ -128,6 +128,32 @@ const Decks = (props) => {
                 )
             }
         })
+    };
+
+    const [Createfifi] = useMutation(gql`
+        mutation Create(
+            $idFcg_del: ID
+        ){
+            Createfifi(
+                idFcg_del: $idFcg_del,
+            ){
+                idFcg_del,
+            }
+        }
+    `);
+
+    const SendQuery = (idFcg_del) => {
+        try {
+            Createfifi({
+                variables: {
+                    idFcg_del: idFcg_del,
+                }
+            }).then(res => {
+                console.log(idFcg_del+" correctamente borrada por Fifi");
+            })
+        }catch (err) {
+            console.log(err.toString())
+        }
     };
 
     const handleChange = () => {
@@ -147,6 +173,8 @@ const Decks = (props) => {
         element.style.transition = 'transform 500ms';
         flag = !flag;
     };
+
+
 
     return (
         loading ?

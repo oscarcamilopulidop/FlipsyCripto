@@ -54,7 +54,7 @@ const CreateCard  = props => {
         this.setState({ mdeValue: value });
     };
 
-    const [CreateCardInNeo4j, { data }] = useMutation(gql`
+    const [CreateCardInNeo4j] = useMutation(gql`
         mutation Create(
             $idFc: ID
             $front: String!
@@ -109,7 +109,7 @@ const CreateCard  = props => {
       }catch (err) {
           console.log(err);
       }
-    }
+    };
 
 
     var flag = false;

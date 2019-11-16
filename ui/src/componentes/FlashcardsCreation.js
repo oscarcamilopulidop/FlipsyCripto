@@ -50,7 +50,7 @@ const FlascardsCreation = props => {
         search: idFc,
         state: {
           idFc: idFc,
-          idFcg: props.location.state.id,
+          idFcg: props.location.state.idFcg,
           title: props.location.state.title
         }
       })
@@ -66,7 +66,7 @@ const FlascardsCreation = props => {
 
     const editDeck = () => {
       props.history.push({
-        pathname: 'createCard',
+        pathname: 'deck-edition',
         state: {
           idFcg: props.location.state.idFcg,
           title: props.location.state.title
@@ -95,8 +95,14 @@ const FlascardsCreation = props => {
     };
 
     const play = () => {
-        props.history.push('study')
-    }
+        props.history.push({
+            pathname: 'study',
+            state: {
+                idFcg: props.location.state.idFcg,
+                title: props.location.state.title
+            }
+        })
+    };
 
 
     const deck_title = props.location.state.title;
@@ -159,8 +165,6 @@ const FlascardsCreation = props => {
                         )}
                     />
                 </div>
-
-
 
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
