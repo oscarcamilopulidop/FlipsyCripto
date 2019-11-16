@@ -13,19 +13,19 @@ const CategoryDecks = props => {
 
     const data = [
         {
-            cat: 'Matemáticas',
+            cat: 'Matematicas',
             title: 'Matemáticas'
         },
         {
-            cat: 'Química',
+            cat: 'Quimica',
             title: 'Química'
         },
         {
-            cat: 'Física',
+            cat: 'Fisica',
             title: 'Física'
         },
         {
-            cat: 'Biología',
+            cat: 'Biologia',
             title: 'Biología'
         }
     ];
@@ -59,7 +59,13 @@ const CategoryDecks = props => {
 
     const open = (cat,name) => {
         console.log("abriendo " + name +" " + cat)
-        props.history.push('search-deck')
+        props.history.push({
+            pathname: 'search-deck',
+            search: cat,
+            state: {
+                category: cat,
+            }
+        });
     };
 
     const selectImg =(cat) => {
@@ -101,7 +107,7 @@ const CategoryDecks = props => {
                             <List.Item className="item-quest" onClick={()=>open(item.cat,item.title)}>
                                 <List.Item.Meta
                                     color="white"
-                                    avatar={<Avatar size={64} src={selectImg(item.cat)} />}
+                                    avatar={<Avatar size={64} src={selectImg(item.title)} />}
                                     title={item.title}
                                 />
                                 <img className = "play-questionnaire" src={require("../Assets/play-blue.svg")} alt="play"/>

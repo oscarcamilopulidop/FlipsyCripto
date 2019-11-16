@@ -1,24 +1,35 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {Avatar, Button, Card, Input, Layout, List} from 'antd'
-import '../Styles/SearchFlashCards.css'
+import '../Styles/SearchDecks.css'
 import '../Styles/Home.css'
-import ProfileList from "./ProfileList";
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import {Auth} from "aws-amplify";
-import {useQuery} from "@apollo/react-hooks";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
+import Swal from "sweetalert2";
 
 const { Header, Footer} = Layout;
 
-// const GET_DECKS = gql`
-//     query Search($id: String) {
-//         CAT(name: $id) {
-//             fcg {
-//                 title
-//             }
-//     }
-// }`;
+const GET_DECKS = gql`
+    query Search($id: String) {
+        CAT(name: $id) {
+            fcg {
+                title
+                idFcg
+                idUser
+            }
+    }
+}`;
+
+const ADD_DECKS = gql `mutation ADD_FCG_TO_WATCH_LIST($id :ID, $idFcg: ID) {
+    AddUSERObserving( from: {
+            idUser: $id
+        }, to: {
+            idFcg: $idFcg
+        }
+    ) {from{idUser}}
+}`;
 
 const SearchDecks = props => {
     const { state, actions } = useContext(Context);
@@ -39,27 +50,67 @@ const SearchDecks = props => {
         category: "",
     })
 
-    // const { loading, error, data } = useQuery(GET_DECKS,
-    //     {variables:{
-    //                 id:  searchDeck.category//"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
-    //     },
-    //     pollInterval: 500,
-    // });
+    const { loading, error, data } = useQuery(GET_DECKS,
+        {variables:{
+                    id:  props.location.state.category//"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+        },
+        pollInterval: 500,
+
+
+    });
+
+    if (!loading) {
+        // data.filter((item,i) => {
+        //     console.log(item)
+        // })
+        console.log(typeof (data))
+    }
+
+    // useEffect( () => {
+    //     !loading
     //
-    // if (!loading) { console.log(data) }
+    // }, [loading])
+
+    const addDeck = idFcg => {
+        Swal.fire({
+            title: 'Seguro que deseas agregar la baraja?',
+            type: 'warning',
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Agregar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                // addDeck(idFcg);
+                console.log("Aqui deberia agregar la baraja " + idFcg)
+                Swal.fire(
+                    '',
+                    'Esta baraja ha sido agregada.',
+                    'success'
+                )
+            }
+        })
+    }
+
+    // const {} = useMutation(ADD_DECKS,
+    //     {variables{
+    //         // id: state.cu
+    //             idFcg: data
+    //         }
+    //
+    // })
 
     const toSearch = () => {
         dataTemp1.push({
             name: 'testing',
         })
-        console.log(searchDeck.category);
-        console.log(dataTemp1);
+        console.log(state.current_category.cat_name);
 
     }
 
     const dataTemp1 = [
         {
-            name: 'Baraja de Ronald',
+            name: 'Baraja de Cristian'
         },
         {
             name: 'Baraja de Organista',
@@ -71,7 +122,7 @@ const SearchDecks = props => {
 
     const dataTemp2 = [
         {
-            name: 'Baraja de Cristian'
+            name: 'Baraja de Ronald',
         },
         {
             name: 'Baraja de Brayan',
@@ -94,6 +145,9 @@ const SearchDecks = props => {
     }
 
     return (
+        loading ?
+            <div />
+            :
         <div className='searcher-main-container'>
             <Layout>
 
@@ -104,35 +158,34 @@ const SearchDecks = props => {
                 <div className="home-menu-collapse" id="menu">
                     <Menu/>
                 </div>
-                <div className="search-container">
-                    <Search
-                        placeholder="Tema"
-                        onSearch={toSearch}
-                        onChange={e=>setSearchDeck({...searchDeck,category: e.target.value})}
-                        size="large"
-                        enterButton />
-                </div>
 
                 <div className='list-main-container'>
                     <List
                         itemLayout="horizontal"
-                        dataSource={dataTemp1}
+                        dataSource={data.CAT[0].fcg}
                         renderItem={item => (
+                            item.idUser == state.in_session_data.uid
+                                ?
+                            <div />
+                                :
                             <List.Item>
                                 <List.Item.Meta
                                     color="white"
                                     avatar={
-                                        <Card title=" " onClick={() => console.log("baraja ...")}>
-                                            <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
-                                        </Card>
+                                        <div className="mini-card-content-study">
+                                            <div> Texto de prueba del contenido de la primera tarjeta </div>
+                                            <span>
+                                                <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
+                                            </span>
+                                        </div>
                                     }
-                                    title={item.name}
+                                    title={item.title}
                                 />
                                 <Button
                                     type="primary"
                                     shape="circle"
                                     size={"large"}
-                                    onClick={() => console.log("wait") }>
+                                    onClick={() => addDeck(item.idFcg) }>
                                     +
                                 </Button>
                             </List.Item>
