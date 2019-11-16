@@ -1,0 +1,49 @@
+.secundary-card-preview{
+    vertical-align: middle;
+    horizontal-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 60px;
+    background: white;
+    border: 3px #094c6d solid;
+    font-size: 5px;
+    color: #094c6d;
+    text-align: center;
+    padding: 4px;
+}
+
+.primary-card-preview{
+    position: relative;
+    vertical-align: middle;
+    horizontal-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+    width: 93px;
+    background: white;
+    border: 3px #094c6d solid;
+    font-size: 8.5px;
+    color: #094c6d;
+    text-align: center;
+    padding: 4px;
+}
+
+.preview-cards-container{
+    vertical-align: middle;
+    width: 100% !important;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-preview{
+}
+
+.title-preview{
+    color: #094c6d;
+    font-size: 3vh;
+
+}
