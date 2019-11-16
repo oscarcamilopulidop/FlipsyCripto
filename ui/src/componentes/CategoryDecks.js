@@ -104,7 +104,7 @@ const CategoryDecks = props => {
                                     avatar={<Avatar size={64} src={selectImg(item.cat)} />}
                                     title={item.title}
                                 />
-                                <img className = "play-questionnaire" src={require("../Assets/play-white.svg")} alt="play"/>
+                                <img className = "play-questionnaire" src={require("../Assets/play-blue.svg")} alt="play"/>
                             </List.Item>
                         )}
                     />
@@ -113,9 +113,9 @@ const CategoryDecks = props => {
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                    <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <Badge count={5}> <img className = "footer-item-selected" src={require("../Assets/Notification-selected.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
+                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
                 </Footer>
             </Layout>
         </div>
