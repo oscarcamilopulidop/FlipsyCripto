@@ -14,10 +14,12 @@ const { Header, Footer} = Layout;
 const { Option } = Select;
 
 const GET_DECKS = gql`
-  query Search($id: String!) {
-      FCGroup(idUser: $id)  {
-            idFcg, title
+  query Search($id : ID!) {
+    USER(idUser : $id) {
+      fcg {
+        idFcg title
       }
+    }
   }`;
 
 
@@ -140,7 +142,7 @@ const Decks = (props) => {
                     </Button>
                     <List
                         grid={{ gutter: 10, column: 3 }}
-                        dataSource={data.FCGroup}
+                        dataSource={data.USER[0].fcg}
                         renderItem={item => (
                             <List.Item>
                                 <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
@@ -155,12 +157,10 @@ const Decks = (props) => {
                     ,
                 </div>
 
-
-
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
                     <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
                 </Footer>

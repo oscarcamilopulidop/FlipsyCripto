@@ -22,7 +22,7 @@ const GET_DECKS = gql`
     }
 }`;
 
-const ADD_DECKS = gql `mutation ADD_FCG_TO_WATCH_LIST($id :ID, $idFcg: ID) {
+const ADD_DECKS = gql `mutation ADD_FCG_TO_WATCH_LIST($id :ID!, $idFcg: ID!) {
     AddUSERObserving( from: {
             idUser: $id
         }, to: {
@@ -66,11 +66,6 @@ const SearchDecks = props => {
         console.log(typeof (data))
     }
 
-    // useEffect( () => {
-    //     !loading
-    //
-    // }, [loading])
-
     const addDeck = idFcg => {
         Swal.fire({
             title: 'Seguro que deseas agregar la baraja?',
@@ -81,7 +76,7 @@ const SearchDecks = props => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
-                // addDeck(idFcg);
+                addDeckRelation(idFcg);
                 console.log("Aqui deberia agregar la baraja " + idFcg)
                 Swal.fire(
                     '',
@@ -91,43 +86,23 @@ const SearchDecks = props => {
             }
         })
     }
+    const [addRelation] = useMutation(ADD_DECKS);
 
-    // const {} = useMutation(ADD_DECKS,
-    //     {variables{
-    //         // id: state.cu
-    //             idFcg: data
-    //         }
-    //
-    // })
-
-    const toSearch = () => {
-        dataTemp1.push({
-            name: 'testing',
-        })
-        console.log(state.current_category.cat_name);
-
+    const addDeckRelation = idFcg => {
+      try {
+          addRelation({
+              variables: {
+                id: state.in_session_data.uid,
+                idFcg : idFcg
+              }
+          }).then(res => {
+              console.log(res.data)
+              // props.history.push('decks')
+          })
+      } catch (error) { console.log("error => ", error) }
     }
 
-    const dataTemp1 = [
-        {
-            name: 'Baraja de Cristian'
-        },
-        {
-            name: 'Baraja de Organista',
-        },
-        {
-            name: 'Baraja de Maria',
-        },
-    ];
 
-    const dataTemp2 = [
-        {
-            name: 'Baraja de Ronald',
-        },
-        {
-            name: 'Baraja de Brayan',
-        },
-    ]
     const { Search } = Input;
 
     var flag = false;
@@ -196,7 +171,7 @@ const SearchDecks = props => {
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                    <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
                     <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
                 </Footer>

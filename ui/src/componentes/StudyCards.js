@@ -32,7 +32,7 @@ const StudyCards = props => {
         query Seacrh($id: ID! = "997690.2499482292" ) {
             FC(idFc: $id)  {
                 front, back
-        }        
+        }
     }`;
 
     const { state, actions } = useContext(Context);
@@ -140,7 +140,7 @@ const StudyCards = props => {
             <Footer className="footer">
                 <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                 <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                 <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
                 <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
             </Footer>
