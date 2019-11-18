@@ -2,3 +2,29 @@
     width: 10%;
     height: 10%;
 }
+
+.mini-deck{
+    position: relative;
+    vertical-align: middle;
+    horizontal-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 50px;
+    background: #094c6d;
+    border: 3px #094c6d solid;
+    /*font-size: 2.5px;*/
+    background-color: #094c6d;
+    text-align: center;
+    padding: 4px;
+    z-index: 10;
+}
+
+.img-card{
+    height: 30px;
+    width: 30px;
+    position: relative;
+    display: flex;
+    z-index: 1;
+}

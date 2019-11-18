@@ -147,11 +147,8 @@ const SearchDecks = props => {
                                 <List.Item.Meta
                                     color="white"
                                     avatar={
-                                        <div className="mini-card-content-study">
-                                            <div> Texto de prueba del contenido de la primera tarjeta </div>
-                                            <span>
-                                                <img className = "img-flashcard-study" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" height="15" width="15"/>
-                                            </span>
+                                        <div className="mini-deck">
+                                            <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                                         </div>
                                     }
                                     title={item.title}
