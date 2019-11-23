@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import 'antd/dist/antd.css';
-import { Layout, Button, Form,Select, Tag, Input, AutoComplete, Icon} from 'antd';
+import { Layout, Button, Form,Select, Input, AutoComplete, Icon} from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import '../Styles/DeckCreation.css'
@@ -8,14 +8,9 @@ import Menu from "./Menu";
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import moment from "moment";
+import { Badge} from 'antd';
 
-const { Search } = Input;
-const { Header, Footer, Sider, Content } = Layout;
-
-function log(e) {
-    console.log(e);
-}
-
+const { Header, Footer, Content } = Layout;
 
 const formItemLayout = {
     labelCol: {
@@ -66,6 +61,8 @@ const DeckCreation = props => {
             $isStudying: Boolean!,
             $lastModifyDate: String!,
             $creationDate: String!,
+            $remainingNotifications: Int,
+            $observing_users: [String]
         ){
             CreateFCGroup(
                 idFcg: $idFcg,
@@ -77,8 +74,10 @@ const DeckCreation = props => {
                 isStudying: $isStudying,
                 lastModifyDate: $lastModifyDate,
                 creationDate: $creationDate,
+                remainingNotifications: $remainingNotifications,
+                observing_users: $observing_users
             ){
-                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate,
+                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate, remainingNotifications, observing_users
             }
         }
     `);
@@ -109,6 +108,8 @@ const DeckCreation = props => {
                     isStudying: deck_data.public_,
                     lastModifyDate: deck_data.lastModifyDate,
                     creationDate: deck_data.creationDate,
+                    remainingNotifications: 3,
+                    observing_users: []
                 }
             }).then(res => {
                 console.log(res.data)
@@ -206,9 +207,9 @@ const DeckCreation = props => {
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>

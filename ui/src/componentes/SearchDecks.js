@@ -55,8 +55,6 @@ const SearchDecks = props => {
                     id:  props.location.state.category//"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
         },
         pollInterval: 500,
-
-
     });
 
     if (!loading) {
