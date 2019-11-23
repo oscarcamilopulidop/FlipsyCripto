@@ -18,6 +18,9 @@ const GET_DECKS = gql`
                 title
                 idFcg
                 idUser
+                observing_users {
+                  idUser
+                }
             }
     }
 }`;
@@ -58,10 +61,7 @@ const SearchDecks = props => {
     });
 
     if (!loading) {
-        // data.filter((item,i) => {
-        //     console.log(item)
-        // })
-        console.log(typeof (data))
+        console.log(data)
     }
 
     const addDeck = idFcg => {
