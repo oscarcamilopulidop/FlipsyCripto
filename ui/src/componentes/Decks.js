@@ -4,23 +4,20 @@ import '../Styles/Decks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
-import { useQuery } from '@apollo/react-hooks'
+import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
-import { useMutation } from '@apollo/react-hooks';
 import Swal from 'sweetalert2';
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
 
 const GET_DECKS = gql`
-  query Search($id : ID!) {
-    USER(idUser : $id) {
-      fcg {
-        idFcg title
-      }
-    }
-  }`;
+    query Search($id: String!) {
+        FCGroup(idUser: $id)  {
+            idFcg, title
+        }
+    }`;
 
 
 
@@ -33,7 +30,7 @@ const Decks = (props) => {
             });
             console.log(res.attributes.sub)
         }).catch(() => {
-          props.history.push('');
+            props.history.push('');
         })
     }, []);
 
@@ -45,7 +42,7 @@ const Decks = (props) => {
                 id: uid //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
-    });
+        });
 
     console.log(data)
 
@@ -60,12 +57,12 @@ const Decks = (props) => {
     const openDeckEdit = (idFcg, title) => {
         console.log(idFcg)
         props.history.push({
-          pathname: 'deck-edition',
-          search: idFcg,
-          state: {
-            idFcg: idFcg,
-            title: title
-          }
+            pathname: 'deck-edition',
+            search: idFcg,
+            state: {
+                idFcg: idFcg,
+                title: title
+            }
         })
     }
 
@@ -73,27 +70,27 @@ const Decks = (props) => {
     const openDeck = (idFcg, title) => {
         console.log(idFcg)
         props.history.push({
-          pathname: 'cards-creation',
-          search: idFcg,
-          state: {
-            idFcg: idFcg,
-            title: title
-          }
+            pathname: 'cards-creation',
+            search: idFcg,
+            state: {
+                idFcg: idFcg,
+                title: title
+            }
         })
     }
 
 
     const [CreateFifiNeo4j, { data1 }] = useMutation(gql`
-                        mutation Create(
-                            $idFcgDel: ID!
-                        ){
-                            CreateFifi(
-                                idFcgDel: $idFcgDel
-                            ){
-                                idFcgDel
-                            }
-                        }
-                    `);
+        mutation Create(
+            $idFcgDel: ID!
+        ){
+            CreateFifi(
+                idFcgDel: $idFcgDel
+            ){
+                idFcgDel
+            }
+        }
+    `);
 
 
     const DeleteInfo = (idFcg) => {
@@ -103,8 +100,8 @@ const Decks = (props) => {
             CreateFifiNeo4j({
                 variables: {
                     idFcgDel: idFcg,
-            }}).then(res => {
-                console.log(res.data1)
+                }}).then(res => {
+                console.log(res)
                 props.history.push('home')
             })
         } catch (error) { console.log("error => ", error) }
@@ -150,63 +147,67 @@ const Decks = (props) => {
         flag = !flag;
     };
 
+
+
     return (
         loading ?
             <div />
             :
-        <div className='decks-main-container'>
-            <Layout>
+            <div className='decks-main-container'>
+                <Layout>
 
-                <Header className = "header">
-                    <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
-                    <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
-                </Header>
-                <div className="home-menu-collapse" id="menu">
-                    <Menu/>
-                </div>
-                <div className="decks-container">
-                    <h1 onClick={show}>Barajas</h1>
+                    <Header className = "header">
+                        <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
+                        <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
+                    </Header>
+                    <div className="home-menu-collapse" id="menu">
+                        <Menu/>
+                    </div>
+                    <div className="decks-container">
+                        <h1 onClick={show}>Barajas</h1>
 
-                    <div className="select-container">
-                        <Select defaultValue="Propias" style={{ width: '60%'}} onChange={handleChange}>
-                            <Option value="Propias">Propias</Option>
-                            <Option value="Compartidas">Compartidas conmigo</Option>
-                        </Select>
+                        <div className="select-container">
+                            <Select defaultValue="Propias" style={{ width: '60%'}} onChange={handleChange}>
+                                <Option value="Propias">Propias</Option>
+                                <Option value="Compartidas">Compartidas conmigo</Option>
+                            </Select>
+                        </div>
+
+                        <Button onClick={() => props.history.push('deck-creation')} className="new-card" type="dashed" ghost>
+                            Nueva
+                            <br/>
+                            Baraja
+                            <br/>
+                            +
+                        </Button>
+                        <List
+                            grid={{ gutter: 10, column: 3 }}
+                            dataSource={data.FCGroup}
+                            renderItem={item => (
+                                <List.Item>
+                                    <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => openDeckEdit(item.idFcg)} alt="delete-button"/>
+                                    <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
+                                    <Card title=" " onClick={() => openDeck(item.idFcg, item.title)}>
+                                        <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
+                                        {item.title}
+                                    </Card>
+                                </List.Item>
+                            )}
+                        />
+                        ,
                     </div>
 
-                    <Button onClick={() => props.history.push('deck-creation')} className="new-card" type="dashed" ghost>
-                        Nueva
-                        <br/>
-                        Baraja
-                        <br/>
-                        +
-                    </Button>
-                    <List
-                        grid={{ gutter: 10, column: 3 }}
-                        dataSource={data.USER[0].fcg}
-                        renderItem={item => (
-                            <List.Item>
-                                <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => openDeckEdit(item.idFcg)} alt="delete-button"/>
-                                <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
-                                <Card title=" " onClick={() => openDeck(item.idFcg, item.title)}>
-                                    <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
-                                    {item.title}
-                                </Card>
-                            </List.Item>
-                        )}
-                    />
-                    ,
-                </div>
 
-                <Footer className="footer">
-                    <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
-                    <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
-                    <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
-                </Footer>
-            </Layout>
-        </div>
+
+                    <Footer className="footer">
+                        <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
+                        <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
+                        <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                        <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
+                        <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
+                    </Footer>
+                </Layout>
+            </div>
     )
 };
 

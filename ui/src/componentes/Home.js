@@ -10,6 +10,9 @@ import Menu from "./Menu";
 import { Auth } from 'aws-amplify'
 import { Badge} from 'antd';
 import ReactCardFlip from "react-card-flip";
+import Swal from "sweetalert2";
+import {gql} from "apollo-boost";
+import {useQuery} from "@apollo/react-hooks";
 
 const { Search } = Input;
 const { Header, Footer, Content } = Layout;
@@ -257,25 +260,6 @@ const Home = props => {
                     <div className="text-container">
                         <span className="text"> <span className="link"> Juanita suarez </span> ha creado una nueva baraja <span className="link"> Matemáticas </span> </span>
                     </div>
-                </div>
-
-                <div className="outside-container">
-                    <img className="circular" src ="https://static.ellahoy.es/ellahoy/fotogallery/845X0/459517/cortes-de-cabello-apra-cara-cuadrada-2017.jpg" height="100" width="100"/>
-                    <div className="text-container">
-                        <span className="text"> <span className="link" onClick={() => console.log(state.in_session_data.uid)} > Andrés Felipe Ortíz </span> ha aceptado tu invitación de amistad</span>
-                    </div>
-                </div>
-
-                <div className="outside-container">
-                    <div className="card">
-                    </div>
-                    <img className="circular" src ="http://cdn3.upsocl.com/wp-content/uploads/2016/05/18-24.jpg" height="100" width="100"/>
-                    <div className="text-container">
-                        <span className="text"> <span className="link"> Juan Carlos Castellanos </span> ha compartido contigo su baraja <span className="link"> Música Instrumental </span> </span>
-                    </div>
-                </div>
-                <div className="outside-container">
-
                 </div>
 
             </Content>

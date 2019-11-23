@@ -6,7 +6,7 @@ import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { Auth } from 'aws-amplify'
 import Swal from 'sweetalert2'
-import {useQuery} from "@apollo/react-hooks";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
 import { Badge} from 'antd';
 
@@ -50,7 +50,7 @@ const FlascardsCreation = props => {
         search: idFc,
         state: {
           idFc: idFc,
-          idFcg: props.location.state.id,
+          idFcg: props.location.state.idFcg,
           title: props.location.state.title
         }
       })
@@ -66,13 +66,39 @@ const FlascardsCreation = props => {
 
     const editDeck = () => {
       props.history.push({
-        pathname: 'createCard',
+        pathname: 'deck-edition',
         state: {
           idFcg: props.location.state.idFcg,
           title: props.location.state.title
         }
       })
       };
+
+      const [CreateFifi2Neo4j, { data1 }] = useMutation(gql`
+                          mutation Create(
+                              $idFcDel: ID!
+                          ){
+                              CreateFifi2(
+                                  idFcDel: $idFcDel
+                              ){
+                                  idFcDel
+                              }
+                          }
+                      `);
+
+      const DeleteInfo = (idFc) => {
+          try {
+              CreateFifi2Neo4j({
+                  variables: {
+                      idFcDel: idFc,
+              }}).then(res => {
+                  console.log(res)
+                  props.history.push('decks')
+              })
+          } catch (error) { console.log("error => ", error)}
+
+      }
+
 
     const deleteCard = idFc => {
         Swal.fire({
@@ -84,7 +110,8 @@ const FlascardsCreation = props => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
-                console.log("AQUÍ DEBERÍA BORRAR LA CARTA "+idFc);
+                DeleteInfo(idFc);
+                console.log("AQUÍ DEBERÍA BORRAR LA CARTA "+ idFc);
                 Swal.fire(
                     '',
                     'Su carta ha sido eliminada.',
@@ -95,8 +122,14 @@ const FlascardsCreation = props => {
     };
 
     const play = () => {
-        props.history.push('study')
-    }
+        props.history.push({
+            pathname: 'study',
+            state: {
+                idFcg: props.location.state.idFcg,
+                title: props.location.state.title
+            }
+        })
+    };
 
 
     const deck_title = props.location.state.title;
@@ -153,14 +186,12 @@ const FlascardsCreation = props => {
                         renderItem={item => (
                             <List.Item>
                                 <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")} onClick={ () => editCard(item.idFc)} alt="delete-button"/>
-                                <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFcg)} alt="delete-button"/>
+                                <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFc)} alt="delete-button"/>
                                 <Card onClick={() => openCard(item.idFc)}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>
                             </List.Item>
                         )}
                     />
                 </div>
-
-
 
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>

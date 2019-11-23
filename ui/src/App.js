@@ -19,11 +19,11 @@ import QuestionnairesList from './componentes/QuestionnairesList'
 import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
 import CreateCard from './componentes/CreateCard'
-import SearchDecks from "./componentes/SearchDecks";
 import CategoryDecks from "./componentes/CategoryDecks";
 import EditCard from './componentes/EditCard'
 import Question from './componentes/Question'
 import Congratulations from './componentes/Congratulations'
+import SearchDecks from "./componentes/SearchDecks";
 
 function App() {
   return (

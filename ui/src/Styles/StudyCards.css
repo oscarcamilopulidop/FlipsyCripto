@@ -8,9 +8,11 @@
 
 .flip-card-study{
     position: relative;
-    background-color: #094c6d;
+    background: white;
+    border: 5px #094c6d solid;
     padding: 10px;
-    height: 80%;
+    height: 75vh;
+    width: 100%;
     display: table;
     overflow: hidden;
 }
@@ -52,6 +54,13 @@
     padding: 4px;
 }
 
+.arrow-study-right{
+    height: 4.2em;
+    width: 3em;
+    float: right;
+}
+
+
 .arrow-study{
     height: 4.2em;
     width: 3em;
@@ -74,3 +83,13 @@
     right: 2%;
 }
 
+.test-study{
+    background: violet;
+}
+
+.study-header{
+    color: #094c6d;
+    align-items: center;
+    display:flex;
+    justify-content: space-between;
+}
