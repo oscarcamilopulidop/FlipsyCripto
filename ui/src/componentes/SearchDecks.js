@@ -64,10 +64,14 @@ const SearchDecks = props => {
 
     if (!loading) {
         console.log(data)
-        data.CAT[0].fcg[0].observing_users.forEach((user) => {
-          if (Object.values(user).indexOf(state.in_session_data.uid) > -1)
-            isAlreadyObserving = true
-        })
+        // for(let i = 0; i < data.CAT[0].fcg.length; i++){
+        //     console.log(typeof (data.CAT[0]));
+        //     data.CAT[0].fcg[0].observing_users.forEach((user) => {
+        //         console.log(user);
+        //         if (Object.values(user).indexOf(state.in_session_data.uid) > -1)
+        //             isAlreadyObserving = true
+        //     })
+        // }
     }
 
     const addDeck = idFcg => {
@@ -152,7 +156,7 @@ const SearchDecks = props => {
                                     color="white"
                                     avatar={
                                         <div className="mini-deck">
-                                            <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
+                                            <img className = "search-img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                                         </div>
                                     }
                                     title={item.title}
