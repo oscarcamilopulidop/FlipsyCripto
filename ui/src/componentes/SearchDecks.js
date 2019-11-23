@@ -55,13 +55,19 @@ const SearchDecks = props => {
 
     const { loading, error, data } = useQuery(GET_DECKS,
         {variables:{
-                    id:  props.location.state.category//"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                    id:  props.location.state.category
         },
         pollInterval: 500,
     });
 
+    var isAlreadyObserving = false;
+
     if (!loading) {
         console.log(data)
+        data.CAT[0].fcg[0].observing_users.forEach((user) => {
+          if (Object.values(user).indexOf(state.in_session_data.uid) > -1)
+            isAlreadyObserving = true
+        })
     }
 
     const addDeck = idFcg => {
@@ -137,7 +143,7 @@ const SearchDecks = props => {
                         itemLayout="horizontal"
                         dataSource={data.CAT[0].fcg}
                         renderItem={item => (
-                            item.idUser == state.in_session_data.uid
+                            item.idUser == state.in_session_data.uid || isAlreadyObserving
                                 ?
                             <div />
                                 :
