@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect } from 'react'
 import {Button, List, Card, Layout} from 'antd'
 import '../Styles/FlashcardsCreation.css'
 import '../Styles/Home.css'
@@ -6,14 +6,26 @@ import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { Auth } from 'aws-amplify'
 import Swal from 'sweetalert2'
-import {useQuery} from "@apollo/react-hooks";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
+import { Badge} from 'antd';
 
 
 
 const { Header, Footer} = Layout;
 
 const FlascardsCreation = props => {
+    useEffect(() => {
+      Auth.currentAuthenticatedUser().then(res => {
+        actions({
+          type: 'setState',
+          payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+        })
+        console.log(res.attributes.sub)
+      }).catch(err => {
+        props.history.push('');
+      })
+    }, [])
 
     const GET_FLASHCARDS = gql`
         query Seacrh($id: String!) {
@@ -22,43 +34,71 @@ const FlascardsCreation = props => {
         }
     }`;
 
-    useEffect(() => {
-        Auth.currentAuthenticatedUser().then(res => {
-            actions({
-                type: 'setState',
-                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
-            console.log(res.attributes.sub)
-        }).catch(err => {
-          props.history.push('');
-        })
-    }, [])
-
     const { state, actions } = useContext(Context);
 
-    const { loading, error, data } = useQuery(GET_FLASHCARDS,
+    const { loading, data } = useQuery(GET_FLASHCARDS,
         {variables:{
-                id: state.current_deck.id //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                id: props.location.state.idFcg //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
     });
     if (!loading) { console.log(data) }
-    const openCard= idFc => {
-        console.log(idFc);
-        actions({
-            type: "setState",
-            payload: {
-                ...state, current_flashcard:
-                    { ...state.current_flashcard,
-                        id: idFc} }
-        });
 
-        props.history.push('study')
+    const openCard= idFc => {
+      props.history.push({
+        pathname: 'study',
+        search: idFc,
+        state: {
+          idFc: idFc,
+          idFcg: props.location.state.idFcg,
+          title: props.location.state.title
+        }
+      })
+    };
+    const editCard= idFc => {
+        props.history.push({
+            pathname: 'editCard',
+            state:{
+                item: idFc
+            }
+        })
     };
 
     const editDeck = () => {
-        props.history.push('createCard')
-    }
+      props.history.push({
+        pathname: 'deck-edition',
+        state: {
+          idFcg: props.location.state.idFcg,
+          title: props.location.state.title
+        }
+      })
+      };
+
+      const [CreateFifi2Neo4j, { data1 }] = useMutation(gql`
+                          mutation Create(
+                              $idFcDel: ID!
+                          ){
+                              CreateFifi2(
+                                  idFcDel: $idFcDel
+                              ){
+                                  idFcDel
+                              }
+                          }
+                      `);
+
+      const DeleteInfo = (idFc) => {
+          try {
+              CreateFifi2Neo4j({
+                  variables: {
+                      idFcDel: idFc,
+              }}).then(res => {
+                  console.log(res)
+                  props.history.push('decks')
+              })
+          } catch (error) { console.log("error => ", error)}
+
+      }
+
 
     const deleteCard = idFc => {
         Swal.fire({
@@ -70,7 +110,8 @@ const FlascardsCreation = props => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
-                console.log("AQUÍ DEBERÍA BORRAR LA CARTA "+idFc);
+                DeleteInfo(idFc);
+                console.log("AQUÍ DEBERÍA BORRAR LA CARTA "+ idFc);
                 Swal.fire(
                     '',
                     'Su carta ha sido eliminada.',
@@ -78,32 +119,25 @@ const FlascardsCreation = props => {
                 )
             }
         })
-    }
+    };
 
     const play = () => {
-        props.history.push('study')
-    }
+        props.history.push({
+            pathname: 'study',
+            state: {
+                idFcg: props.location.state.idFcg,
+                title: props.location.state.title
+            }
+        })
+    };
 
 
-    const deck_title ='Matematicas I';
+    const deck_title = props.location.state.title;
 
-    const dataL = [
-        {
-            front: 'Si dividimos 1 entre 0 el resultado es...',
-        },
-        {
-            front: '¿Cuanto es la cuarta parte de la tercera parte?',
-        },
-        {
-            front: '1+1',
-        },
-
-    ];
-
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -112,7 +146,7 @@ const FlascardsCreation = props => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
 
     return (
         loading ?
@@ -133,7 +167,13 @@ const FlascardsCreation = props => {
                         {deck_title}
                         <img onClick={play} className = "play-deck" src={require("../Assets/play.svg")} alt="play icon"/>
                     </h1>
-                    <Button onClick={() => props.history.push('createCard')} className="new-flashcard" type="dashed" ghost>
+                    <Button onClick={() => props.history.push({
+                            pathname: 'createCard',
+                            state: {
+                              idFcg: props.location.state.idFcg,
+                              title: props.location.state.title
+                            }
+                          })} className="new-flashcard" type="dashed" ghost>
                         Nueva
                         <br/>
                         Tarjeta
@@ -145,26 +185,24 @@ const FlascardsCreation = props => {
                         dataSource={data.FC}
                         renderItem={item => (
                             <List.Item>
-                                <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
-                                <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFcg)} alt="delete-button"/>
+                                <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")} onClick={ () => editCard(item.idFc)} alt="delete-button"/>
+                                <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFc)} alt="delete-button"/>
                                 <Card onClick={() => openCard(item.idFc)}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>
                             </List.Item>
                         )}
                     />
                 </div>
 
-
-
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                     <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>
     )
-}
+};
 
 export default FlascardsCreation

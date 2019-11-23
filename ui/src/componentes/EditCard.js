@@ -1,20 +1,31 @@
-import React, { useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Layout, Button } from 'antd';
 import '../Styles/Home.css'
 import '../Styles/CreateCard.css'
 import '../App.css';
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
-import { useMutation } from '@apollo/react-hooks'
+import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import moment from "moment";
 import { Auth } from 'aws-amplify'
-import { Badge } from 'antd';
+import { Badge} from 'antd';
 
 
-const { Header, Footer } = Layout;
 
-const CreateCard  = props => {
+const { Header, Footer, } = Layout;
+
+const GET_CARD_DATA = gql`
+    query Seacrh($id: ID! ) {
+        FC(idFc: $id)  {
+            front, back
+        }
+    }`;
+
+const EditCard  = props => {
+
+    const [localData, setLocalData] = useState([])
+
     useEffect(() => {
         Auth.currentAuthenticatedUser().then(res => {
             actions({
@@ -30,12 +41,10 @@ const CreateCard  = props => {
     const { state, actions } = useContext(Context);
 
     const [flashCard_data, setFlashCard_data] = useState(  {
-        idFc: (Math.random() * 1000000).toString(),
+        idFc: props.location.state.item,
         front: '',
         back: '',
-        lastModifyDate: moment().unix().toString(),
-        creationDate: moment().unix().toString(),
-        idFCG: props.location.state.idFcg,
+        lastModifyDate: moment().unix().toString()
     });
 
     const constructor = () => {
@@ -44,7 +53,7 @@ const CreateCard  = props => {
         };
         this.handleClick = this.handleClick.bind(this);
     }
-
+    
     const handleClick = (e) => {
         e.preventDefault();
         this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
@@ -54,24 +63,32 @@ const CreateCard  = props => {
         this.setState({ mdeValue: value });
     };
 
-    const [CreateCardInNeo4j] = useMutation(gql`
-        mutation Create(
-            $idFc: ID
+    const { loading, error, data } = useQuery(GET_CARD_DATA,
+        {variables:{
+                id: props.location.state.item //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
+                // id: 'ss'
+            },
+            pollInterval: 500,
+        });
+    // if(!loading){ console.log(data)}
+    useEffect( () => {
+        !loading && setLocalData(data.FC[0])
+
+    }, [loading])
+    const [UpdateCardInNeo4j] = useMutation(gql`
+        mutation Update(
+            $idFc: ID!
             $front: String!
             $back: String!
             $lastModifyDate: String!
-            $creationDate: String!
-            $idFCG: String!
         ){
-            CreateFC(
+            UpdateFC(
                 idFc: $idFc,
                 front: $front,
                 back: $back,
-                lastModifyDate: $lastModifyDate,
-                creationDate: $creationDate,
-                idFCG: $idFCG,
+                lastModifyDate: $lastModifyDate
             ){
-                idFc, front, back, lastModifyDate, creationDate, idFCG
+                idFc, front, back, lastModifyDate
             }
         }
     `);
@@ -81,35 +98,22 @@ const CreateCard  = props => {
     };
 
     const SendQuery = () => {
-      UpdateInfo();
-      console.log(flashCard_data)
       try {
-          CreateCardInNeo4j({
+          UpdateCardInNeo4j({
               variables: {
-                  idFc: flashCard_data.idFc,
-                  front: flashCard_data.front,
-                  back: flashCard_data.back,
-                  lastModifyDate: flashCard_data.lastModifyDate,
-                  creationDate: flashCard_data.creationDate,
-                  idFCG: flashCard_data.idFCG,
+                  idFc: props.location.state.item,
+                  front: localData.front,
+                  back: localData.back,
+                  lastModifyDate: moment().unix().toString(),
               }
           }).then(res => {
               console.log(res.data)
-              console.log(props)
-
-              props.history.push({
-                pathname: 'cards-creation',
-                search: props.location.state.idFcg,
-                state: {
-                  idFcg: flashCard_data.idFCG,
-                  title: props.location.state.title
-                }
-              })
+              props.history.push('home')
           })
       }catch (err) {
           console.log(err);
       }
-    };
+    }
 
 
     var flag = false;
@@ -125,30 +129,39 @@ const CreateCard  = props => {
         element.style.transition = 'transform 500ms';
         flag = !flag;
     }
+
+
         return (
+            loading ?
+                <div />
+                :
             <Layout className="layout">
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
-                </Header>
+                </Header>c
                 <div className="home-menu-collapse" id="menu">
                     <Menu/>
                 </div>
                  <form className="content" action="" method="post">
                     <div className="center">
                         <div className="desk-creation-title">
-                            <h1>Crear Carta</h1>
+                            <h1>Editar Carta</h1>
                         </div>
                     </div>
                     <div className="cart-side">
-                        <h3 onClick={() => console.log(props.location.state)}>Parte Frontal:</h3>
+                        <h3 onClick={() => console.log(localData)}>
+                            Parte Frontal:
+                        </h3>
                         {/*
                         <Button size="large" type="primary" shape="round" icon="plus-circle-o">
                             Imagen opcional
                         </Button>
                         */}
                         <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard_data({ ...flashCard_data, front: e.target.value})}
+                                   onChange={e => setLocalData({ ...localData, front: e.target.value})}
+                                   value={localData.front}
+                            /*value={data.FC[0].front}*/
                         />
                     </div>
                     <div className="cart-side">
@@ -159,12 +172,14 @@ const CreateCard  = props => {
                         </Button>
                         */}
                         <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard_data({ ...flashCard_data, back: e.target.value})}
+                                   onChange={e => setLocalData({ ...localData, back: e.target.value})}
+                                   value={localData.back}
+                            /*value={data.FC[0].back}*/
                         />
                     </div>]
                     <div className="deck-creation-button-final">
                         <Button size="large" type="primary" onClick={SendQuery}>
-                            Crear
+                            Editar
                         </Button>
                     </div>
                 </form>
@@ -172,12 +187,12 @@ const CreateCard  = props => {
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
                     <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         );
 
-};
-export default CreateCard
+}
+export default EditCard

@@ -1,14 +1,13 @@
-import React, {useContext, useState, useEffect} from 'react'
-import {Button, List, Card, Layout, Select} from 'antd'
+import React, {useContext, useEffect} from 'react'
+import {Button, List, Card, Layout, Select, Badge} from 'antd'
 import '../Styles/Decks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
-import { useQuery } from '@apollo/react-hooks'
-import { useMutation } from '@apollo/react-hooks'
+import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
@@ -30,46 +29,86 @@ const Decks = (props) => {
             actions({
                 type: 'setState',
                 payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
-            })
+            });
             console.log(res.attributes.sub)
-        }).catch(err => {
+        }).catch(() => {
           props.history.push('');
         })
-    }, [])
+    }, []);
 
     const { state, actions } = useContext(Context);
-    const uid = state.in_session_data.uid
+    const uid = state.in_session_data.uid;
     console.log(uid);
-    const { loading, error, data } = useQuery(GET_DECKS,
+    const { loading, data } = useQuery(GET_DECKS,
         {variables:{
                 id: uid //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
     });
 
+    console.log(data)
+
     if (!loading) { console.log(data) }
 
-    const dataJ = [];
-
     const show = () => {
-        const { id } = state.user_credentials;
         console.log(state.user_credentials);
-        console.log(data.USER[0]);
+        // console.log(data.USER[0]);
+        console.log(props.location.state)
     };
 
-    const openDeck = idFcg => {
+    const openDeckEdit = (idFcg, title) => {
         console.log(idFcg)
-        actions({
-            type: "setState",
-            payload: {
-                ...state, current_deck:
-                    { ...state.current_deck,
-                        id: idFcg} }
+        props.history.push({
+          pathname: 'deck-edition',
+          search: idFcg,
+          state: {
+            idFcg: idFcg,
+            title: title
+          }
         })
-
-        props.history.push('cards-creation')
     }
 
+
+    const openDeck = (idFcg, title) => {
+        console.log(idFcg)
+        props.history.push({
+          pathname: 'cards-creation',
+          search: idFcg,
+          state: {
+            idFcg: idFcg,
+            title: title
+          }
+        })
+    }
+
+
+    const [CreateFifiNeo4j, { data1 }] = useMutation(gql`
+                        mutation Create(
+                            $idFcgDel: ID!
+                        ){
+                            CreateFifi(
+                                idFcgDel: $idFcgDel
+                            ){
+                                idFcgDel
+                            }
+                        }
+                    `);
+
+
+    const DeleteInfo = (idFcg) => {
+        const uid = state.in_session_data.uid
+        console.log(uid)
+        try {
+            CreateFifiNeo4j({
+                variables: {
+                    idFcgDel: idFcg,
+            }}).then(res => {
+                console.log(res)
+                props.history.push('home')
+            })
+        } catch (error) { console.log("error => ", error) }
+
+    }
 
     const deleteDeck = idFcg => {
         Swal.fire({
@@ -81,6 +120,7 @@ const Decks = (props) => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
+                DeleteInfo(idFcg);
                 console.log("AQUÍ DEBERÍA BORRAR LA BAEAJA "+idFcg);
                 Swal.fire(
                     '',
@@ -89,16 +129,16 @@ const Decks = (props) => {
                 )
             }
         })
-    }
+    };
 
     const handleChange = () => {
         console.log("mostrando barajas ")
-    }
+    };
 
-    var flag = false;
+    let flag = false;
     const ShowSideMenu = () => {
 
-        var element = document.getElementById('menu');
+        let element = document.getElementById('menu');
         if(flag){
             element.style.transform = 'translate(60vw)';
         }else{
@@ -107,7 +147,9 @@ const Decks = (props) => {
         element.style.zIndex = '25';
         element.style.transition = 'transform 500ms';
         flag = !flag;
-    }
+    };
+
+
 
     return (
         loading ?
@@ -145,9 +187,9 @@ const Decks = (props) => {
                         dataSource={data.USER[0].fcg}
                         renderItem={item => (
                             <List.Item>
-                                <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => props.history.push('deck-creation')} alt="delete-button"/>
+                                <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => openDeckEdit(item.idFcg)} alt="delete-button"/>
                                 <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
-                                <Card title=" " onClick={() => openDeck(item.idFcg)}>
+                                <Card title=" " onClick={() => openDeck(item.idFcg, item.title)}>
                                     <img className = "img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/>
                                     {item.title}
                                 </Card>
@@ -162,11 +204,11 @@ const Decks = (props) => {
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                     <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>
     )
-}
+};
 
 export default Decks
