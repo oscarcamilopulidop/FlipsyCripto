@@ -6,7 +6,7 @@ import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { Auth } from 'aws-amplify'
 import Swal from 'sweetalert2'
-import {useQuery} from "@apollo/react-hooks";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
 import { Badge} from 'antd';
 
@@ -74,6 +74,32 @@ const FlascardsCreation = props => {
       })
       };
 
+      const [CreateFifi2Neo4j, { data1 }] = useMutation(gql`
+                          mutation Create(
+                              $idFcDel: ID!
+                          ){
+                              CreateFifi2(
+                                  idFcDel: $idFcDel
+                              ){
+                                  idFcDel
+                              }
+                          }
+                      `);
+
+      const DeleteInfo = (idFc) => {
+          try {
+              CreateFifi2Neo4j({
+                  variables: {
+                      idFcDel: idFc,
+              }}).then(res => {
+                  console.log(res)
+                  props.history.push('decks')
+              })
+          } catch (error) { console.log("error => ", error)}
+
+      }
+
+
     const deleteCard = idFc => {
         Swal.fire({
             title: 'Seguro que desea eliminar la carta?',
@@ -84,7 +110,8 @@ const FlascardsCreation = props => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
-                console.log("AQUÍ DEBERÍA BORRAR LA CARTA "+idFc);
+                DeleteInfo(idFc);
+                console.log("AQUÍ DEBERÍA BORRAR LA CARTA "+ idFc);
                 Swal.fire(
                     '',
                     'Su carta ha sido eliminada.',
@@ -159,7 +186,7 @@ const FlascardsCreation = props => {
                         renderItem={item => (
                             <List.Item>
                                 <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")} onClick={ () => editCard(item.idFc)} alt="delete-button"/>
-                                <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFcg)} alt="delete-button"/>
+                                <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFc)} alt="delete-button"/>
                                 <Card onClick={() => openCard(item.idFc)}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>
                             </List.Item>
                         )}
