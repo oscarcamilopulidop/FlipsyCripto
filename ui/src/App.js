@@ -19,6 +19,8 @@ import QuestionnairesList from './componentes/QuestionnairesList'
 import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
 import CreateCard from './componentes/CreateCard'
+import SearchDecks from "./componentes/SearchDecks";
+import CategoryDecks from "./componentes/CategoryDecks";
 import EditCard from './componentes/EditCard'
 import Question from './componentes/Question'
 import Congratulations from './componentes/Congratulations'
@@ -47,6 +49,8 @@ function App() {
         <Route path='/decks' component={Decks} />
         <Route path="/study" component={StudyCards} />
         <Route path="/createCard" component={CreateCard}/>
+        <Route path='/search-deck' component={SearchDecks}/>
+        <Route path='/search-category' component={CategoryDecks}/>
         <Route path="/editCard" component={EditCard}/>
         <Route path="/question" component={Question}/>
         <Route path="/congratulations" component={Congratulations}/>
