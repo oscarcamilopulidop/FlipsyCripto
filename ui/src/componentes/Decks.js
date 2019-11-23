@@ -101,7 +101,7 @@ const Decks = (props) => {
                 variables: {
                     idFcgDel: idFcg,
             }}).then(res => {
-                console.log(res.data1)
+                console.log(res)
                 props.history.push('home')
             })
         } catch (error) { console.log("error => ", error) }
@@ -120,7 +120,6 @@ const Decks = (props) => {
             if (result.value) {
                 DeleteInfo(idFcg);
                 console.log("AQUÍ DEBERÍA BORRAR LA BAEAJA "+idFcg);
-                SendQuery(idFcg);
                 Swal.fire(
                     '',
                     'Su baraja ha sido eliminada.',
@@ -128,32 +127,6 @@ const Decks = (props) => {
                 )
             }
         })
-    };
-
-    const [Createfifi] = useMutation(gql`
-        mutation Create(
-            $idFcg_del: ID
-        ){
-            Createfifi(
-                idFcg_del: $idFcg_del,
-            ){
-                idFcg_del,
-            }
-        }
-    `);
-
-    const SendQuery = (idFcg_del) => {
-        try {
-            Createfifi({
-                variables: {
-                    idFcg_del: idFcg_del,
-                }
-            }).then(res => {
-                console.log(idFcg_del+" correctamente borrada por Fifi");
-            })
-        }catch (err) {
-            console.log(err.toString())
-        }
     };
 
     const handleChange = () => {
