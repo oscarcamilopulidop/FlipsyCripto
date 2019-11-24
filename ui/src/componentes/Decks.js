@@ -102,7 +102,6 @@ const Decks = (props) => {
                     idFcgDel: idFcg,
             }}).then(res => {
                 console.log(res)
-                props.history.push('home')
             })
         } catch (error) { console.log("error => ", error) }
 
@@ -194,7 +193,6 @@ const Decks = (props) => {
                             </List.Item>
                         )}
                     />
-                    ,
                 </div>
 
 
