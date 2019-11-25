@@ -60,18 +60,20 @@ const SearchDecks = props => {
         pollInterval: 500,
     });
 
-    var isAlreadyObserving = false;
-
     if (!loading) {
         console.log(data)
-        // for(let i = 0; i < data.CAT[0].fcg.length; i++){
-        //     console.log(typeof (data.CAT[0]));
-        //     data.CAT[0].fcg[0].observing_users.forEach((user) => {
-        //         console.log(user);
-        //         if (Object.values(user).indexOf(state.in_session_data.uid) > -1)
-        //             isAlreadyObserving = true
-        //     })
-        // }
+    }
+
+    function isBeingObserved(deck) {
+      var observingFlag = false
+      deck.observing_users.forEach((user) => {
+              // console.log(user);
+              if (Object.values(user).indexOf(state.in_session_data.uid) > -1)
+                  observingFlag = true
+          })
+      // console.log(deck.observing_users)
+      console.log(observingFlag)
+      return observingFlag
     }
 
     const addDeck = idFcg => {
@@ -147,7 +149,7 @@ const SearchDecks = props => {
                         itemLayout="horizontal"
                         dataSource={data.CAT[0].fcg}
                         renderItem={item => (
-                            item.idUser == state.in_session_data.uid || isAlreadyObserving
+                            item.idUser == state.in_session_data.uid || isBeingObserved(item)
                                 ?
                             <div />
                                 :
