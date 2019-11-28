@@ -93,7 +93,6 @@ const FlascardsCreation = props => {
                       idFcDel: idFc,
               }}).then(res => {
                   console.log(res)
-                  props.history.push('decks')
               })
           } catch (error) { console.log("error => ", error)}
 
