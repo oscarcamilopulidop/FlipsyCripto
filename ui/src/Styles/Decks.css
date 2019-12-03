@@ -58,17 +58,17 @@
 }
 
 .decks-container .img-card{
-     margin-bottom: 18px;
-     height: 55px;
- }
+    margin-bottom: 18px;
+    height: 55px;
+}
 
 .decks-container .new-card{
-     color: #00558c;
-     border-color: #00558c;
-     width: 114.31px;
-     height: 159.58px;
-     margin: auto;
- }
+    color: #00558c;
+    border-color: #00558c;
+    width: 114.31px;
+    height: 159.58px;
+    margin: auto;
+}
 
 .decks-container .select-container{
     margin-bottom: 0;

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import 'antd/dist/antd.css';
 import { Layout, Button, Form,Select, Input, AutoComplete, Icon} from 'antd';
 import Context from '../GlobalState/context'
@@ -7,6 +7,7 @@ import '../Styles/DeckCreation.css'
 import Menu from "./Menu";
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
+import { Auth } from 'aws-amplify'
 import moment from "moment";
 import { Badge} from 'antd';
 
@@ -29,6 +30,17 @@ const types = [
 ];
 
 const DeckCreation = props => {
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+            props.history.push('');
+        })
+    }, [])
 
   const { state, actions } = useContext(Context);
 
@@ -61,7 +73,7 @@ const DeckCreation = props => {
             $isStudying: Boolean!,
             $lastModifyDate: String!,
             $creationDate: String!,
-            $remainingNotifications: Int,
+            $remainingNotifications: Int
         ){
             CreateFCGroup(
                 idFcg: $idFcg,
@@ -75,7 +87,7 @@ const DeckCreation = props => {
                 creationDate: $creationDate,
                 remainingNotifications: $remainingNotifications,
             ){
-                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate, remainingNotifications,
+                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate, remainingNotifications
             }
         }
     `);

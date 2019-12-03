@@ -22,6 +22,8 @@ import CreateCard from './componentes/CreateCard'
 import EditCard from './componentes/EditCard'
 import Question from './componentes/Question'
 import Congratulations from './componentes/Congratulations'
+import SearchDecks from "./componentes/SearchDecks";
+import CategoryDecks from "./componentes/CategoryDecks";
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
         <Route path="/editCard" component={EditCard}/>
         <Route path="/question" component={Question}/>
         <Route path="/congratulations" component={Congratulations}/>
+        <Route path='/search-deck' component={SearchDecks}/>
+        <Route path='/search-category' component={CategoryDecks}/>
       </Switch>
     </BrowserRouter>
   );

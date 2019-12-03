@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react'
 import {Avatar, Layout, List} from 'antd'
-import '../Styles/QuestionnairesList.css'
+import '../Styles/CategoryDecks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";
@@ -9,40 +9,24 @@ import { Badge} from 'antd';
 
 const { Header, Footer} = Layout;
 
-const QuestionnairesList = props => {
+const CategoryDecks = props => {
 
     const data = [
         {
-            cat: 'Matemáticas',
-            title: 'Sumas'
+            cat: 'Matematicas',
+            title: 'Matemáticas'
         },
         {
-            cat: 'Química',
-            title: 'Quirales'
+            cat: 'Quimica',
+            title: 'Química'
         },
         {
-            cat: 'Física',
-            title: 'Newton'
+            cat: 'Fisica',
+            title: 'Física'
         },
         {
-            cat: 'Biología',
-            title: 'Reinos'
-        },
-        {
-            cat: 'Matemáticas',
-            title: 'Multiplicaciones'
-        },
-        {
-            cat: 'Química',
-            title: 'Reacciones'
-        },
-        {
-            cat: 'Física',
-            title: 'Hooke'
-        },
-        {
-            cat: 'Biología',
-            title: 'Celula'
+            cat: 'Biologia',
+            title: 'Biología'
         }
     ];
 
@@ -75,22 +59,28 @@ const QuestionnairesList = props => {
 
     const open = (cat,name) => {
         console.log("abriendo " + name +" " + cat)
-        props.history.push('question')
+        props.history.push({
+            pathname: 'search-deck',
+            search: cat,
+            state: {
+                category: cat,
+            }
+        });
     };
 
     const selectImg =(cat) => {
         switch (cat) {
             case 'Matemáticas':
-                return require("../Assets/pi.svg");
+                return require("../Assets/pi-blue.svg");
                 break;
             case 'Química':
-                return require("../Assets/chemistry.svg");
+                return require("../Assets/chemistry-blue.svg");
                 break;
             case 'Física':
-                return require("../Assets/physics.svg");
+                return require("../Assets/physics-blue.svg");
                 break;
             case 'Biología':
-                return require("../Assets/biology.svg");
+                return require("../Assets/biology-blue.svg");
             default:
 
         }
@@ -117,10 +107,10 @@ const QuestionnairesList = props => {
                             <List.Item className="item-quest" onClick={()=>open(item.cat,item.title)}>
                                 <List.Item.Meta
                                     color="white"
-                                    avatar={<Avatar size={64} src={selectImg(item.cat)} />}
+                                    avatar={<Avatar size={64} src={selectImg(item.title)} />}
                                     title={item.title}
                                 />
-                                 <img className = "play-questionnaire" src={require("../Assets/play-white.svg")} alt="play"/>
+                                <img className = "play-questionnaire" src={require("../Assets/play-blue.svg")} alt="play"/>
                             </List.Item>
                         )}
                     />
@@ -129,13 +119,13 @@ const QuestionnairesList = props => {
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search"onClick={() => props.history.push('search-category')}/>
+                    <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <Badge count={5}> <img className = "footer-item-selected" src={require("../Assets/Notification-selected.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>
     )
 };
 
-export default QuestionnairesList
+export default CategoryDecks

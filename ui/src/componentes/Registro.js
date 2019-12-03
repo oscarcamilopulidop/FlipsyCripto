@@ -110,6 +110,7 @@ const Registro = props => {
                     <Input
                         className="signup-input"
                         onChange={e => setSignUpCredentials({ ...signUpCredentials, usuario: e.target.value })}
+                        onClick={() => console.log(signUpCredentials)}
                         placeholder="Nickname"
                     />
 
