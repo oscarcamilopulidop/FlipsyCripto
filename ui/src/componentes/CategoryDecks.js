@@ -87,7 +87,7 @@ const CategoryDecks = props => {
     };
 
     return (
-        <div className='questionnaires-main-container'>
+        <div className='category-main-container'>
             <Layout>
 
                 <Header className = "header">
@@ -98,19 +98,19 @@ const CategoryDecks = props => {
                     <Menu/>
                 </div>
 
-                <div className='list-main-container'>
+                <div className='list-main-container-category'>
 
                     <List
                         itemLayout="horizontal"
                         dataSource={data}
                         renderItem={item => (
-                            <List.Item className="item-quest" onClick={()=>open(item.cat,item.title)}>
+                            <List.Item className="item-quest-category" onClick={()=>open(item.cat,item.title)}>
                                 <List.Item.Meta
                                     color="white"
                                     avatar={<Avatar size={64} src={selectImg(item.title)} />}
                                     title={item.title}
                                 />
-                                <img className = "play-questionnaire" src={require("../Assets/play-blue.svg")} alt="play"/>
+                                <img className = "play-questionnaire-category" src={require("../Assets/play-blue.svg")} alt="play"/>
                             </List.Item>
                         )}
                     />

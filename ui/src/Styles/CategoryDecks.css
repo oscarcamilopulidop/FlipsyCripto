@@ -1,21 +1,21 @@
-.item-quest {
+.item-quest-category {
     border-color: #00558c;
     background: white;
     margin: 15px;
     border-radius: 50px;
 }
 
-.list-main-container{
+.list-main-container-category{
     margin-top: 42px;
     margin-bottom: 42px;
 }
 
-.questionnaires-main-container .ant-list-item-meta-title {
+.category-main-container .ant-list-item-meta-title {
     text-align: center;
     color: #00558c;
 }
 
-.play-questionnaire{
+.play-questionnaire-category{
     height: 14%;
     width: 14%;
     margin-right: 25px;
