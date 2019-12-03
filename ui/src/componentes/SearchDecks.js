@@ -8,6 +8,8 @@ import {Auth} from "aws-amplify";
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
 import Swal from "sweetalert2";
+import { Badge} from 'antd';
+
 
 const { Header, Footer} = Layout;
 
@@ -180,7 +182,7 @@ const SearchDecks = props => {
                     <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                     <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>
