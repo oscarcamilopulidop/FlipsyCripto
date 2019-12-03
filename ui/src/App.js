@@ -10,13 +10,20 @@ import Confirmation from './componentes/Confirmation'
 import Searcher from "./componentes/Searcher";
 import Menu from './componentes/Menu'
 import DeckCreation from './componentes/DeckCreation';
+import DeckEdition from './componentes/DeckEdition';
 import WizardNickname from "./componentes/WizardNickname";
 import WizardPersonalInfo from "./componentes/WizardPersonalInfo";
 import Wizard from "./componentes/Wizard";
 import FlashcardsCreation from './componentes/FlashcardsCreation'
+import QuestionnairesList from './componentes/QuestionnairesList'
 import Decks from './componentes/Decks'
 import StudyCards from './componentes/StudyCards'
 import CreateCard from './componentes/CreateCard'
+import CategoryDecks from "./componentes/CategoryDecks";
+import EditCard from './componentes/EditCard'
+import Question from './componentes/Question'
+import Congratulations from './componentes/Congratulations'
+import SearchDecks from "./componentes/SearchDecks";
 
 function App() {
   return (
@@ -33,13 +40,20 @@ function App() {
         <Route path='/search' component={Searcher} />
         <Route path="/menu" component={Menu} exact />
         <Route path="/deck-creation" component={DeckCreation} />
+        <Route path="/deck-edition" component={DeckEdition} />
         <Route path="/wizard-name" component={WizardNickname} />
         <Route path="/wizard-personal-info" component={WizardPersonalInfo} />
         <Route path="/wizard" component={Wizard}/>
+        <Route path="/questionnaires-list" component={QuestionnairesList}/>
         <Route path='/cards-creation' component={FlashcardsCreation} />
         <Route path='/decks' component={Decks} />
         <Route path="/study" component={StudyCards} />
         <Route path="/createCard" component={CreateCard}/>
+        <Route path='/search-deck' component={SearchDecks}/>
+        <Route path='/search-category' component={CategoryDecks}/>
+        <Route path="/editCard" component={EditCard}/>
+        <Route path="/question" component={Question}/>
+        <Route path="/congratulations" component={Congratulations}/>
       </Switch>
     </BrowserRouter>
   );

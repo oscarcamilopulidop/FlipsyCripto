@@ -1,21 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import 'antd/dist/antd.css';
-import { Layout, Button, Form,Select, Tag, Input, AutoComplete, Icon} from 'antd';
+import { Layout, Button, Form,Select, Input, AutoComplete, Icon} from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import '../Styles/DeckCreation.css'
 import Menu from "./Menu";
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
+import { Auth } from 'aws-amplify'
 import moment from "moment";
+import { Badge} from 'antd';
 
-const { Search } = Input;
-const { Header, Footer, Sider, Content } = Layout;
-
-function log(e) {
-    console.log(e);
-}
-
+const { Header, Footer, Content } = Layout;
 
 const formItemLayout = {
     labelCol: {
@@ -34,34 +30,37 @@ const types = [
 ];
 
 const DeckCreation = props => {
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+            props.history.push('');
+        })
+    }, [])
 
-    const { state, actions } = useContext(Context);
+  const { state, actions } = useContext(Context);
 
-    // eslint-disable-next-line no-undef
     var currtenDate = moment().unix();
-    const [deck, setDeck] = useState(  {
-        id: (Math.random() * 1000000).toString(),
-        name: '',
-        typeDeck: 0,
-        categoryDeck: '',
-        dateDeck: currtenDate,
+    const [deck_data, set_deck_data] = useState({
+      idFcg: (Math.random() * 1000000).toString(),
+      idUser: state.in_session_data.uid,
+      idCat: "",
+      idScat: "",
+      title: "",
+      public_: true,
+      isStudying: true,
+      lastModifyDate: moment().unix().toString(),
+      creationDate: moment().unix().toString(),
     });
     const dataSource = ['Matematicas', 'Quimica', 'Fisica', 'Biologia'];
 
     const { Option } = Select;
 
     const [selected, setSelected] = useState({ page: "Home"});
-
-
-    const [temp, { data_ }] = useMutation(gql`
-        mutation Create($idUser: ID!, $idFcg: ID!){
-            AddUSEROwns(from:{
-                idUser:$idUser
-            },to:{
-                idFcg:$idFcg
-            }){from{idUser}}
-        }
-    `)
 
     const [CreateDeckInNeo4j, { data }] = useMutation(gql`
         mutation Create(
@@ -74,6 +73,7 @@ const DeckCreation = props => {
             $isStudying: Boolean!,
             $lastModifyDate: String!,
             $creationDate: String!,
+            $remainingNotifications: Int
         ){
             CreateFCGroup(
                 idFcg: $idFcg,
@@ -85,95 +85,48 @@ const DeckCreation = props => {
                 isStudying: $isStudying,
                 lastModifyDate: $lastModifyDate,
                 creationDate: $creationDate,
+                remainingNotifications: $remainingNotifications,
             ){
-                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate,
+                idFcg, idUser, idCat, idScat, title, public, isStudying, lastModifyDate, creationDate, remainingNotifications
             }
         }
     `);
 
-
-
     function onSelect(value) {
         console.log('onSelect', value);
     }
+
     const show = () => {
-        const {idUser, id, name, typeDeck, categoryDeck, dateDeck } = deck;
-        actions({
-            type: "setState",
-            payload: {
-                ...state, user_credentials:
-                    { ...state.user_credentials} }
-        })
+        const uid = state.in_session_data.uid
+        console.log(uid)
         console.log(state.user_credentials);
-        actions({
-            type: "setState",
-            payload: {
-                ...state, deck:
-                    { ...state.deck,
-                        idUser: state.user_credentials.id,
-                        idFcg: deck.id,
-                        title: deck.name,
-                        public_: deck.typeDeck,
-                        idCat: deck.categoryDeck,
-                        creationDate: deck.dateDeck.toString(),
-                        lastModifiedDate: deck.dateDeck.toString()
-                    }
-            }
-        })
-        // console.log(deck);
-        console.log(state.deck)
+        console.log(deck_data)
     };
+
     const UpdateInfo = () => {
-        const {idUser, id, name, typeDeck, categoryDeck, dateDeck } = deck;
-        actions({
-            type: "setState",
-            payload: {
-                ...state, deck:
-                    { ...state.deck,
-                        idUser: state.user_credentials.id,
-                        idFcg: deck.id,
-                        title: deck.name,
-                        public_: deck.typeDeck,
-                        idCat: deck.categoryDeck,
-                        creationDate: deck.dateDeck.toString(),
-                        lastModifiedDate: deck.dateDeck.toString()
-                    }
-            }
-        })
-        console.log(state.user_credentials);
+        const uid = state.in_session_data.uid
+        console.log(uid)
         try {
             CreateDeckInNeo4j({
                 variables: {
-                    idFcg: state.deck.idFcg,
-                    idUser: state.deck.idUser,
-                    idCat: state.deck.idCat,
-                    idScat: state.deck.idCat,
-                    title: state.deck.title,
-                    public_: state.deck.public_,
-                    isStudying: true,
-                    lastModifyDate: state.deck.lastModifiedDate.toString(),
-                    creationDate: state.deck.creationDate.toString(),
+                    idFcg: deck_data.idFcg,
+                    idUser: deck_data.idUser,
+                    idCat: deck_data.idCat,
+                    idScat: deck_data.idCat,
+                    title: deck_data.title,
+                    public_: deck_data.public_,
+                    isStudying: deck_data.public_,
+                    lastModifyDate: deck_data.lastModifyDate,
+                    creationDate: deck_data.creationDate,
+                    remainingNotifications: 3,
                 }
             }).then(res => {
                 console.log(res.data)
-                // props.history.push('decks')
+                props.history.push('decks')
             })
         } catch (error) { console.log("error => ", error) }
-        try {
-            temp({
-                variables: {
-                    idUser: state.deck.idUser,
-                    idFcg: state.deck.idFcg
-                }
-            }).then((res => {
-                props.history.push('decks');
-            }))
-        }catch (e) {
-            console.log(e);
 
-        }
     }
-
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -216,14 +169,14 @@ const DeckCreation = props => {
                             <Form.Item label="Nombre">
                                 <Input
                                     className="name-input"
-                                    onChange={e => setDeck({ ...deck, name: e.target.value})}
+                                    onChange={e => set_deck_data({ ...deck_data, title: e.target.value})}
                                     placeholder="Nombre"
                                     onClick={show}
                                 />
                             </Form.Item>
                             <Form.Item label="Tipo">
                                 <Select placeholder="Seleccionar tipo"
-                                        onChange={e => setDeck({ ...deck, typeDeck: (e === "publica")})}
+                                        onChange={e => set_deck_data({ ...deck_data, public_: (e === "publica")})}
                                 >
                                     <Option value="publica">Publica</Option>
                                     <Option value="privada">Privada</Option>
@@ -233,7 +186,7 @@ const DeckCreation = props => {
                                 <AutoComplete
                                     className="category-input"
                                     placeholder="Buscar categoría"
-                                    onChange={e => setDeck({ ...deck, categoryDeck: e})}
+                                    onChange={e => set_deck_data({ ...deck_data, idCat: e, idScat: e})}
                                     onSelect={onSelect}
                                     dataSource={dataSource}
                                 >
@@ -249,10 +202,6 @@ const DeckCreation = props => {
                                         }
                                     />
                                 </AutoComplete>
-                                <Tag closable onClose={log}>
-                                    Tag 2
-                                </Tag>
-
                             </Form.Item>
                         </Form>
                         <div className="deck-creation-button-final">
@@ -267,9 +216,9 @@ const DeckCreation = props => {
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>

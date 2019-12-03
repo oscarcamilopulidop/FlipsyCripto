@@ -29,4 +29,12 @@
     resize: none;
     font-size: small;
     color: #777;
+    border-radius: 10px;
+    margin-top: 1em;
+}
+
+.cart-side{
+    margin-top: 1.5em;
+    color: black;
+    margin-right: 1.5em;
 }

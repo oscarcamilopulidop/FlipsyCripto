@@ -1,7 +1,5 @@
-import React, {Component, useContext, useState} from 'react';
-import CardContent from '@material-ui/core/CardContent';
+import React, { useContext, useEffect, useState} from 'react';
 import { Layout, Button } from 'antd';
-import ReactCardFlip from 'react-card-flip'
 import '../Styles/Home.css'
 import '../Styles/CreateCard.css'
 import '../App.css';
@@ -9,16 +7,35 @@ import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
+import moment from "moment";
+import { Auth } from 'aws-amplify'
+import { Badge } from 'antd';
 
-const { Header, Footer, Sider, Content } = Layout;
+
+const { Header, Footer } = Layout;
 
 const CreateCard  = props => {
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+          props.history.push('');
+        })
+    }, [])
 
     const { state, actions } = useContext(Context);
 
-    const [flashCard, setFlashCard] = useState(  {
+    const [flashCard_data, setFlashCard_data] = useState(  {
+        idFc: (Math.random() * 1000000).toString(),
         front: '',
         back: '',
+        lastModifyDate: moment().unix().toString(),
+        creationDate: moment().unix().toString(),
+        idFCG: props.location.state.idFcg,
     });
 
     const constructor = () => {
@@ -28,7 +45,6 @@ const CreateCard  = props => {
         this.handleClick = this.handleClick.bind(this);
     }
 
-
     const handleClick = (e) => {
         e.preventDefault();
         this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
@@ -37,16 +53,17 @@ const CreateCard  = props => {
     const handleChange = value => {
         this.setState({ mdeValue: value });
     };
-    const [CreateCardInNeo4j, { data }] = useMutation(gql`
+
+    const [CreateCardInNeo4j] = useMutation(gql`
         mutation Create(
             $idFc: ID
             $front: String!
             $back: String!
             $lastModifyDate: String!
             $creationDate: String!
-            $idFCG: String!        
+            $idFCG: String!
         ){
-            CreateFCGroup(
+            CreateFC(
                 idFc: $idFc,
                 front: $front,
                 back: $back,
@@ -54,28 +71,44 @@ const CreateCard  = props => {
                 creationDate: $creationDate,
                 idFCG: $idFCG,
             ){
-                idFcg, front, back, lastModifyDate, creationDate, idFCG
+                idFc, front, back, lastModifyDate, creationDate, idFCG
             }
         }
     `);
 
-    const show = () => {
-        const { front, back } = flashCard;
-        const { id } = state.user_credentials;
-        const { idFcg } = state.deck;
-        console.log(state.user_credentials);
-        actions({
-            type: "setState",
-            payload: {
-                ...state, flashCard:
-                    { ...state.flashCard,
-                        front: flashCard.front,
-                        back: flashCard.back,
-                    }
-            }
-        });
+    const UpdateInfo = () => {
+        console.log(flashCard_data);
+    };
 
-        console.log(state.flashCard);
+    const SendQuery = () => {
+      UpdateInfo();
+      console.log(flashCard_data)
+      try {
+          CreateCardInNeo4j({
+              variables: {
+                  idFc: flashCard_data.idFc,
+                  front: flashCard_data.front,
+                  back: flashCard_data.back,
+                  lastModifyDate: flashCard_data.lastModifyDate,
+                  creationDate: flashCard_data.creationDate,
+                  idFCG: flashCard_data.idFCG,
+              }
+          }).then(res => {
+              console.log(res.data)
+              console.log(props)
+
+              props.history.push({
+                pathname: 'cards-creation',
+                search: props.location.state.idFcg,
+                state: {
+                  idFcg: flashCard_data.idFCG,
+                  title: props.location.state.title
+                }
+              })
+          })
+      }catch (err) {
+          console.log(err);
+      }
     };
 
 
@@ -101,36 +134,50 @@ const CreateCard  = props => {
                 <div className="home-menu-collapse" id="menu">
                     <Menu/>
                 </div>
-                <form className="content" action="" method="post">
-                    <div className="add-deck" onClick={show}>
-                        Matemáticas I
+                 <form className="content" action="" method="post">
+                    <div className="center">
+                        <div className="desk-creation-title">
+                            <h1>Crear Carta</h1>
+                        </div>
                     </div>
-                    <div className="">
-                        Parte Frontal:
-                        <br/>
+                    <div className="cart-side">
+                        <h3 onClick={() => console.log(props.location.state)}>Parte Frontal:</h3>
+                        {/*
+                        <Button size="large" type="primary" shape="round" icon="plus-circle-o">
+                            Imagen opcional
+                        </Button>
+                        */}
                         <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard({ ...flashCard, front: e.target.value})}
-                        />
-                        Parte posterior:
-                        <br/>
-                        <textarea  className="text-area flip-card"
-                                   onChange={e => setFlashCard({ ...flashCard, back: e.target.value})}
+                                   onChange={e => setFlashCard_data({ ...flashCard_data, front: e.target.value})}
                         />
                     </div>
-                    <Button onClick={() => props.history.push('home')}>
-                        Aceptar
-                    </Button>
+                    <div className="cart-side">
+                        <h3>Parte Posterior:</h3>
+                        {/*
+                        <Button size="large" type="primary" shape="round" icon="plus-circle-o">
+                            Imagen opcional
+                        </Button>
+                        */}
+                        <textarea  className="text-area flip-card"
+                                   onChange={e => setFlashCard_data({ ...flashCard_data, back: e.target.value})}
+                        />
+                    </div>]
+                    <div className="deck-creation-button-final">
+                        <Button size="large" type="primary" onClick={SendQuery}>
+                            Crear
+                        </Button>
+                    </div>
                 </form>
 
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                    <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         );
 
-}
+};
 export default CreateCard

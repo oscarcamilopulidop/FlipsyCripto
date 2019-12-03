@@ -4,6 +4,9 @@ import { useState } from 'react'
 const State = {
     user_credentials: {
         email: ""
+    },
+    in_session_data: {
+        uid: ""
     }
 }
 

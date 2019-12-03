@@ -5,9 +5,7 @@
     flex-flow: column;
 }
 
-
 .decks-main-container{
-    height: 100vh;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -36,6 +34,7 @@
 
 .decks-container .ant-card-head {
     height: 1.7em;
+    width: 114.31px;
     margin-bottom: 0.4em !important;
     min-height: 0;
     background-color: #00558c;
@@ -50,6 +49,8 @@
     display: flex;
     flex-flow: column;
     text-align: center;
+    width: 114.31px;
+    height: 125px;
 }
 
 .decks-container .ant-card:hover {
@@ -57,17 +58,17 @@
 }
 
 .decks-container .img-card{
-     margin-bottom: 18px;
-     height: 55px;
- }
+    margin-bottom: 18px;
+    height: 55px;
+}
 
 .decks-container .new-card{
-     color: #00558c;
-     border-color: #00558c;
-     width: 114.31px;
-     height: 159.58px;
-     margin: auto;
- }
+    color: #00558c;
+    border-color: #00558c;
+    width: 114.31px;
+    height: 159.58px;
+    margin: auto;
+}
 
 .decks-container .select-container{
     margin-bottom: 0;
@@ -79,4 +80,56 @@
 
 .ant-select-dropdown-menu-item {
     color: #00558c;
+}
+
+.delete-button{
+    z-index: 10;
+    position: absolute;
+    height: 1.3em;
+    top: 0.4em;
+    right: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.edit-button{
+    z-index: 10;
+    position: absolute;
+    height: 1.3em;
+    top: 0.4em;
+    left: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.swal2-popup {
+    width: 90vw !important;
+    background: rgb(255, 255, 255) !important;
+    box-shadow: 0 2px 10px black !important;
+}
+
+.swal2-confirm{
+    background: #a5dc86 !important;
+}
+
+.swal2-cancel{
+    background: #f27474 !important;
+}
+
+.swal2-title {
+    color: #4e4e4e !important;
+}
+
+.swal2-content {
+    color: #4e4e4e !important;
+}
+
+.swal2-footer {
+    color: #4e4e4e !important;
+}
+
+
+@keyframes pop {
+    from {transform: scale(.1)}
+    to {transform: scale(1)}
 }

@@ -10,16 +10,7 @@ import { gql } from 'apollo-boost';
 
 const WizardPersonalInfo = props => {
     const { state, actions } = useContext(Context);
-
-    const { Option } = Select;
-
-    const [wizardPersonalInfo, setWizardPersonalInfo] = useState({
-        date: '',
-        gender: '',
-        notifications: 0,
-    });
-
-    const [CreateUserInNeo4j, { data }] = useMutation(gql`
+    const [CreateUserInNeo4j] = useMutation(gql`
         mutation Create($idUser: ID!, $nickname: String!, $name: String!, $lastName: String!,
             $birthDate: String!, $email: String!, $gender: String!, $emailNotifications: Boolean!
         ){
@@ -31,17 +22,17 @@ const WizardPersonalInfo = props => {
         }
     `);
 
+    const { Option } = Select;
+
+    const [wizardPersonalInfo, setWizardPersonalInfo] = useState({
+        date: '',
+        gender: '',
+        notifications: false,
+    });
+
+
+
     const UpdateInfo = () => {
-        const { date, gender, notifications } = state.user_credentials
-        actions({
-            type: "setState",
-            payload: {
-                ...state, user_credentials:
-                    { ...state.user_credentials,
-                        date: wizardPersonalInfo.date,
-                        gender: wizardPersonalInfo.gender,
-                        notifications: wizardPersonalInfo.notifications} }
-        })
         console.log(state.user_credentials);
         try {
             CreateUserInNeo4j({
@@ -51,13 +42,13 @@ const WizardPersonalInfo = props => {
                     email: state.user_credentials.email,
                     lastName: state.user_credentials.last_name,
                     name: state.user_credentials.first_name,
-                    birthDate: state.user_credentials.date,
-                    gender: state.user_credentials.gender,
-                    emailNotifications: state.user_credentials.notifications
+                    birthDate: wizardPersonalInfo.date,
+                    gender: wizardPersonalInfo.gender,
+                    emailNotifications: wizardPersonalInfo.notifications
                 }
             }).then(res => {
                 console.log(res.data)
-                props.history.push('')
+                props.history.push('home')
             })
         } catch (error) { console.log("error => ", error) }
     }

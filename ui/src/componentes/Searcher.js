@@ -1,13 +1,30 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Input, Layout} from 'antd'
 import '../Styles/Searcher.css'
 import '../Styles/Home.css'
 import ProfileList from "./ProfileList";
 import Menu from "./Menu";
+import Context from "../GlobalState/context";
+import {Auth} from "aws-amplify";
+import { Badge} from 'antd';
 
 const { Header, Footer} = Layout;
 
 const Searcher = props => {
+
+    const { state, actions } = useContext(Context);
+
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+            props.history.push('');
+        })
+    }, [])
 
     const toSearch = () => {
 
@@ -53,9 +70,9 @@ const Searcher = props => {
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                     <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                    <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                    <img className = "footer-item-selected" src={require("../Assets/search-selected.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                    <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                    <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
             </Layout>
         </div>

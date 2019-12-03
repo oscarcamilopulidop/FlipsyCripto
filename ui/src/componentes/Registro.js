@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import regis from '../Assets/icon.png';
 import ConfirmCode from './CodConf'
 import '../Styles/Signup.css'
@@ -7,18 +7,12 @@ import { Button, Input, Checkbox } from 'antd'
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import Swal from 'sweetalert2'
-// import { gql } from 'apollo-boost';
+import { gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
+
 
 
 const Registro = props => {
-    // const [CreateUserInNeo4j, { data }] = useMutation(gql`
-    //     mutation Create($id: ID!, $nickname: String!, $email: String!){
-    //         CreateUSER(idUser: $id, nickname: $nickname, email: $email){
-    //             idUser nickname email
-    //         }
-    //     }
-    // `)
-
     const { state, actions } = useContext(Context)
     const [signUpCredentials, setSignUpCredentials] = useState({
         correo: '',
@@ -30,7 +24,14 @@ const Registro = props => {
     const ValidateCredentials = () => {
         signUpCredentials.terminos
             ? handleSubmit()
-            : alert("Debes aceptar los términos y condiciones")
+            : Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text: `
+                            Debes aceptar los términos y condiciones
+                        `,
+                footer: '<i> Inténtalo de nuevo :D </i>'
+            })
     }
 
     const handleSubmit = async () => {
@@ -59,14 +60,29 @@ const Registro = props => {
                 })
 
         } catch (error) {
-            Swal.fire({
-                type: 'error',
-                title: 'Error',
-                text: `
-                    La Contraseña debe contener 8 caracteres, mayúscula y minúscula y al menos un número
-                `,
-                footer: '<i> Inténtalo de nuevo :D </i>'
-            })
+            alert(error.name)
+            switch (error.name) {
+                case 'UsernameExistsException': {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error',
+                        text: `
+                            El correo ingresado ya existe
+                        `,
+                        footer: '<i> Inténtalo de nuevo :D </i>'
+                    })
+                }break;
+                default: {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error',
+                        text: `
+                            La Contraseña debe contener 8 caracteres, mayúscula y minúscula y al menos un número
+                        `,
+                        footer: '<i> Inténtalo de nuevo :D </i>'
+                    })
+                }
+            }
         }
     }
 
@@ -94,6 +110,7 @@ const Registro = props => {
                     <Input
                         className="signup-input"
                         onChange={e => setSignUpCredentials({ ...signUpCredentials, usuario: e.target.value })}
+                        onClick={() => console.log(signUpCredentials)}
                         placeholder="Nickname"
                     />
 
@@ -114,7 +131,6 @@ const Registro = props => {
                 </section>
 
                 <section  className="final-options">
-                    <p>¿Ya tienes tu código? <a href="#">Ingrésalo aquí</a> </p>
                     <p>¿Ya tienes tu cuenta? <a onClick={() => props.history.push('signin')}>Inicia sesión</a> </p>
                 </section>
 

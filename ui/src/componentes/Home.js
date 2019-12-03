@@ -1,18 +1,37 @@
 import React, { useState, useEffect, useContext } from 'react'
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Layout } from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import '../Styles/Home.css'
-import { Input } from 'antd';
-import CardContent from "@material-ui/core/CardContent";
+import '../Styles/CardsPreview.css'
+import { Button, Modal, Input } from 'antd';
 import Menu from "./Menu";
+import { Auth } from 'aws-amplify'
+import { Badge} from 'antd';
+import ReactCardFlip from "react-card-flip";
+import Swal from "sweetalert2";
+import {gql} from "apollo-boost";
+import {useQuery} from "@apollo/react-hooks";
 
 const { Search } = Input;
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
 const Home = props => {
+    const [userId, setUserId] = useState("")
+    const { state, actions } = useContext(Context)
+
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().then(res => {
+            actions({
+                type: 'setState',
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+            })
+            console.log(res.attributes.sub)
+        }).catch(err => {
+          props.history.push('');
+        })
+    }, [])
 
     var flag = false;
     const ShowSideMenu = () => {
@@ -28,7 +47,7 @@ const Home = props => {
         flag = !flag;
     }
 
-    return (
+        return (
         <Layout className="home-container">
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
@@ -64,29 +83,13 @@ const Home = props => {
                     </div>
                 </div>
 
-                <div className="outside-container">
-                    <img className="circular" src ="https://static.ellahoy.es/ellahoy/fotogallery/845X0/459517/cortes-de-cabello-apra-cara-cuadrada-2017.jpg" height="100" width="100"/>
-                    <div className="text-container">
-                        <span className="text"> <span className="link"> Andrés Felipe Ortíz </span> ha aceptado tu invitación de amistad</span>
-                    </div>
-                </div>
-
-                <div className="outside-container">
-                    <div className="card">
-                    </div>
-                    <img className="circular" src ="http://cdn3.upsocl.com/wp-content/uploads/2016/05/18-24.jpg" height="100" width="100"/>
-                    <div className="text-container">
-                        <span className="text"> <span className="link"> Juan Carlos Castellanos </span> ha compartido contigo su baraja <span className="link"> Música Instrumental </span> </span>
-                    </div>
-                </div>
-
             </Content>
             <Footer className="footer">
                 <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                 <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
-                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search')}/>
+                <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                 <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
-                <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('')}/>
+                <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
             </Footer>
         </Layout>
     )
