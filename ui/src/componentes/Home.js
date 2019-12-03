@@ -4,10 +4,12 @@ import { Layout } from 'antd';
 import Context from '../GlobalState/context'
 import { withRouter } from 'react-router-dom'
 import '../Styles/Home.css'
-import { Input } from 'antd';
+import '../Styles/CardsPreview.css'
+import { Button, Modal, Input } from 'antd';
 import Menu from "./Menu";
 import { Auth } from 'aws-amplify'
 import { Badge} from 'antd';
+import ReactCardFlip from "react-card-flip";
 import Swal from "sweetalert2";
 import {gql} from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
@@ -17,7 +19,6 @@ const { Header, Footer, Content } = Layout;
 
 const Home = props => {
     const [userId, setUserId] = useState("")
-    const [show, setShow] = useState(false)
     const { state, actions } = useContext(Context)
 
     useEffect(() => {
@@ -46,7 +47,7 @@ const Home = props => {
         flag = !flag;
     }
 
-    return (
+        return (
         <Layout className="home-container">
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
