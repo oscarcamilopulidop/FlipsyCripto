@@ -57,7 +57,7 @@ const Verification = props => {
             </div>
 
             <section className="form-container">
-                <Input className="input" placeholder="Correo Electrónico" onChange={(e) => setVerificationCredentials({ ...verificationCredentials, email: e.target.value })} />
+                <Input className="input" placeholder="Correo Electrónico" onChange={(e) => setVerificationCredentials({ ...verificationCredentials, email: e.target.value.toLowerCase() })} />
             </section>
 
             <section className="verification-btn-container">
