@@ -16,7 +16,7 @@ import {ApolloProvider} from '@apollo/react-hooks'
 Amplify.configure(config)
 
 const client = new ApolloClient({
-    uri:"http://18.190.119.49:4000"
+    uri: process.env.REACT_APP_GRAPHQL_URI
 })
 
 

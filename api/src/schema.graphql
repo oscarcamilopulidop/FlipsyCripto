@@ -16,6 +16,9 @@ type USER {
   fcg: [FCGroup] @cypher (
     statement: "MATCH (this)-[:OWNS_FCG]->(f:FCGroup) RETURN f"
   )
+  observing_fcgs: [FCGroup] @cypher (
+    statement: "MATCH (this)-[:IS_OBSERVING_FCG {posible:0}]->(f:FCGroup) RETURN f"
+  )
 }
 
 type FC {
@@ -45,18 +48,33 @@ type FCGroup {
   fc: [FC] @cypher (
     statement: "MATCH (this)-[:CONTAINS_FC]->(f:FC) RETURN f"
   )
-
+  observing_users: [USER] @cypher (
+    statement: "MATCH (this)<-[r:IS_OBSERVING_FCG]-(u:USER) RETURN u"
+  )
 }
 
 type CAT{
   id: ID!
   name: String!
+  fcg: [FCGroup] @cypher (
+    statement: "MATCH (this)-[:CONTAINS_FCG]->(f:FCGroup) RETURN f"
+  )
 }
 
 type SCAT{
   id: ID!
   name: String!
   commonTags: [String!]
+
+
+}
+
+type Fifi{
+  idFcgDel: ID!
+}
+
+type Fifi2{
+  idFcDel: ID!
 }
 
 ##RELATIONSHIPS
@@ -67,15 +85,16 @@ type is_friend @relation(name: "IS_FRIEND") {
     notifications: Boolean!
 }
 
-type FcgToUser @relation(names: "OWNS_FCG"){
+type FcgToUser @relation(name: "OWNS_FCG"){
   from: USER
   to: FCGroup
 }
-type FcToFcg @relation(names: "CONTAINS_FC"){
+type FcToFcg @relation(name: "CONTAINS_FC"){
   from: FCGroup
   to: FC
 }
-type  FcgShareTo @relation(names: "IS_OBSERVING_GFC"){
+type  FcgShareTo @relation(name: "IS_OBSERVING_FCG"){
   from: USER
   to: FCGroup
 }
+
