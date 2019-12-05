@@ -17,7 +17,7 @@ type USER {
     statement: "MATCH (this)-[:OWNS_FCG]->(f:FCGroup) RETURN f"
   )
   observing_fcgs: [FCGroup] @cypher (
-    statement: "MATCH (this)-[:IS_OBSERVING_FCG {posible:0}]->(f:FCGroup) RETURN f"
+    statement: "MATCH (this)-[:IS_OBSERVING_FCG]->(f:FCGroup) RETURN f"
   )
 }
 
@@ -97,4 +97,3 @@ type  FcgShareTo @relation(name: "IS_OBSERVING_FCG"){
   from: USER
   to: FCGroup
 }
-
