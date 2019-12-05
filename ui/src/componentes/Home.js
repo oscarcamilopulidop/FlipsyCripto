@@ -83,12 +83,29 @@ const Home = props => {
                     </div>
                 </div>
 
+                <div className="outside-container">
+                    <div className="card">
+                    </div>
+                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-13.jpg" height="100" width="100"/>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Simon El Gran Varon </span> ha creado una nueva baraja <span className="link"> Química </span> </span>
+                    </div>
+                </div>
+
+                <div className="outside-container">
+                    <div className="card">
+                    </div>
+                    <img className="circular" src ="https://www.dzoom.org.es/wp-content/uploads/2011/08/insp-cuadradas-13.jpg" height="100" width="100"/>
+                    <div className="text-container">
+                        <span className="text"> <span className="link"> Juanito Alimaña </span> ha creado una nueva baraja <span className="link"> Biología </span> </span>
+                    </div>
+                </div>
+
             </Content>
             <Footer className="footer">
                 <img className = "footer-item-selected" src={require("../Assets/home-selected.svg")} alt="Home" onClick={() => props.history.push('home')}/>
                 <img className = "footer-item" src={require("../Assets/cards.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
                 <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
-                <img className = "footer-item" src={require("../Assets/profile.svg")} alt="Profile" onClick={() => props.history.push('')}/>
                 <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
             </Footer>
         </Layout>

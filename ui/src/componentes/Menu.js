@@ -18,22 +18,10 @@ const Menu = props => {
 
             <div className="menu-main-menu">                
                 <p onClick={() => props.history.push('decks')}> Barajas </p>
-                <p> Comunidad </p>
+                <p onClick={() => props.history.push('search')}> Comunidad </p>
                 <p> Perfil </p>
-                <p> Retos </p>
+                <p onClick={() => props.history.push('questionnaires-list')}> Retos </p>
                 <p onClick={logout}> Cerrar Sesión </p>
-                <div className="center-hr">
-                    <hr className="menu-separator"/>
-                </div>
-            </div>
-            
-            
-   
-            <div className="menu-friends">
-                <p> Amigos </p>
-                <p> Amigo 1 </p>
-                <p> Amigo 2 </p>
-                <p> Amigo 3 </p>
             </div>
         </div>
 
