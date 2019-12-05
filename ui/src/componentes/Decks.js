@@ -12,10 +12,21 @@ import Swal from 'sweetalert2';
 const { Header, Footer} = Layout;
 const { Option } = Select;
 
-const GET_DECKS = gql`
-    query Search($id: String!) {
-        FCGroup(idUser: $id)  {
+const GET_MY_DECKS = gql`
+    query Search($id: ID!) {
+        USER(idUser: $id)  {
+          fcg {
             idFcg, title
+          }
+        }
+    }`;
+
+const GET_OBSERVING_DECKS = gql`
+    query Search($id: ID!) {
+        USER(idUser: $id)  {
+          observing_fcgs {
+            idFcg, title
+          }
         }
     }`;
 
@@ -33,24 +44,38 @@ const Decks = (props) => {
             props.history.push('');
         })
     }, []);
-
+    console.log(props.location.state)
     const { state, actions } = useContext(Context);
     const uid = state.in_session_data.uid;
     console.log(uid);
-    const { loading, data } = useQuery(GET_DECKS,
+
+    if (props.location.state.decks_type == 'owned') {
+      console.log("Testing")
+    }
+
+    (props.location.state.decks_type == 'owned')? console.log(GET_MY_DECKS) : console.log(GET_OBSERVING_DECKS)
+    const { loading, data } = useQuery((props.location.state.decks_type == 'owned')? GET_MY_DECKS : GET_OBSERVING_DECKS, // GET_OBSERVING_DECKS GET_MY_DECKS ,
         {variables:{
                 id: uid //"8e472c4b-0e05-4d81-b017-01dc7a1be9f3"
             },
             pollInterval: 500,
         });
 
-    console.log(data)
 
-    if (!loading) { console.log(data) }
+    var rendering_data;
+
+    if (!loading) {
+      if (props.location.state.decks_type == 'owned') {
+        rendering_data = data.USER[0].fcg
+      } else if (props.location.state.decks_type == 'shared') {
+        rendering_data = data.USER[0].observing_fcgs
+      }
+
+      console.log(rendering_data)
+    }
 
     const show = () => {
         console.log(state.user_credentials);
-        // console.log(data.USER[0]);
         console.log(props.location.state)
     };
 
@@ -70,7 +95,7 @@ const Decks = (props) => {
     const openDeck = (idFcg, title) => {
         console.log(idFcg)
         props.history.push({
-            pathname: 'cards-creation',
+              pathname: 'cards-creation',
             search: idFcg,
             state: {
                 idFcg: idFcg,
@@ -128,8 +153,14 @@ const Decks = (props) => {
         })
     };
 
-    const handleChange = () => {
-        console.log("mostrando barajas ")
+    const handleChange = (event) => {
+        // console.log(event)
+        // console.log("mostrando barajas ")
+        if (event == 'Propias') {
+          props.history.push({pathname: 'decks', state: {decks_type : "owned"}})
+        } else if (event == 'Compartidas') {
+          props.history.push({pathname: 'decks', state: {decks_type : "shared"}})
+        }
     };
 
     let flag = false;
@@ -180,7 +211,7 @@ const Decks = (props) => {
                         </Button>
                         <List
                             grid={{ gutter: 10, column: 3 }}
-                            dataSource={data.FCGroup}
+                            dataSource={rendering_data}
                             renderItem={item => (
                                 <List.Item>
                                     <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => openDeckEdit(item.idFcg)} alt="delete-button"/>
@@ -195,7 +226,7 @@ const Decks = (props) => {
                     </div>
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
-                    <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
+                    <img className = "footer-item-selected" src={require("../Assets/cards-selected.svg")} alt="Flashcards" onClick={() => props.history.push({pathname: 'decks', state: {decks_type : "owned"}})}/>
                     <img className = "footer-item" src={require("../Assets/search.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>
                     <Badge count={5}> <img className = "footer-item" src={require("../Assets/Notification.svg")} alt="Notificaciones" onClick={() => props.history.push('questionnaires-list')}/> </Badge>
                 </Footer>
