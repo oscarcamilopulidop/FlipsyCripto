@@ -21,3 +21,8 @@
     color: white;
 }
 
+@media (min-width: 650px) {
+    .questionnaires-main-container .ant-list-item{
+        margin: 2% 10%;
+    }
+}

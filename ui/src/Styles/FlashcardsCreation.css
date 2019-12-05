@@ -104,3 +104,21 @@
     margin: 0;
     padding: 0;
 }
+
+.flashcards-container .ant-col-8{
+    width: auto;
+}
+
+.flashcards-container .ant-list-item{
+    position: relative;
+}
+
+@media (min-width: 850px) {
+    .flashcards-container .ant-col-8{
+        width: 16.666666666%;
+        left: auto;
+    }
+    .flashcards-container .ant-list-item{
+        width:114.3px;
+    }
+}

@@ -183,7 +183,7 @@ const FlascardsCreation = props => {
                         grid={{ gutter: 10, column: 3 }}
                         dataSource={data.FC}
                         renderItem={item => (
-                            <List.Item>
+                            <List.Item style={{left: String((window.innerWidth*0.9+10 - 126.3*Math.trunc((window.innerWidth*0.9+10)/126.3))/2) + 'px'}}>
                                 <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")} onClick={ () => editCard(item.idFc)} alt="delete-button"/>
                                 <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFc)} alt="delete-button"/>
                                 <Card onClick={() => openCard(item.idFc)}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>

@@ -133,3 +133,21 @@
     from {transform: scale(.1)}
     to {transform: scale(1)}
 }
+
+.decks-container .ant-col-8{
+    width: auto;
+}
+
+.decks-container .ant-list-item{
+    position: relative;
+}
+
+@media (min-width: 850px) {
+    .decks-container .ant-col-8{
+        width: 16.666666666%;
+        left: auto;
+    }
+    .decks-container .ant-list-item{
+        width:114.3px;
+    }
+}
