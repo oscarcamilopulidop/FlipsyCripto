@@ -20,3 +20,32 @@
     width: 14%;
     margin-right: 25px;
 }
+
+@media (min-width: 650px) {
+    .list-main-container-category .ant-list-item{
+        margin: 2% 7%;
+        width: 36%;
+        float: left;
+        padding: 5% 0;
+    }
+}
+
+@media (min-width: 900px) {
+    .list-main-container-category .ant-list-item-meta-title {
+        font-size: x-large;
+    }
+
+    .list-main-container-category .play-questionnaire {
+        width: 70px;
+        height: 70px;
+    }
+
+    .list-main-container-category .ant-avatar {
+        width: 75px !important;
+        height: 75px !important;
+    }
+
+    .list-main-container-category .ant-list-item{
+        padding: 4% 0;
+    }
+}
