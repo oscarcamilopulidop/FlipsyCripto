@@ -10,6 +10,7 @@ import { gql } from 'apollo-boost';
 import moment from "moment";
 import { Auth } from 'aws-amplify'
 import { Badge} from 'antd';
+import NavBar from "./NavBar";
 
 
 
@@ -136,6 +137,7 @@ const EditCard  = props => {
                 <div />
                 :
             <Layout className="layout">
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

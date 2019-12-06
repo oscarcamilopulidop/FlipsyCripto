@@ -63,3 +63,9 @@
 .rta-container{
     text-align: center;
 }
+
+@media (min-width: 700px) {
+    .question-container{
+        margin-top: 40px;
+    }
+}

@@ -10,6 +10,7 @@ import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
 import moment from "moment";
 import { Badge} from 'antd';
+import NavBar from "./NavBar";
 
 const { Header, Footer, Content } = Layout;
 
@@ -145,6 +146,7 @@ const DeckCreation = props => {
     return (
         <div className="deck-creation">
             <Layout>
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

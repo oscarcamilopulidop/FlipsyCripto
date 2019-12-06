@@ -197,10 +197,6 @@
     vertical-align: middle;
 }
 
-.nav-web {
-    display: none;
-}
-
 .text{
     color: #000000;
     font-family: Arial;
@@ -223,13 +219,4 @@ div{
 @keyframes pop {
     from {transform: scale(.1)}
     to {transform: scale(1)}
-}
-
-@media (min-width: 500px) {
-    .header{
-        display: none;
-    }
-    .footer{
-        display: none;
-    }
 }

@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
 import { Badge} from 'antd';
+import NavBar from "./NavBar";
 
 
 
@@ -153,7 +154,7 @@ const FlascardsCreation = props => {
             :
         <div className='flashcards-main-container'>
             <Layout>
-
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

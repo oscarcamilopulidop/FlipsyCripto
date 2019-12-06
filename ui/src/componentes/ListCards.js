@@ -12,6 +12,7 @@ import '../Styles/Home.css'
 import '../Styles/ListCards.css'
 
 import '../App.css';
+import NavBar from "./NavBar";
 const { Header, Footer, Sider, Content } = Layout;
 
 class ListCards extends React.Component {
@@ -34,6 +35,7 @@ class ListCards extends React.Component {
 
         return (
             <Layout className="layout">
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones"/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones"/>

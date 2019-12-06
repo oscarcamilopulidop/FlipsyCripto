@@ -8,6 +8,7 @@ import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
 import Swal from 'sweetalert2';
+import NavBar from "./NavBar";
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
@@ -154,7 +155,7 @@ const Decks = (props) => {
             :
             <div className='decks-main-container'>
                 <Layout>
-
+                    <NavBar className = "nav-web"></NavBar>
                     <Header className = "header">
                         <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                         <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
