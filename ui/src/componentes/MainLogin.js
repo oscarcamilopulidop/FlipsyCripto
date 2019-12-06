@@ -88,7 +88,8 @@ const MainLogin = props => {
     return (
         <div className='login-main-container'>
             <div className="img-logo-container">
-                <img className="img-logo" src={require('../Assets/LogoLogin.PNG')} alt="" />
+                <img className="img-logo" src={require('../Assets/LogoLogin.svg')} alt="logo-main-login" />
+                <img className="flipsy-logo" src={require('../Assets/FlipsyMain.svg')} alt="logo-main-login" />
             </div>
 
             <section className="form-container">

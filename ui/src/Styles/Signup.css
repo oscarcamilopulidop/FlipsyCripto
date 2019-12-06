@@ -6,6 +6,10 @@
     margin: 0;
 }
 
+.Registro {
+    min-height: 100vh;
+}
+
 .Registro .ant-input{
     margin: 5px;
 }

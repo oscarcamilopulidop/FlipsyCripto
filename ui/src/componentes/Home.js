@@ -13,6 +13,8 @@ import ReactCardFlip from "react-card-flip";
 import Swal from "sweetalert2";
 import {gql} from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
+import NavBar from "./NavBar.js";
+
 
 const { Search } = Input;
 const { Header, Footer, Content } = Layout;
@@ -49,6 +51,7 @@ const Home = props => {
 
         return (
         <Layout className="home-container">
+            <NavBar className = "nav-web"></NavBar>
             <Header className = "header">
                 <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                 <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

@@ -49,11 +49,12 @@ const Verification = props => {
     return (
         <div className='verification-main-container'>
             <div className="img-logo-container">
-                <img className="img-logo" src={require('../Assets/LogoVerification.PNG')} alt="" />
+                <img className="img-logo" src={require('../Assets/LogoVerification.PNG')} alt="Question-Mark" />
+                <img className="img-question" src={require('../Assets/QuestionMark.svg')} alt="Question-Mark" />
             </div>
 
             <div className="verification-txt-container">
-                <h3 className="text-code">Ingresa tu correo electrónico para enviarte el código de verificación</h3>
+                <h3 className="text-code">Ingresa tu correo electrónico para enviarte un código de verificación</h3>
             </div>
 
             <section className="form-container">

@@ -51,7 +51,8 @@ const Confirmation = props => {
     return (
         <div className='confirm-main-container'>
             <div className="img-logo-container">
-                <img className="img-logo" src={require('../Assets/LogoConfirmation.PNG')} alt="" />
+                <img className="img-logo" src={require('../Assets/LogoConfirmation.PNG')} alt="Succes-Icon" />
+                <img className="yes-logo" src={require('../Assets/YesIcon.svg')} alt="Succes-Icon" />
             </div>
 
             <section className="form-container">
