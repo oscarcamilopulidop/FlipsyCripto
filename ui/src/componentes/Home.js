@@ -71,7 +71,7 @@ const Home = props => {
                     + Nueva baraja
                 </div>
 
-                <div className="deck" onClick={() => props.history.push('decks')}>
+                <div className="deck" onClick={() => props.history.push({pathname: 'decks', state: {decks_type : "owned"}})}>
                    <div className="bottom">
                        Barajas
                    </div>

@@ -25,6 +25,7 @@ import Question from './componentes/Question'
 import Congratulations from './componentes/Congratulations'
 import SearchDecks from "./componentes/SearchDecks";
 import NavBar from "./componentes/NavBar.js";
+import SearchFlashCardsByDecks from "./componentes/SearchFlashCardsByDeck";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/question" component={Question}/>
         <Route path="/congratulations" component={Congratulations}/>
         <Route path="/navbar" component={NavBar}/>
+        <Route path="/search-flashcard-by-deck" component={SearchFlashCardsByDecks}/>
       </Switch>
     </BrowserRouter>
   );
