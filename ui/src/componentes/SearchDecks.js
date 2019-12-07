@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { Badge} from 'antd';
 import ReactCardFlip from "react-card-flip";
 import NavBar from "./NavBar";
+import ModalFlashCard from "./ModalFlashCard";
 
 
 const { Header, Footer} = Layout;
@@ -54,11 +55,6 @@ const SearchDecks = props => {
     }, [])
 
     const [show, setShow] = useState(false)
-    const [isFlipped0, setFlipped0] = useState(true)
-    const [isFlipped1, setFlipped1] = useState(true)
-    const [isFlipped2, setFlipped2] = useState(true)
-    const [current, setCurrent] = useState(0)
-
 
     const[searchDeck, setSearchDeck] = useState({
         category: "",
@@ -139,150 +135,10 @@ const SearchDecks = props => {
         element.style.transition = 'transform 500ms';
         flag = !flag;
     }
-    const AddDeck = () =>{
-
-    }
 
     const Cancel = () => {
         setShow(false)
     }
-
-
-    const dataFCg = {name: 'Matematicas'};
-    const dataFC = [{front: 'Texto de prueba frontal 1', back: 'Texto de prueba posterior 1'},
-        {front: 'Texto de prueba frontal 2', back: 'Texto de prueba posterior 2'},
-        {front: 'Texto de prueba frontal 3', back: 'Texto de prueba posterior 3'},
-        {front: 'Texto de prueba frontal 4', back: 'Texto de prueba posterior 4'},
-    ];
-
-    const nextCard = () => {
-        if(current + 1 < dataFC.length){
-            setCurrent(current+1);
-        }
-        console.log(current)
-    };
-
-    const prevCard = () => {
-        if(current > 0){
-            setCurrent(current-1);
-        }
-        console.log(current)
-    };
-
-    const getFirstCards = () => {
-        if(current == 0){
-            return(
-                <ReactCardFlip isFlipped={isFlipped0} flipDirection="horizontal">
-                    <div className="primary-card-preview"  key="front" onClick={() => setFlipped0(true)}>
-                        {dataFC[current].front}
-                    </div>
-                    <div className="primary-card-preview"  key="back" onClick={() => setFlipped0(false)}>
-                        {dataFC[current].back}
-                    </div>
-                </ReactCardFlip>);
-        }else if(current+1 == dataFC.length){
-            if(current-2 >= 0) {
-                return (
-                    <ReactCardFlip isFlipped={isFlipped0} flipDirection="horizontal">
-                        <div className="secundary-card-preview" key="front" onClick={() => setFlipped0(true)}>
-                            {dataFC[current-2].front}
-                        </div>
-                        <div className="secundary-card-preview" key="back" onClick={() => setFlipped0(false)}>
-                            {dataFC[current-2].back}
-                        </div>
-                    </ReactCardFlip>);
-            }
-        } else {
-            return(
-                <ReactCardFlip isFlipped={isFlipped0} flipDirection="horizontal">
-                    <div className="secundary-card-preview"  key="front" onClick={() => setFlipped0(true)}>
-                        {dataFC[current-1].front}
-                    </div>
-                    <div className="secundary-card-preview"  key="back" onClick={() => setFlipped0(false)}>
-                        {dataFC[current-1].back}
-                    </div>
-                </ReactCardFlip>
-            );
-        }
-    };
-
-    const getSecondCard = () => {
-        if(current == 0){
-            if(dataFC.length >= 2){
-                return(
-                    <ReactCardFlip isFlipped={isFlipped1} flipDirection="horizontal">
-                        <div className="secundary-card-preview"  key="front" onClick={() => setFlipped1(true)}>
-                            {dataFC[current+1].front}
-                        </div>
-                        <div className="secundary-card-preview"  key="back" onClick={() => setFlipped1(false)}>
-                            {dataFC[current+1].back}
-                        </div>
-                    </ReactCardFlip>);
-            }
-        }else if(current+1 == dataFC.length){
-            if(current-1 >= 0 ) {
-                return (
-                    <ReactCardFlip isFlipped={isFlipped1} flipDirection="horizontal">
-                        <div className="secundary-card-preview" key="front" onClick={() => setFlipped1(true)}>
-                            {dataFC[current - 1].front}
-                        </div>
-                        <div className="secundary-card-preview" key="back" onClick={() => setFlipped1(false)}>
-                            {dataFC[current - 1].back}
-                        </div>
-                    </ReactCardFlip>);
-            }
-        }else {
-            return(
-                <ReactCardFlip isFlipped={isFlipped1} flipDirection="horizontal">
-                    <div className="primary-card-preview"  key="front" onClick={() => setFlipped1(true)}>
-                        {dataFC[current].front}
-                    </div>
-                    <div className="primary-card-preview"  key="back" onClick={() => setFlipped1(false)}>
-                        {dataFC[current].back}
-                    </div>
-                </ReactCardFlip>
-            );
-        }
-    };
-
-    const getdThirdCard = () => {
-        if(current == 0){
-            if(dataFC.length >= 3){
-                return(
-                    <ReactCardFlip isFlipped={isFlipped2} flipDirection="horizontal">
-                        <div className="secundary-card-preview"  key="front" onClick={() => setFlipped2(true)}>
-                            {dataFC[current+2].front}
-                        </div>
-                        <div className="secundary-card-preview"  key="back" onClick={() => setFlipped2(false)}>
-                            {dataFC[current+2].back}
-                        </div>
-                    </ReactCardFlip>);
-            }
-        }else if(current+1 == dataFC.length){
-            return (
-                <ReactCardFlip isFlipped={isFlipped2} flipDirection="horizontal">
-                    <div className="primary-card-preview" key="front" onClick={() => setFlipped2(true)}>
-                        {dataFC[current].front}
-                    </div>
-                    <div className="primary-card-preview" key="back" onClick={() => setFlipped2(false)}>
-                        {dataFC[current].back}
-                    </div>
-                </ReactCardFlip>
-            );
-        }else {
-            if(current+1 < dataFC.length) {
-                return(
-                    <ReactCardFlip isFlipped={isFlipped2} flipDirection="horizontal">
-                        <div className="secundary-card-preview"  key="front" onClick={() => setFlipped2(true)}>
-                            {dataFC[current+1].front}
-                        </div>
-                        <div className="secundary-card-preview"  key="back" onClick={() => setFlipped2(false)}>
-                            {dataFC[current+1].back}
-                        </div>
-                    </ReactCardFlip>);
-            }
-        }
-    };
 
     const openDeck = (idFcg, title) => {
         console.log(idFcg)
@@ -296,6 +152,15 @@ const SearchDecks = props => {
         })
     }
 
+    const openDeck2 = (idFcg, title) => {
+        console.log(idFcg)
+        setShow(true);
+        actions({
+            type: 'setState',
+            payload: {...state, actually_deck: {...state.actually_deck, idFcg: idFcg, title: title,show:true}}
+        })
+    }
+
     return (
         loading ?
             <div />
@@ -305,28 +170,11 @@ const SearchDecks = props => {
                 className = "modal-preview"
                 title={null}
                 closable = {false}
-                visible={show}
+                visible={state.actually_deck.show}
                 centered
                 footer={null}
             >
-                <div className="title-preview">
-                    {dataFCg.name} {current+1} / {dataFC.length}
-                </div>
-                <div className="preview-cards-container">
-                    <img className="arrow-study" src={require("../Assets/prev-card.svg")} onClick={prevCard} />
-                    {getFirstCards()}
-                    {getSecondCard()}
-                    {getdThirdCard()}
-                    <img className="arrow-study" src={require("../Assets/next-card.svg")} onClick={nextCard} />
-                </div>
-                <div className="preview-cards-container">
-                    <Button onClick={Cancel}>
-                        Cancelar
-                    </Button>
-                    <Button type="primary" icon="plus" onClick={AddDeck}>
-                        Agregar
-                    </Button>
-                </div>
+                <ModalFlashCard/>
             </Modal>
             <Layout>
                 <NavBar className = "nav-web"></NavBar>
@@ -351,7 +199,7 @@ const SearchDecks = props => {
                                 <List.Item.Meta
                                     color="white"
                                     avatar={
-                                        <div className="mini-deck" onClick={() => openDeck(item.idFcg, item.title)}>
+                                        <div className="mini-deck" onClick={() => openDeck2(item.idFcg, item.title)}>
                                             <img className = "search-img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" />
                                         </div>
                                     }

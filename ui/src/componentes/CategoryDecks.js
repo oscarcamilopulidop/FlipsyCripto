@@ -60,6 +60,10 @@ const CategoryDecks = props => {
 
     const open = (cat,name) => {
         console.log("abriendo " + name +" " + cat)
+        actions({
+            type: 'setState',
+            payload: {...state, actually_deck: {...state.actually_deck,show:false}}
+        })
         props.history.push({
             pathname: 'search-deck',
             search: cat,
