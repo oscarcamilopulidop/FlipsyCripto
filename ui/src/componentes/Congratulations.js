@@ -7,6 +7,7 @@ import Context from "../GlobalState/context";
 import {Auth} from "aws-amplify";
 import { Button, Badge } from 'antd';
 import { Statistic } from 'antd';
+import NavBar from "./NavBar";
 
 const { Header, Footer} = Layout;
 
@@ -54,6 +55,7 @@ const Congratulations = props => {
     return (
         <div className='congratulations-main-container'>
             <Layout>
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

@@ -7,6 +7,7 @@ import Context from "../GlobalState/context";
 import {Auth} from "aws-amplify";
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import { Button, Badge } from 'antd';
+import NavBar from "./NavBar";
 
 const { Header, Footer} = Layout;
 
@@ -62,6 +63,7 @@ const Question = props => {
     return (
         <div className='question-main-container'>
             <Layout>
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

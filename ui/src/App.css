@@ -3,12 +3,6 @@
     height: 100%;
 }
 
-/*.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}*/
-
 .img-container {
     width: 65%;
     height: 12em;
@@ -17,12 +11,10 @@
     align-items: center;
     border-radius: 1em;
     margin-top: 2em;
-    box-shadow: 0 4px 10px rgb(2, 0, 34);
-    background: steelblue;
 }
 
 .img-regis{
-    width: 30%;
+    width: 50%;
     max-height: 80%;
 }
 
@@ -36,8 +28,8 @@
     align-items: center;
     justify-content: space-between;
 }
-.input {
-    width: 85% !important;
+.Registro .input {
+    width: 85%;
 }
 
 .terms-and-conditions {
@@ -62,29 +54,10 @@
     margin: 1em 0;
 }
 
-.Registro .MuiInput-underline::after{
-    border-bottom: 2px solid #ffffff ;
-}
-
-.Registro .MuiInput-underline::before{
-    border-bottom: 1px solid #ffffff ;
-}
-
-.Registro .MuiCheckbox-colorPrimary.Mui-checked {
-    color: #ffffff ;
-}
-
-
-.Registro .MuiButton-textPrimary {
-    background: #FFFFFD;
-    margin: 10px;
-}
-
 .Registro {
     background: #013C63;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    height: 100vh;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -96,10 +69,6 @@
     display: flex;
     justify-content: center;
     margin-top: 6em;
-}
-
-.Registro .MuiFormGroup-root{
-    margin: 4px;
 }
 
 .onda-blanca {
@@ -122,36 +91,10 @@
     margin-top: 3%;
 }
 
-.CodConf{
-}
-
 .azul{
     color: #09737B;
 }
 
-.CodConf .MuiButton-containedPrimary {
-    color: #075A80;
-    background-color: #01D7DF;
-    width: 50%;
-    align-self: center;
-}
-
-.CodConf .MuiButton-containedPrimary:hover {
-    color: #013C63;
-    background-color: #01D7DF;
-}
-.CodConf .MuiFormGroup-root {
-    width: 60%;
-    margin: 5px;
-    flex-flow: row;
-    align-self: center;
-}
-
 .pequeño{
     font-size: small;
-}
-
-.CodConf .MuiFormControl-marginDense{
-    width: 20%;
-    margin: 5px;
 }

@@ -10,6 +10,7 @@ import '../App.css';
 import Menu from "./Menu";
 import {Auth} from "aws-amplify";
 import Context from "../GlobalState/context";
+import NavBar from "./NavBar";
 const { Header, Footer, Sider, Content } = Layout;
 
 const StudyCards = props => {
@@ -107,6 +108,7 @@ const StudyCards = props => {
             <div />
             :
             <Layout className="layout">
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

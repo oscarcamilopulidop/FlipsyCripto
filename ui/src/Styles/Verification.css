@@ -1,12 +1,18 @@
 .verification-main-container {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
 }
 
-.img-logo {
-    width: 101%;
-    transform: translateY(-10%);
+.verification-main-container .img-logo{
+    display: unset;
+}
+
+.verification-main-container .img-question{
+    display: none;
+    margin-top: 50px;
+    width: 35%;
+    margin-bottom: 30px;
 }
 
 .img-logo-container {
@@ -20,8 +26,8 @@
     text-align: center;
 }
 
-.input {
-    width: 55% !important;
+.verification-main-container .input {
+    width: 55%;
 }
 
 .form-container {
@@ -43,4 +49,32 @@
 
 .text-code{
     padding: 0 3em;
+    color: white;
+}
+
+@media (min-width: 500px) {
+    .verification-main-container .img-logo{
+        display: none;
+    }
+
+    .verification-main-container .img-question{
+        display: unset;
+    }
+    .verification-main-container {
+        background: #013C63;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+}
+
+@media (min-width: 650px) {
+    .verification-main-container .img-question{
+        width: 30%;
+    }
+}
+
+@media (min-width: 750px) {
+    .verification-main-container .img-question{
+        width: 20%;
+    }
 }

@@ -8,6 +8,7 @@ import {useMutation, useQuery} from '@apollo/react-hooks'
 import { gql } from 'apollo-boost';
 import { Auth } from 'aws-amplify'
 import Swal from 'sweetalert2';
+import NavBar from "./NavBar";
 
 const { Header, Footer} = Layout;
 const { Option } = Select;
@@ -185,7 +186,7 @@ const Decks = (props) => {
             :
             <div className='decks-main-container'>
                 <Layout>
-
+                    <NavBar className = "nav-web"></NavBar>
                     <Header className = "header">
                         <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                         <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
@@ -213,7 +214,7 @@ const Decks = (props) => {
                             grid={{ gutter: 10, column: 3 }}
                             dataSource={rendering_data}
                             renderItem={item => (
-                                <List.Item>
+                                <List.Item style={{left: String((window.innerWidth*0.9+10 - 126.3*Math.trunc((window.innerWidth*0.9+10)/126.3))/2) + 'px'}}>
                                     <img className = "edit-button" src={require("../Assets/edit-white.svg")}  onClick={() => openDeckEdit(item.idFcg)} alt="delete-button"/>
                                     <img className = "delete-button" src={require("../Assets/delete.svg")}  onClick={() => deleteDeck(item.idFcg)} alt="delete-button"/>
                                     <Card title=" " onClick={() => openDeck(item.idFcg, item.title)}>

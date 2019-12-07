@@ -1,12 +1,18 @@
 .confirm-main-container {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
 }
 
-.img-logo {
-    width: 101%;
-    transform: translateY(-10%);
+.confirm-main-container .img-logo{
+    display: unset;
+}
+
+.confirm-main-container .yes-logo{
+    display: none;
+    width: 35%;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .img-logo-container {
@@ -15,8 +21,8 @@
     justify-content: center;
 }
 
-.input {
-    width: 55% !important;
+.confirm-main-container .input {
+    width: 55%;
     margin-bottom: 0.5em;
 }
 
@@ -37,3 +43,37 @@
     margin-top: 2em;
 }
 
+.confirm-main-container .ant-btn {
+    margin: 30px auto;
+}
+
+@media (min-width: 500px) {
+    .confirm-main-container .img-logo{
+        display: none;
+    }
+
+    .confirm-main-container .yes-logo{
+        display: unset;
+    }
+}
+
+@media (min-width: 650px) {
+    .confirm-main-container .yes-logo{
+        width: 25%;
+    }
+    .confirm-main-container .input {
+        width: 40%;
+        margin-bottom: 0.7em;
+    }
+    .confirm-main-container {
+        background: #013C63;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+}
+
+@media (min-width: 800px) {
+    .confirm-main-container .yes-logo{
+        width: 20%;
+    }
+}

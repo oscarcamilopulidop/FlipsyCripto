@@ -1,13 +1,18 @@
 .login-main-container {
     width: 100vw;
-    height: 100vh;
     overflow: hidden;
     background-color: white;
 }
-
+.login-main-container button{
+    margin: auto;
+}
 .img-logo {
-    width: 101%;
-    transform: translateY(-10%);
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.flipsy-logo{
+    display: none;
 }
 
 .img-logo-container {
@@ -16,8 +21,9 @@
     justify-content: center;
 }
 
-.input {
-    width: 55% !important;
+.login-main-container .input {
+    width: 55%;
+    margin: 5px;
 }
 
 .form-container {
@@ -43,5 +49,31 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 4em;
+    margin-top: 10%;
+}
+
+.flipsy-logo {
+    margin-top: 50px;
+    width: 35%;
+}
+
+@media (min-width: 500px) {
+    .img-logo{
+        display: none;
+    }
+
+    .flipsy-logo{
+        display: unset;
+    }
+
+    .final-options{
+        margin-top: 5%;
+    }
+}
+
+@media (min-width: 650px) {
+    .flipsy-logo {
+        margin-top: 50px;
+        width: 30%;
+    }
 }

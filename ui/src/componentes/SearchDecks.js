@@ -10,6 +10,7 @@ import {gql} from "apollo-boost";
 import Swal from "sweetalert2";
 import { Badge} from 'antd';
 import ReactCardFlip from "react-card-flip";
+import NavBar from "./NavBar";
 
 
 const { Header, Footer} = Layout;
@@ -316,7 +317,7 @@ const SearchDecks = props => {
                 </div>
             </Modal>
             <Layout>
-
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

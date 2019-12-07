@@ -21,3 +21,31 @@
     color: white;
 }
 
+@media (min-width: 650px) {
+    .questionnaires-main-container .ant-list-item{
+        margin: 2% 7%;
+        width: 36%;
+        float: left;
+        padding: 5% 0;
+    }
+}
+
+@media (min-width: 900px) {
+    .questionnaires-main-container .ant-list-item-meta-title {
+        font-size: x-large;
+    }
+
+    .questionnaires-main-container .play-questionnaire {
+        width: 70px;
+        height: 70px;
+    }
+
+    .questionnaires-main-container .ant-avatar {
+        width: 75px !important;
+        height: 75px !important;
+    }
+
+    .questionnaires-main-container .ant-list-item{
+        padding: 4% 0;
+    }
+}

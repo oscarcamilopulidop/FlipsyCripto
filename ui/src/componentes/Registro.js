@@ -92,7 +92,7 @@ const Registro = props => {
             <div className="wave">
 
                 <div className="img-container">
-                    <img onClick={() => console.log(state)} src={regis} className="img-regis" alt="logo-registro" />
+                    <img className="img-regis" src={require('../Assets/regis.svg')} alt="logo-main-login"/>
                 </div>
             </div>
 

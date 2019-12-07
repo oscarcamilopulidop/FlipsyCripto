@@ -14,7 +14,6 @@
     width: 50px;
     background: #094c6d;
     border: 3px #094c6d solid;
-    /*font-size: 2.5px;*/
     background-color: #094c6d;
     text-align: center;
     padding: 4px;
@@ -27,4 +26,47 @@
     position: relative;
     display: flex;
     z-index: 1;
+}
+
+.title-preview{
+    text-align: center;
+}
+
+@media (min-width: 700px) {
+    .searcher-main-container .mini-deck{
+         width: 100px;
+         height: 140px;
+     }
+    .searcher-main-container .ant-list-item-meta-content{
+        align-self: center;
+    }
+    .searcher-main-container h4{
+        margin: auto;
+    }
+    .searcher-main-container .search-img-card{
+        height: 50px;
+        width: 50px;
+    }
+    .searcher-main-container .ant-btn{
+        height: 60px;
+        width: 60px;
+    }
+    .searcher-main-container .list-main-container{
+        margin: 2em 15%;
+    }
+    .preview-cards-container .react-card-flip{
+        width: unset;
+        height: unset;
+    }
+    .preview-cards-container .primary-card-preview{
+        width: 139px;
+        height: 195px;
+        font-size: small;
+    }
+
+    .preview-cards-container .secundary-card-preview{
+        width: 90px;
+        height: 120px;
+        font-size: smaller;
+    }
 }

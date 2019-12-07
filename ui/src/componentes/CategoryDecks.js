@@ -6,6 +6,7 @@ import Menu from "./Menu";
 import Context from "../GlobalState/context";
 import {Auth} from "aws-amplify";
 import { Badge} from 'antd';
+import NavBar from "./NavBar";
 
 const { Header, Footer} = Layout;
 
@@ -89,7 +90,7 @@ const CategoryDecks = props => {
     return (
         <div className='category-main-container'>
             <Layout>
-
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>

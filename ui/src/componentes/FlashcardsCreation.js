@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
 import { Badge} from 'antd';
+import NavBar from "./NavBar";
 
 
 
@@ -153,7 +154,7 @@ const FlascardsCreation = props => {
             :
         <div className='flashcards-main-container'>
             <Layout>
-
+                <NavBar className = "nav-web"></NavBar>
                 <Header className = "header">
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')}/>
                     <img className = "notifications" src={require("../Assets/menu-button.svg")} alt="Notificaciones" onClick={ShowSideMenu}/>
@@ -183,7 +184,7 @@ const FlascardsCreation = props => {
                         grid={{ gutter: 10, column: 3 }}
                         dataSource={data.FC}
                         renderItem={item => (
-                            <List.Item>
+                            <List.Item style={{left: String((window.innerWidth*0.9+10 - 126.3*Math.trunc((window.innerWidth*0.9+10)/126.3))/2) + 'px'}}>
                                 <img className = "edit-card-button" src={require("../Assets/edit-blue.svg")} onClick={ () => editCard(item.idFc)} alt="delete-button"/>
                                 <img className = "delete-card-button" src={require("../Assets/delete-blue.svg")}  onClick={() => deleteCard(item.idFc)} alt="delete-button"/>
                                 <Card onClick={() => openCard(item.idFc)}>{item.front} <img className = "img-flashcard" src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas"/> </Card>

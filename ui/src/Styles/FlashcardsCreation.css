@@ -104,3 +104,50 @@
     margin: 0;
     padding: 0;
 }
+
+.flashcards-container .ant-col-8{
+    width: auto;
+}
+
+.flashcards-container .ant-list-item{
+    position: relative;
+}
+
+@media (min-width: 650px) {
+    .flashcards-container .ant-col-8{
+        width: 25%;
+        left: auto;
+        margin-bottom: 2%;
+    }
+
+    .flashcards-container .ant-list-item{
+        left: auto !important;
+        width: 189px;
+    }
+
+    .flashcards-container .ant-card-body{
+        width: 100%;
+        height: 235px;
+        font-size: large;
+    }
+
+    .flashcards-container h1{
+        font-size: x-large;
+    }
+
+    .flashcards-container .img-card{
+        height: 82px;
+    }
+    .delete-button{
+        height: 1.9em;
+    }
+
+    .edit-button{
+        height: 1.9em;
+    }
+
+    .flashcards-container .new-flashcard{
+        width: 155px;
+        height: 235px;
+    }
+}

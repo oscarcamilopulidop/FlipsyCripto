@@ -1,0 +1,51 @@
+.menu-container .ant-menu{
+    background: #013C63;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0A648F, #013C63);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0A648F, #013C63); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: white;
+    height: 50px;
+}
+
+.menu-container .logo{
+    height: 50px;
+}
+
+.menu-container{
+    display: none;
+}
+
+.menu-container .footer-item{
+    height: 50px;
+}
+
+.menu-container .ant-badge{
+    height: 30px;
+}
+.search-menu{
+    width: 200px;
+    float: right;
+}
+
+@media (min-width: 700px) {
+    .menu-container{
+        display: unset;
+    }
+}
+
+.nav-web {
+    display: none;
+    position: fixed;
+    width: 100%;
+}
+
+@media(min-width: 700px){
+    .search-menu{
+        width: 35%;
+    }
+    .header{
+        display: none;
+    }
+    .footer{
+        display: none;
+    }
+}
