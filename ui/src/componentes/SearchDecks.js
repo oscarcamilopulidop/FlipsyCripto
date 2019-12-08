@@ -46,7 +46,7 @@ const SearchDecks = props => {
         Auth.currentAuthenticatedUser().then(res => {
             actions({
                 type: 'setState',
-                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}}
+                payload: {...state, in_session_data: {...state.in_session_data, uid: res.attributes.sub}, actually_deck: {...state.actually_deck,show:false}}
             })
             console.log(res.attributes.sub)
         }).catch(err => {

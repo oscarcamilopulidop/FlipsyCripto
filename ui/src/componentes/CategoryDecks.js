@@ -63,7 +63,7 @@ const CategoryDecks = props => {
         actions({
             type: 'setState',
             payload: {...state, actually_deck: {...state.actually_deck,show:false}}
-        })
+        });
         props.history.push({
             pathname: 'search-deck',
             search: cat,
