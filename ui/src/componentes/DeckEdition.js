@@ -20,6 +20,26 @@ const GET_DECKS_INFO = gql`
       }
   }`;
 
+const DELETE_OLD_CAT_CONNECTION = gql`
+  mutation remove($catID: ID!, $fcgID: ID!) {
+    RemoveCATSubscribedFCG(
+      from: {id: $catID},
+      to: {idFcg: $fcgID}
+    ) {
+      from{name}
+    }
+  }`;
+
+const ADD_NEW_CAT_CONNECTION = gql`
+  mutation add($catID: ID!, $fcgID: ID!) {
+    AddCATSubscribedFCG(
+      from: {id: $catID},
+      to: {idFcg: $fcgID}
+    ) {
+      from{name}
+    }
+  }`;
+
 function log(e) {
     console.log(e);
 }
@@ -43,6 +63,9 @@ const types = [
 const DeckEdition = props => {
 
   const [localData, setLocalData] = useState([])
+
+  const [DeleteOldDeckCatInNeo4j, { old_info }] = useMutation(DELETE_OLD_CAT_CONNECTION);
+  const [AddNewDeckCatInNeo4j, { new_info }] = useMutation(ADD_NEW_CAT_CONNECTION);
 
   const [UpdateDeckInNeo4j, { variables }] = useMutation(gql`
       mutation Update(
@@ -74,9 +97,12 @@ const DeckEdition = props => {
             }
     });
 
+  if(!loading) {
+    console.log(data.FCGroup[0])
+  }
+
     useEffect( () => {
       !loading && setLocalData(data.FCGroup[0])
-
     }, [loading])
 
     var currtenDate = moment().unix();
@@ -112,6 +138,26 @@ const DeckEdition = props => {
 
     const UpdateInfo = () => {
         try {
+          console.log(data.FCGroup[0].idCat)
+          console.log(localData.idFcg)
+
+            DeleteOldDeckCatInNeo4j({
+              variables: {
+                catID: data.FCGroup[0].idCat,
+                fcgID: localData.idFcg
+              }
+            }).then(() => {
+              console.log("Hey Jude, don't make it bad")
+                AddNewDeckCatInNeo4j({
+                  variables: {
+                    catID: localData.idCat,
+                    fcgID: localData.idFcg
+                  }
+                }).then(() => {
+                  console.log('Hey Jude x2')
+                })
+            })
+
             UpdateDeckInNeo4j({
                 variables: {
                     idFcg: localData.idFcg,
@@ -125,6 +171,7 @@ const DeckEdition = props => {
                 console.log(res.data)
                 props.history.push({pathname: 'decks', state: {decks_type : "owned"}})
             })
+
         } catch (error) { console.log("error => ", error) }
 
     }

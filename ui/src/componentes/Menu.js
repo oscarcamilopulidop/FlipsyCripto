@@ -16,8 +16,8 @@ const Menu = props => {
                 <img className="menu-img-logo" src={require('../Assets/icon.png')} alt="" />
             </div>
 
-            <div className="menu-main-menu">                
-                <p onClick={() => props.history.push('decks')}> Barajas </p>
+            <div className="menu-main-menu">
+                <p onClick={() => props.history.push({pathname: 'decks', state: {decks_type : "owned"}})}> Barajas </p>
                 <p onClick={() => props.history.push('search')}> Comunidad </p>
                 <p> Perfil </p>
                 <p onClick={() => props.history.push('questionnaires-list')}> Retos </p>
@@ -25,7 +25,7 @@ const Menu = props => {
             </div>
         </div>
 
-        
+
     )
 };
 

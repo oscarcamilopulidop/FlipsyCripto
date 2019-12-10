@@ -28,7 +28,7 @@ type FC {
   lastModifyDate: String!
   creationDate: String!
   comments: String
-  contatins: FcToFcg
+  contains: FcToFcg
   idFCG: String!
 }
 
@@ -43,7 +43,6 @@ type FCGroup {
   isStudying: Boolean!
   lastModifyDate: String!
   creationDate: String!
-  specificTags: [String!]
   remainingNotifications: Int
   fc: [FC] @cypher (
     statement: "MATCH (this)-[:CONTAINS_FC]->(f:FC) RETURN f"
@@ -59,14 +58,13 @@ type CAT{
   fcg: [FCGroup] @cypher (
     statement: "MATCH (this)-[:CONTAINS_FCG]->(f:FCGroup) RETURN f"
   )
+  subscribedFCG: CatToFcg
 }
 
 type SCAT{
   id: ID!
   name: String!
   commonTags: [String!]
-
-
 }
 
 type Fifi{
@@ -89,11 +87,18 @@ type FcgToUser @relation(name: "OWNS_FCG"){
   from: USER
   to: FCGroup
 }
+
 type FcToFcg @relation(name: "CONTAINS_FC"){
   from: FCGroup
   to: FC
 }
+
 type  FcgShareTo @relation(name: "IS_OBSERVING_FCG"){
   from: USER
+  to: FCGroup
+}
+
+type  CatToFcg @relation(name: "CONTAINS_FCG"){
+  from: CAT
   to: FCGroup
 }
