@@ -3,6 +3,18 @@
     height: 10%;
 }
 
+.not-found{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items :center;
+}
+
+.not-found-image{
+    height: 80%;
+    width: 80%;
+}
+
 .mini-deck{
     position: relative;
     vertical-align: middle;

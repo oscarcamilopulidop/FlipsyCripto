@@ -23,6 +23,7 @@ const GET_DECKS = gql`
                 title
                 idFcg
                 idUser
+                public
                 observing_users {
                   idUser
                 }
@@ -67,8 +68,12 @@ const SearchDecks = props => {
         pollInterval: 500,
     });
 
+    var filteredData;
+
     if (!loading) {
         console.log(data)
+        filteredData = filterData(data.CAT[0].fcg)
+        console.log(filteredData)
     }
 
     function isBeingObserved(deck) {
@@ -81,6 +86,19 @@ const SearchDecks = props => {
       // console.log(deck.observing_users)
       console.log(observingFlag)
       return observingFlag
+    }
+
+
+
+    function filterData(rawData) {
+      var temp = [];
+      rawData.forEach((deck) => {
+          if (!((deck.idUser == state.in_session_data.uid || isBeingObserved(deck)) || (!deck.public))) {
+            temp.push(deck);
+          }
+      })
+
+      return temp
     }
 
     const addDeck = idFcg => {
@@ -174,12 +192,18 @@ const SearchDecks = props => {
                     <Menu/>
                 </div>
 
+                {(filteredData.length == 0)?
+                  <div className="not-found">
+                      <img className="not-found-image" src={require("../Assets/not_found.png")}
+                           alt="logo-flipsy-cartas"/>
+                  </div>
+                  :
                 <div className='list-main-container'>
                     <List
                         itemLayout="horizontal"
-                        dataSource={data.CAT[0].fcg}
+                        dataSource={filteredData}
                         renderItem={item => (
-                            item.idUser == state.in_session_data.uid || isBeingObserved(item)
+                            (item.idUser == state.in_session_data.uid || isBeingObserved(item)) || (!item.public)
                                 ?
                             <div />
                                 :
@@ -204,6 +228,7 @@ const SearchDecks = props => {
                         )}
                     />
                 </div>
+              }
 
                 <Footer className="footer">
                     <img className = "footer-item" src={require("../Assets/home.svg")} alt="Home" onClick={() => props.history.push('home')}/>
