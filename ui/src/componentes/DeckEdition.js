@@ -123,7 +123,7 @@ const DeckEdition = props => {
                 }
             }).then(res => {
                 console.log(res.data)
-                props.history.push('decks')
+                props.history.push({pathname: 'decks', state: {decks_type : "owned"}})
             })
         } catch (error) { console.log("error => ", error) }
 

@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {Avatar, Button, Card, Input, Layout, List, Modal} from 'antd'
-import '../Styles/SearchFlashCardsByDecks.css'
 import '../Styles/Home.css'
 import Menu from "./Menu";
 import Context from "../GlobalState/context";

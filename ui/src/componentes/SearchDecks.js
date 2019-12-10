@@ -142,18 +142,6 @@ const SearchDecks = props => {
 
     const openDeck = (idFcg, title) => {
         console.log(idFcg)
-        props.history.push({
-            pathname: 'search-flashcard-by-deck',
-            search: idFcg,
-            state: {
-                idFcg: idFcg,
-                title: title
-            }
-        })
-    }
-
-    const openDeck2 = (idFcg, title) => {
-        console.log(idFcg)
         setShow(true);
         actions({
             type: 'setState',
@@ -199,7 +187,7 @@ const SearchDecks = props => {
                                 <List.Item.Meta
                                     color="white"
                                     avatar={
-                                        <div className="mini-deck" onClick={() => openDeck2(item.idFcg, item.title)}>
+                                        <div className="mini-deck" onClick={() => openDeck(item.idFcg, item.title)}>
                                             <img className = "search-img-card"  src={require("../Assets/logo-cartas.svg")} alt="logo-flipsy-cartas" />
                                         </div>
                                     }
