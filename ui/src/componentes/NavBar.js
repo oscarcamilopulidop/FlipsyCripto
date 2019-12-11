@@ -13,7 +13,7 @@ const NavBar = props => {
                     <img className = "logo" src={require("../Assets/FlipsyBlanco.svg")} alt="Notificaciones" onClick={() => props.history.push('home')} />
                 </Menu.Item>
                 <Menu.Item >
-                    <img className = "footer-item" src={require("../Assets/cards-white.svg")} alt="Flashcards" onClick={() => props.history.push('decks')}/>
+                    <img className = "footer-item" src={require("../Assets/cards-white.svg")} alt="Flashcards" onClick={() => props.history.push({pathname: 'decks', state: {decks_type : "owned"}})}/>
                 </Menu.Item>
                 <Menu.Item>
                     <img className = "footer-item" src={require("../Assets/search-white.svg")} alt="Search" onClick={() => props.history.push('search-category')}/>

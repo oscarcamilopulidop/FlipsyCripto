@@ -17,6 +17,7 @@ Amplify.configure(config)
 
 const client = new ApolloClient({
     uri: process.env.REACT_APP_GRAPHQL_URI
+    // uri:'http://localhost:4001/graphql'
 })
 
 
