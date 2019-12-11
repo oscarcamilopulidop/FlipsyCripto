@@ -193,9 +193,8 @@ const SearchDecks = props => {
                 </div>
 
                 {(filteredData.length == 0)?
-                  <div className="not-found">
-                      <img className="not-found-image" src={require("../Assets/not_found.png")}
-                           alt="logo-flipsy-cartas"/>
+                  <div>
+                      <img className="not-found-image" src={require("../Assets/not_found.png")} alt="logo-flipsy-cartas"/>
                   </div>
                   :
                 <div className='list-main-container'>

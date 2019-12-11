@@ -3,16 +3,14 @@
     height: 10%;
 }
 
-.not-found{
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items :center;
-}
-
 .not-found-image{
-    height: 80%;
-    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 500px;
+    margin-top: -250px; /* Half the height */
+    margin-left: -300px; /* Half the width */
 }
 
 .mini-deck{
