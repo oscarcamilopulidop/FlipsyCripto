@@ -181,9 +181,6 @@ const ModalFlashCard = props => {
                     <Button onClick={Cancel}>
                         Cancelar
                     </Button>
-                    <Button type="primary" icon="plus" onClick={() => addDeck(123)}>
-                        Agregar
-                    </Button>
                 </div>
             </div>
     )
